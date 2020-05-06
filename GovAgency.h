@@ -56,7 +56,7 @@ public:
     // Contrat :
     //
 
-    GovAgency (string _mail, string _password, string _prenom, string _nom );
+    GovAgency (string _username, string  _password );
     // Mode d'emploi :
     //
     // Contrat :

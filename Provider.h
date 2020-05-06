@@ -56,7 +56,7 @@ public:
     // Contrat :
     //
 
-    Provider (string _mail, string _password, string _prenom, string _nom );
+    Provider (string _username, string _password );
     // Mode d'emploi :
     //
     // Contrat :
