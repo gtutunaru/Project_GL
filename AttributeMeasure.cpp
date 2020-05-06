@@ -6,7 +6,7 @@
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation de la classe <User> (fichier User.cpp) ------------
+//---------- Réalisation de la classe <AttributeMeasure> (fichier AttributeMeasure.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
@@ -22,7 +22,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type User::Méthode ( liste des paramètres )
+// type AttributeMeasure::Méthode ( liste des paramètres )
 // Algorithme :
 //
 //{
@@ -38,7 +38,7 @@ AttributeMeasure::AttributeMeasure ( const AttributeMeasure & unAttributeMeasure
 //
 {
 #ifdef MAP
-    cout << "Appel au constructeur de copie de <User>" << endl;
+    cout << "Appel au constructeur de copie de <AttributeMeasure>" << endl;
 #endif
     attributeID = unAttributeMeasure.attributeID;
     unit = unAttributeMeasure.unit;
@@ -53,7 +53,7 @@ AttributeMeasure::AttributeMeasure ( )
 #ifdef MAP
     cout << "Appel au constructeur de <AttributeMeasure>" << endl;
 #endif
-} //----- Fin de User
+} //----- Fin de AttributeMeasure
 
 AttributeMeasure::AttributeMeasure (string unAttributeID,string unUnit,string unDescription  )
 // Algorithme :
@@ -65,7 +65,7 @@ AttributeMeasure::AttributeMeasure (string unAttributeID,string unUnit,string un
     attributeID = unAttributeID;
     unit = unUnit;
     description = unDescription;
-} //----- Fin de User
+} //----- Fin de AttributeMeasure
 
 
 AttributeMeasure::~AttributeMeasure ( )
