@@ -1,14 +1,14 @@
 /*************************************************************************
-                           Sensor  -  description
+                           Cleaner  -  description
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
     e-mail               : $gheorghe.tutunaru@insa-lyonfr$
 *************************************************************************/
 
-//---------- Interface de la classe <Sensor> (fichier Sensor.h) ----------------
-#if ! defined ( Sensor_H )
-#define Sensor_H
+//---------- Interface de la classe <Cleaner> (fichier Cleaner.h) ----------------
+#if ! defined ( Cleaner_H )
+#define Cleaner_H
 
 //--------------------------------------------------- Interfaces utilisées
 using namespace std;
@@ -20,12 +20,12 @@ using namespace std;
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Sensor>
+// Rôle de la classe <Cleaner>
 //
 //
 //------------------------------------------------------------------------
 
-class Sensor
+class Cleaner
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -38,9 +38,8 @@ public:
     //
 
 
-
 //------------------------------------------------- Surcharge d'opérateurs
-    Sensor & operator = ( const Sensor & unSensor );
+    Cleaner & operator = ( const Cleaner & unCleaner );
     // Mode d'emploi :
     //
     // Contrat :
@@ -48,19 +47,19 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    Sensor ( const Sensor & unSensor );
+    Cleaner ( const Cleaner & unCleaner );
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
     //
 
-    Sensor (int _id, double _latitude, double _longitude, string _description);
+    Cleaner (int _id, double _latitude, double _longitude, string _description, string _start, string _end);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~Sensor ( );
+    virtual ~Cleaner ( );
     // Mode d'emploi :
     //
     // Contrat :
@@ -72,13 +71,15 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-    int sensorId;
+    int cleanerId;
     double latitude;
     double longitude;
     string description;
+    string start;
+    string end;
 
 };
 
-//-------------------------------- Autres définitions dépendantes de <Sensor>
+//-------------------------------- Autres définitions dépendantes de <Cleaner>
 
-#endif // Sensor_H
+#endif // Cleaner_H
