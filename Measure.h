@@ -76,7 +76,7 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
     string timestamp;
-    string value;
+    double value;
     bool falseData;
 
 };
