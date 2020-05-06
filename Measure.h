@@ -75,7 +75,9 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-    string timestamp;
+    tm timestamp;
+    int sensorId;
+    string attributeId;
     double value;
     bool falseData;
 
