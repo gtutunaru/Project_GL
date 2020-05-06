@@ -87,7 +87,7 @@ protected:
 //----------------------------------------------------- Attributs protégés
     int nbPoints;
     double latitude;
-    double longitude; 
+    double longitude;
 
 };
 

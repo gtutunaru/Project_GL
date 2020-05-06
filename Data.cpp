@@ -13,7 +13,7 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
-
+#include <fstream>
 //------------------------------------------------------ Include personnel
 #include "Data.h"
 
@@ -26,7 +26,15 @@ Measure Data::readMeasurements ( string filename)
 // Algorithme :
 //
 {
-    
+    ifstream file;
+    file.open(filename);
+    if(!file) {
+        cerr<< "Problem with file " << filename << ". Unable to open." << endl;
+    } else {
+        while (!file.eof()) {
+            
+        }
+    }
 } //----- Fin de readMeasurements
 
 
