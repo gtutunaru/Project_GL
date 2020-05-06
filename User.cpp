@@ -42,24 +42,20 @@ User::User ( const User & unUser )
 // Algorithme :
 //
 {
-    mail = unUser.mail;
     password = unUser.password;
-    prenom = unUser.prenom;
-    nom = unUser.nom;
+    username = unUser.username;
 #ifdef MAP
     cout << "Appel au constructeur de copie de <User>" << endl;
 #endif
 } //----- Fin de User (constructeur de copie)
 
 
-User::User ( string _mail, string _password, string _prenom, string _nom )
+User::User ( string _username, string _password )
 // Algorithme :
 //
 {
-    mail = _mail;
+    usernmae = _username;
     password = _password;
-    prenom = _prenom;
-    nom = _nom;
 #ifdef MAP
     cout << "Appel au constructeur de <User>" << endl;
 #endif
