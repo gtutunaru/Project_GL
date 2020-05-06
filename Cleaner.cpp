@@ -42,8 +42,7 @@ using namespace std;
 // Algorithme :
 //
 {
-    password = unCleaner.password;
-    Cleanername = unCleaner.Cleanername;
+    
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Cleaner>" << endl;
 #endif

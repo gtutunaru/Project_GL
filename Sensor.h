@@ -40,7 +40,7 @@ public:
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-    Sensor & operator = ( const Sensor & unSensor );
+    //Sensor & operator = ( const Sensor & unSensor );
     // Mode d'emploi :
     //
     // Contrat :
@@ -53,6 +53,8 @@ public:
     //
     // Contrat :
     //
+
+    Sensor();
 
     Sensor (int _id, double _latitude, double _longitude, string _description);
     // Mode d'emploi :
