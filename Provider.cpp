@@ -27,15 +27,13 @@ using namespace std;
 //
 //{
 //} //----- Fin de Méthode
-
+list<Cleaner> Provider::getCleaners()
+{
+    return cleaners;
+}
 
 //------------------------------------------------- Surcharge d'opérateurs
-/*Provider & Provider::operator = ( const Provider & unProvider )
-// Algorithme :
-//
-{
-} //----- Fin de operator =
-*/
+
 
 //-------------------------------------------- Constructeurs - destructeur
 Provider::Provider ( const Provider & unProvider )
