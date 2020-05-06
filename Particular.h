@@ -1,14 +1,14 @@
 /*************************************************************************
-                           Provider  -  description
+                           Particular  -  description
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
     e-mail               : $gheorghe.tutunaru@insa-lyonfr$
 *************************************************************************/
 
-//---------- Interface de la classe <Provider> (fichier Provider.h) ----------------
-#if ! defined ( Provider_H )
-#define Provider_H
+//---------- Interface de la classe <Particular> (fichier Particular.h) ----------------
+#if ! defined ( Particular_H )
+#define Particular_H
 
 //--------------------------------------------------- Interfaces utilisées
 #include "User.h"
@@ -17,12 +17,12 @@
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Provider>
+// Rôle de la classe <Particular>
 //
 //
 //------------------------------------------------------------------------
 
-class Provider : public User
+class Particular : public User
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -33,10 +33,21 @@ public:
     //
     // Contrat :
     //
+    void setLongitude(double _longitude);
+
+    double getLongitude();
+
+    void setLatitude(double _latitude);
+
+    double getLatitude();
+
+    void setNbPoints(int _nbPoints);
+
+    int getNbPoints();
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-    //Provider & operator = ( const Provider & unProvider );
+    //Particular & operator = ( const Particular & unParticular );
     // Mode d'emploi :
     //
     // Contrat :
@@ -44,25 +55,25 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    Provider ( const Provider & unProvider );
+    Particular ( const Particular & unParticular );
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
     //
 
-     Provider ( );
+     Particular ( );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Provider (string _username, string _password );
+    Particular (string _username, string _password, double _latitude, double _longitude );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~Provider ( );
+    virtual ~Particular ( );
     // Mode d'emploi :
     //
     // Contrat :
@@ -74,10 +85,13 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-    //list<Cleaner> cleaners;
+    int nbPoints;
+    double latitude;
+    double longitude; 
+
 };
 
-//-------------------------------- Autres définitions dépendantes de <Provider>
+//-------------------------------- Autres définitions dépendantes de <Particular>
 
-#endif // Provider_H
+#endif // Particular_H
 

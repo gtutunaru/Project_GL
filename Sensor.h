@@ -37,11 +37,7 @@ public:
     // Contrat :
     //
 
-    bool viewQuality(double lat, double long, string date_start, string date_end="");
 
-    bool login(string mail, string password);
-
-    bool logout();
 
 //------------------------------------------------- Surcharge d'opérateurs
     Sensor & operator = ( const Sensor & unSensor );

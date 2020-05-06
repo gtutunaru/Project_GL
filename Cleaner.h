@@ -1,28 +1,31 @@
 /*************************************************************************
-                           Provider  -  description
+                           Cleaner  -  description
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
     e-mail               : $gheorghe.tutunaru@insa-lyonfr$
 *************************************************************************/
 
-//---------- Interface de la classe <Provider> (fichier Provider.h) ----------------
-#if ! defined ( Provider_H )
-#define Provider_H
+//---------- Interface de la classe <Cleaner> (fichier Cleaner.h) ----------------
+#if ! defined ( Cleaner_H )
+#define Cleaner_H
 
 //--------------------------------------------------- Interfaces utilisées
-#include "User.h"
+using namespace std;
+#include <iostream>
+#include <string>
+
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Provider>
+// Rôle de la classe <Cleaner>
 //
 //
 //------------------------------------------------------------------------
 
-class Provider : public User
+class Cleaner
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -36,7 +39,7 @@ public:
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-    //Provider & operator = ( const Provider & unProvider );
+    Cleaner & operator = ( const Cleaner & unCleaner );
     // Mode d'emploi :
     //
     // Contrat :
@@ -44,25 +47,19 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    Provider ( const Provider & unProvider );
+    Cleaner ( const Cleaner & unCleaner );
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
     //
 
-     Provider ( );
+    Cleaner (int _id, double _latitude, double _longitude, string _description, string _start, string _end);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Provider (string _username, string _password );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-    virtual ~Provider ( );
+    virtual ~Cleaner ( );
     // Mode d'emploi :
     //
     // Contrat :
@@ -74,10 +71,15 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-    //list<Cleaner> cleaners;
+    int cleanerId;
+    double latitude;
+    double longitude;
+    string description;
+    string start;
+    string end;
+
 };
 
-//-------------------------------- Autres définitions dépendantes de <Provider>
+//-------------------------------- Autres définitions dépendantes de <Cleaner>
 
-#endif // Provider_H
-
+#endif // Cleaner_H

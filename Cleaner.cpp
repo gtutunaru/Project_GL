@@ -1,12 +1,12 @@
 /*************************************************************************
-                           Provider  -  description
+                           Cleaner  -  description
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
     e-mail               : $gheorghe.tutunaru@insa-lyonfr$
 *************************************************************************/
 
-//---------- Réalisation de la classe <Provider> (fichier Provider.cpp) ------------
+//---------- Réalisation de la classe <Cleaner> (fichier Cleaner.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
@@ -15,14 +15,14 @@ using namespace std;
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
-#include "Provider.h"
+#include "Cleaner.h"
 
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Provider::Méthode ( liste des paramètres )
+// type Cleaner::Méthode ( liste des paramètres )
 // Algorithme :
 //
 //{
@@ -30,7 +30,7 @@ using namespace std;
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-/*Provider & Provider::operator = ( const Provider & unProvider )
+/*Cleaner & Cleaner::operator = ( const Cleaner & unCleaner )
 // Algorithme :
 //
 {
@@ -38,39 +38,44 @@ using namespace std;
 */
 
 //-------------------------------------------- Constructeurs - destructeur
-Provider::Provider ( const Provider & unProvider )
-:User(unProvider)
+/*Cleaner::Cleaner ( const Cleaner & unCleaner )
+// Algorithme :
+//
+{
+    password = unCleaner.password;
+    Cleanername = unCleaner.Cleanername;
+#ifdef MAP
+    cout << "Appel au constructeur de copie de <Cleaner>" << endl;
+#endif
+} *///----- Fin de Cleaner (constructeur de copie)
+
+
+Cleaner :: Cleaner (int _id, double _latitude, double _longitude, string _description, string _start, string _end)
+// Algorithme :
+//
+{
+    cleanerId = _id;
+    latitude = _latitude;
+    longitude = _longitude;
+    description = _description;
+    start = _start;
+    end = _end;
+#ifdef MAP
+    cout << "Appel au constructeur de <Cleaner>" << endl;
+#endif
+} //----- Fin de Cleaner
+
+
+Cleaner::~Cleaner ( )
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au constructeur de copie de <Provider>" << endl;
+    cout << "Appel au destructeur de <Cleaner>" << endl;
 #endif
-} //----- Fin de Provider (constructeur de copie)
-
-
-Provider::Provider (string _username, string _password )
-:User(_username,  _password)
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de <Provider>" << endl;
-#endif
-} //----- Fin de Provider
-
-
-Provider::~Provider ( )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au destructeur de <Provider>" << endl;
-#endif
-} //----- Fin de ~Provider
+} //----- Fin de ~Cleaner
 
 
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
-

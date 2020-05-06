@@ -36,11 +36,20 @@ public:
     // Contrat :
     //
 
-    bool viewQuality(double lat, double long, string date_start, string date_end="");
+    //bool viewQuality(double lat, double long, string date_start, string date_end=""); dans DATA
 
-    bool login(string mail, string password);
+    //bool login(string mail, string password);
 
-    bool logout();
+    //bool logout();
+
+
+    string getPassword();
+
+    void setPassword(string _password);
+
+    string getUsername();
+
+    void setUsername(string _username);
 
 //------------------------------------------------- Surcharge d'opérateurs
     //User & operator = ( const User & unUser );
@@ -63,7 +72,7 @@ public:
     // Contrat :
     //
 
-    User (string _mail, string _password, string _prenom, string _nom );
+    User (string _username, string _password );
     // Mode d'emploi :
     //
     // Contrat :
@@ -81,10 +90,10 @@ protected:
 //----------------------------------------------------- Méthodes protégées
     
 //----------------------------------------------------- Attributs protégés
-    string mail;
     string password;
-    string prenom;
-    string nom;
+    string username;
+
+
 };
 
 //-------------------------------- Autres définitions dépendantes de <User>
