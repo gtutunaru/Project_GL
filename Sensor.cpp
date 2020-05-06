@@ -48,14 +48,13 @@ using namespace std;
 } //----- Fin de Sensor (constructeur de copie)
 */
 
-Sensor::Sensor (int _id, double _latitude, double _longitude, string _description)
+Sensor::Sensor (int _id, double _latitude, double _longitude)
 // Algorithme :
 //
 {
     sensorId = _id;
     latitude = _latitude;
     longitude = _longitude;
-    description = _description;
 #ifdef MAP
     cout << "Appel au constructeur de <Sensor>" << endl;
 #endif

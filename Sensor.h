@@ -56,7 +56,7 @@ public:
 
     Sensor();
 
-    Sensor (int _id, double _latitude, double _longitude, string _description);
+    Sensor (int _id, double _latitude, double _longitude);
     // Mode d'emploi :
     //
     // Contrat :
@@ -77,7 +77,6 @@ protected:
     int sensorId;
     double latitude;
     double longitude;
-    string description;
 
 };
 

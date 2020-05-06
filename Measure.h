@@ -57,7 +57,7 @@ public:
     // Contrat :
     //
     
-    Measure (string timestamp,string value,bool falseData );
+    Measure (string timestamp, int sensorId, string attributeId, double value, bool falseData );
     // Mode d'emploi :
     //
     // Contrat :

@@ -55,16 +55,18 @@ Measure::Measure ( )
 #endif
 } //----- Fin de Measure
 
-Measure::Measure (string untimestamp,string unvalue,bool unfalseData)
+Measure::Measure (string _timestamp, int _sensorId, string _attributeId, double _value, bool _falseData)
 // Algorithme :
 //
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Measure>" << endl;
 #endif
-    timestamp = untimestamp;
-    value = unvalue;
-    falseData = unfalseData;
+    //timestamp = ...
+    sensorId = _sensorId;
+    attributeId = _attributeId;
+    value = _value;
+    falseData = _falseData;
 } //----- Fin de Measure
 
 
