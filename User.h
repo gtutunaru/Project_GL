@@ -1,9 +1,9 @@
 /*************************************************************************
                            User  -  description
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : $06/05/2020$
+    copyright            : (C) $2020$ par $gtutunaru$
+    e-mail               : $gheorghe.tutunaru@insa-lyonfr$
 *************************************************************************/
 
 //---------- Interface de la classe <User> (fichier User.h) ----------------
@@ -11,7 +11,9 @@
 #define User_H
 
 //--------------------------------------------------- Interfaces utilisées
-
+#include <iostream>
+#include <string>
+using namespace std;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -34,6 +36,9 @@ public:
     // Contrat :
     //
 
+    bool viewQuality(double lat, double long, string date_start, string date_end="");
+
+    bool login(string mail, string password)
 
 //------------------------------------------------- Surcharge d'opérateurs
     User & operator = ( const User & unUser );
@@ -50,7 +55,7 @@ public:
     // Contrat :
     //
 
-    User ( );
+    User (string _mail, string _password, string _prenom, string _nom );
     // Mode d'emploi :
     //
     // Contrat :
@@ -66,9 +71,12 @@ public:
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-
+    
 //----------------------------------------------------- Attributs protégés
-
+    string mail;
+    string password;
+    string prenom;
+    string nom;
 };
 
 //-------------------------------- Autres définitions dépendantes de <User>

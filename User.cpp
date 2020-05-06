@@ -1,9 +1,9 @@
 /*************************************************************************
                            User  -  description
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : $06/05/2020$
+    copyright            : (C) $2020$ par $gtutunaru$
+    e-mail               : $gheorghe.tutunaru@insa-lyonfr$
 *************************************************************************/
 
 //---------- Réalisation de la classe <User> (fichier User.cpp) ------------
@@ -48,10 +48,14 @@ User::User ( const User & unUser )
 } //----- Fin de User (constructeur de copie)
 
 
-User::User ( )
+User::User ( string _mail, string _password, string _prenom, string _nom )
 // Algorithme :
 //
 {
+    mail = _mail;
+    password = _password;
+    prenom = _prenom;
+    nom = _nom;
 #ifdef MAP
     cout << "Appel au constructeur de <User>" << endl;
 #endif
