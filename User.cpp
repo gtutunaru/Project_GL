@@ -28,6 +28,28 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
+string User::getPassword()
+{
+    return password;
+}
+
+
+void User::setPassword(string _password)
+{
+    password = _password;
+}
+
+
+string User::getUsername()
+{
+    return username;
+}
+
+void User::setUsername(string _username)
+{
+    username = _username;
+}
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 /*User & User::operator = ( const User & unUser )

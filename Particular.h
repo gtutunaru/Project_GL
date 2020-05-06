@@ -33,6 +33,17 @@ public:
     //
     // Contrat :
     //
+    void setLongitude(double _longitude);
+
+    double getLongitude();
+
+    void setLatitude(double _latitude);
+
+    double getLatitude();
+
+    void setNbPoints(int _nbPoints);
+
+    int getNbPoints();
 
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -56,7 +67,7 @@ public:
     // Contrat :
     //
 
-    Particular (string _mail, string _password, string _prenom, string _nom );
+    Particular (string _username, string _password, double _latitude, double _longitude );
     // Mode d'emploi :
     //
     // Contrat :
@@ -75,8 +86,9 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
     int nbPoints;
-    double latitude; //latitude
-    double longitude; //longitude
+    double latitude;
+    double longitude; 
+
 };
 
 //-------------------------------- Autres définitions dépendantes de <Particular>

@@ -42,6 +42,15 @@ public:
 
     //bool logout();
 
+
+    string getPassword();
+
+    void setPassword(string _password);
+
+    string getUsername();
+
+    void setUsername(string _username);
+
 //------------------------------------------------- Surcharge d'opérateurs
     //User & operator = ( const User & unUser );
     // Mode d'emploi :
@@ -83,6 +92,8 @@ protected:
 //----------------------------------------------------- Attributs protégés
     string password;
     string username;
+
+
 };
 
 //-------------------------------- Autres définitions dépendantes de <User>
