@@ -1,50 +1,59 @@
 /*************************************************************************
-                           Sensor  -  description
+                           Data  -  description
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
-    e-mail               : $gheorghe.tutunaru@insa-lyonfr$
+    e-mail               : $erwan.versmee@insa-lyonfr$
 *************************************************************************/
 
-//---------- Interface de la classe <Sensor> (fichier Sensor.h) ----------------
-#if ! defined ( Sensor_H )
-#define Sensor_H
+//---------- Interface de la classe <Data> (fichier Data.h) ----------------
+#if ! defined ( DATA_H )
+#define DATA_H
 
 //--------------------------------------------------- Interfaces utilisées
-using namespace std;
-#include <iostream>
 #include <string>
-
+#include "Measure.h"
+#include "Provider.h"
+#include "AttributeMeasure.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Sensor>
+// Rôle de la classe <Data>
 //
 //
 //------------------------------------------------------------------------
 
-class Sensor
+class Data
 {
 //----------------------------------------------------------------- PUBLIC
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
+    Measure readMeasurement ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    bool viewQuality(double lat, double long, string date_start, string date_end="");
+    Provider readProvider ( string filename );
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
-    bool login(string mail, string password);
+    AttributeMeasure readAttribute ( string filename);
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
-    bool logout();
+    
+
 
 //------------------------------------------------- Surcharge d'opérateurs
-    Sensor & operator = ( const Sensor & unSensor );
+    //Data & operator = ( const Data & Data );
     // Mode d'emploi :
     //
     // Contrat :
@@ -52,37 +61,21 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    Sensor ( const Sensor & unSensor );
-    // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
+    Data ( const Data & Data );
 
-    Sensor (int _id, double _latitude, double _longitude, string _description);
+    Data ();
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~Sensor ( );
+    virtual ~Data ( );
     // Mode d'emploi :
     //
     // Contrat :
     //
-
-//------------------------------------------------------------------ PRIVE
-
-protected:
-//----------------------------------------------------- Méthodes protégées
-
-//----------------------------------------------------- Attributs protégés
-    int sensorId;
-    double latitude;
-    double longitude;
-    string description;
 
 };
 
-//-------------------------------- Autres définitions dépendantes de <Sensor>
+#endif // DATA_H
 
-#endif // Sensor_H
