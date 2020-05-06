@@ -6,7 +6,7 @@
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation de la classe <AttributeMeasure> (fichier AttributeMeasure.cpp) ------------
+//---------- Réalisation de la classe <Measure> (fichier Measure.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
@@ -15,14 +15,14 @@ using namespace std;
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
-#include "AttributeMeasure.h"
+#include "Measure.h"
 
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type AttributeMeasure::Méthode ( liste des paramètres )
+// type Measure::Méthode ( liste des paramètres )
 // Algorithme :
 //
 //{
@@ -33,49 +33,49 @@ using namespace std;
 
 
 //-------------------------------------------- Constructeurs - destructeur
-AttributeMeasure::AttributeMeasure ( const AttributeMeasure & unAttributeMeasure )
+Measure::Measure ( const Measure & unMeasure )
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au constructeur de copie de <AttributeMeasure>" << endl;
+    cout << "Appel au constructeur de copie de <Measure>" << endl;
 #endif
-    attributeID = unAttributeMeasure.attributeID;
-    unit = unAttributeMeasure.unit;
-    description = unAttributeMeasure.description;
-} //----- Fin de AttributeMeasure (constructeur de copie)
+    timestamp = unMeasure.timestamp;
+    value = unMeasure.value;
+    falseData = unMeasure.falseData;
+} //----- Fin de Measure (constructeur de copie)
 
 
-AttributeMeasure::AttributeMeasure ( )
+Measure::Measure ( )
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au constructeur de <AttributeMeasure>" << endl;
+    cout << "Appel au constructeur de <Measure>" << endl;
 #endif
-} //----- Fin de AttributeMeasure
+} //----- Fin de Measure
 
-AttributeMeasure::AttributeMeasure (string unAttributeID,string unUnit,string unDescription  )
+Measure::Measure (string untimestamp,string unvalue,bool unfalseData)
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au constructeur de <AttributeMeasure>" << endl;
+    cout << "Appel au constructeur de <Measure>" << endl;
 #endif
-    attributeID = unAttributeID;
-    unit = unUnit;
-    description = unDescription;
-} //----- Fin de AttributeMeasure
+    timestamp = untimestamp;
+    value = unvalue;
+    falseData = unfalseData;
+} //----- Fin de Measure
 
 
-AttributeMeasure::~AttributeMeasure ( )
+Measure::~Measure ( )
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au destructeur de <AttributeMeasure>" << endl;
+    cout << "Appel au destructeur de <Measure>" << endl;
 #endif
-} //----- Fin de ~AttributeMeasure
+} //----- Fin de ~Measure
 
 
 //------------------------------------------------------------------ PRIVE

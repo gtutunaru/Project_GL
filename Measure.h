@@ -6,9 +6,9 @@
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface de la classe <AttributeMeasure> (fichier AttributeMeasure.h) ----------------
-#if ! defined ( AttributeMeasure_H )
-#define AttributeMeasure_H
+//---------- Interface de la classe <Measure> (fichier Measure.h) ----------------
+#if ! defined ( Measure_H )
+#define Measure_H
 
 using namespace std;
 //--------------------------------------------------- Interfaces utilisées
@@ -24,7 +24,7 @@ using namespace std;
 //
 //------------------------------------------------------------------------
 
-class AttributeMeasure
+class Measure
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -45,25 +45,25 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    AttributeMeasure ( const AttributeMeasure & AttributeMeasure );
+    Measure ( const Measure & unMeasure );
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
     //
 
-    AttributeMeasure ( );
+    Measure ( );
     // Mode d'emploi :
     //
     // Contrat :
     //
     
-    AttributeMeasure (string unAttributeID,string unUnit,string unDescription );
+    Measure (string timestamp,string value,bool falseData );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~AttributeMeasure ( );
+    virtual ~Measure ( );
     // Mode d'emploi :
     //
     // Contrat :
@@ -75,9 +75,9 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-    string attributeID;
-    string unit;
-    string description;
+    string timestamp;
+    string value;
+    bool falseData;
 
 };
 
