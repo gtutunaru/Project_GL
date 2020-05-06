@@ -38,7 +38,9 @@ public:
 
     bool viewQuality(double lat, double long, string date_start, string date_end="");
 
-    bool login(string mail, string password)
+    bool login(string mail, string password);
+
+    bool logout();
 
 //------------------------------------------------- Surcharge d'opérateurs
     User & operator = ( const User & unUser );
