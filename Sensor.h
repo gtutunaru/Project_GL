@@ -56,7 +56,7 @@ public:
 
     Sensor();
 
-    Sensor (int _id, double _latitude, double _longitude, string _description);
+    Sensor (int _id, double _latitude, double _longitude);
     // Mode d'emploi :
     //
     // Contrat :
@@ -68,6 +68,14 @@ public:
     // Contrat :
     //
 
+    int getSensorId();
+    double getLatitude();
+    double getLongitude();
+    string getDescription();
+
+    void setLatitude(double _latitude);
+    void setLongitude(double _longitude);
+    void setDescription(string _description);
 //------------------------------------------------------------------ PRIVE
 
 protected:
@@ -77,7 +85,6 @@ protected:
     int sensorId;
     double latitude;
     double longitude;
-    string description;
 
 };
 
