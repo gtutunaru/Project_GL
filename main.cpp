@@ -1,6 +1,8 @@
 #include <iostream>
 using namespace std;
 int main(){
-    cout<<"hi"; //Camilo was here
+    cout<<"hi";
+    cout<<"hello";
+    //Camilo was here
     return 0;
 }
