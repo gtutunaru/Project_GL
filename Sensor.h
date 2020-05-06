@@ -58,7 +58,7 @@ public:
     // Contrat :
     //
 
-    Sensor (string _mail, string _password, string _prenom, string _nom );
+    Sensor (int _id, double _latitude, double _longitude, string _description);
     // Mode d'emploi :
     //
     // Contrat :
