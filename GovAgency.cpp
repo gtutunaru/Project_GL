@@ -49,8 +49,8 @@ GovAgency::GovAgency ( const GovAgency & unGovAgency )
 } //----- Fin de GovAgency (constructeur de copie)
 
 
-GovAgency::GovAgency (string _mail, string _password, string _prenom, string _nom )
-:User(_mail, _password,  _prenom,  _nom)
+GovAgency::GovAgency (string _username, string _password )
+:User( _username,  _password)
 // Algorithme :
 //
 {

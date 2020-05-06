@@ -54,7 +54,7 @@ User::User ( string _username, string _password )
 // Algorithme :
 //
 {
-    usernmae = _username;
+    username = _username;
     password = _password;
 #ifdef MAP
     cout << "Appel au constructeur de <User>" << endl;
