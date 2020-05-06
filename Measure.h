@@ -1,30 +1,30 @@
 /*************************************************************************
                            User  -  description
                              -------------------
-    début                : $06/05/2020$
-    copyright            : (C) $2020$ par $gtutunaru$
-    e-mail               : $gheorghe.tutunaru@insa-lyonfr$
+    début                : $DATE$
+    copyright            : (C) $YEAR$ par $AUTHOR$
+    e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface de la classe <User> (fichier User.h) ----------------
-#if ! defined ( User_H )
-#define User_H
+//---------- Interface de la classe <Measure> (fichier Measure.h) ----------------
+#if ! defined ( Measure_H )
+#define Measure_H
 
-//--------------------------------------------------- Interfaces utilisées
-#include <iostream>
-#include <string>
 using namespace std;
+//--------------------------------------------------- Interfaces utilisées
+#include <string>
+
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <User>
+// Rôle de la classe <AttributeMeasure>
 //
 //
 //------------------------------------------------------------------------
 
-class User 
+class Measure
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -36,14 +36,8 @@ public:
     // Contrat :
     //
 
-    bool viewQuality(double lat, double long, string date_start, string date_end="");
-
-    bool login(string mail, string password);
-
-    bool logout();
 
 //------------------------------------------------- Surcharge d'opérateurs
-    //User & operator = ( const User & unUser );
     // Mode d'emploi :
     //
     // Contrat :
@@ -51,25 +45,25 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    User ( const User & unUser );
+    Measure ( const Measure & unMeasure );
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
     //
 
-    User ();
+    Measure ( );
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+    
+    Measure (string timestamp,string value,bool falseData );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    User (string _mail, string _password, string _prenom, string _nom );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-    virtual ~User ( );
+    virtual ~Measure ( );
     // Mode d'emploi :
     //
     // Contrat :
@@ -79,15 +73,16 @@ public:
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-    
+
 //----------------------------------------------------- Attributs protégés
-    string mail;
-    string password;
-    string prenom;
-    string nom;
+    string timestamp;
+    string value;
+    bool falseData;
+
 };
 
-//-------------------------------- Autres définitions dépendantes de <User>
+//-------------------------------- Autres définitions dépendantes de <AttributeMeasure>
 
-#endif // User_H
+#endif // AttributeMeasure_H
+
 

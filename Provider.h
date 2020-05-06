@@ -1,30 +1,28 @@
 /*************************************************************************
-                           User  -  description
+                           Provider  -  description
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
     e-mail               : $gheorghe.tutunaru@insa-lyonfr$
 *************************************************************************/
 
-//---------- Interface de la classe <User> (fichier User.h) ----------------
-#if ! defined ( User_H )
-#define User_H
+//---------- Interface de la classe <Provider> (fichier Provider.h) ----------------
+#if ! defined ( Provider_H )
+#define Provider_H
 
 //--------------------------------------------------- Interfaces utilisées
-#include <iostream>
-#include <string>
-using namespace std;
+#include "User.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <User>
+// Rôle de la classe <Provider>
 //
 //
 //------------------------------------------------------------------------
 
-class User 
+class Provider : public User
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -36,14 +34,9 @@ public:
     // Contrat :
     //
 
-    bool viewQuality(double lat, double long, string date_start, string date_end="");
-
-    bool login(string mail, string password);
-
-    bool logout();
 
 //------------------------------------------------- Surcharge d'opérateurs
-    //User & operator = ( const User & unUser );
+    //Provider & operator = ( const Provider & unProvider );
     // Mode d'emploi :
     //
     // Contrat :
@@ -51,25 +44,25 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    User ( const User & unUser );
+    Provider ( const Provider & unProvider );
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
     //
 
-    User ();
+     Provider ( );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    User (string _mail, string _password, string _prenom, string _nom );
+    Provider (string _mail, string _password, string _prenom, string _nom );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~User ( );
+    virtual ~Provider ( );
     // Mode d'emploi :
     //
     // Contrat :
@@ -79,15 +72,12 @@ public:
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-    
+
 //----------------------------------------------------- Attributs protégés
-    string mail;
-    string password;
-    string prenom;
-    string nom;
+
 };
 
-//-------------------------------- Autres définitions dépendantes de <User>
+//-------------------------------- Autres définitions dépendantes de <Provider>
 
-#endif // User_H
+#endif // Provider_H
 

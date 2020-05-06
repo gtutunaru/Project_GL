@@ -6,7 +6,7 @@
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface de la classe <User> (fichier User.h) ----------------
+//---------- Interface de la classe <AttributeMeasure> (fichier AttributeMeasure.h) ----------------
 #if ! defined ( AttributeMeasure_H )
 #define AttributeMeasure_H
 
@@ -19,7 +19,7 @@ using namespace std;
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <User>
+// Rôle de la classe <AttributeMeasure>
 //
 //
 //------------------------------------------------------------------------
@@ -81,7 +81,7 @@ protected:
 
 };
 
-//-------------------------------- Autres définitions dépendantes de <User>
+//-------------------------------- Autres définitions dépendantes de <AttributeMeasure>
 
 #endif // AttributeMeasure_H
 

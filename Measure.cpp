@@ -1,12 +1,12 @@
 /*************************************************************************
                            User  -  description
                              -------------------
-    début                : $06/05/2020$
-    copyright            : (C) $2020$ par $gtutunaru$
-    e-mail               : $gheorghe.tutunaru@insa-lyonfr$
+    début                : $DATE$
+    copyright            : (C) $YEAR$ par $AUTHOR$
+    e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation de la classe <User> (fichier User.cpp) ------------
+//---------- Réalisation de la classe <Measure> (fichier Measure.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
@@ -15,14 +15,14 @@ using namespace std;
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
-#include "User.h"
+#include "Measure.h"
 
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type User::Méthode ( liste des paramètres )
+// type Measure::Méthode ( liste des paramètres )
 // Algorithme :
 //
 //{
@@ -30,53 +30,56 @@ using namespace std;
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-/*User & User::operator = ( const User & unUser )
-// Algorithme :
-//
-{
-} //----- Fin de operator =
-*/
+
 
 //-------------------------------------------- Constructeurs - destructeur
-User::User ( const User & unUser )
-// Algorithme :
-//
-{
-    mail = unUser.mail;
-    password = unUser.password;
-    prenom = unUser.prenom;
-    nom = unUser.nom;
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <User>" << endl;
-#endif
-} //----- Fin de User (constructeur de copie)
-
-
-User::User ( string _mail, string _password, string _prenom, string _nom )
-// Algorithme :
-//
-{
-    mail = _mail;
-    password = _password;
-    prenom = _prenom;
-    nom = _nom;
-#ifdef MAP
-    cout << "Appel au constructeur de <User>" << endl;
-#endif
-} //----- Fin de User
-
-
-User::~User ( )
+Measure::Measure ( const Measure & unMeasure )
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au destructeur de <User>" << endl;
+    cout << "Appel au constructeur de copie de <Measure>" << endl;
 #endif
-} //----- Fin de ~User
+    timestamp = unMeasure.timestamp;
+    value = unMeasure.value;
+    falseData = unMeasure.falseData;
+} //----- Fin de Measure (constructeur de copie)
+
+
+Measure::Measure ( )
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au constructeur de <Measure>" << endl;
+#endif
+} //----- Fin de Measure
+
+Measure::Measure (string untimestamp,string unvalue,bool unfalseData)
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au constructeur de <Measure>" << endl;
+#endif
+    timestamp = untimestamp;
+    value = unvalue;
+    falseData = unfalseData;
+} //----- Fin de Measure
+
+
+Measure::~Measure ( )
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au destructeur de <Measure>" << endl;
+#endif
+} //----- Fin de ~Measure
 
 
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
+
 
