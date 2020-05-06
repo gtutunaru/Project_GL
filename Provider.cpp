@@ -1,12 +1,12 @@
 /*************************************************************************
-                           User  -  description
+                           Provider  -  description
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
     e-mail               : $gheorghe.tutunaru@insa-lyonfr$
 *************************************************************************/
 
-//---------- Réalisation de la classe <User> (fichier User.cpp) ------------
+//---------- Réalisation de la classe <Provider> (fichier Provider.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
@@ -15,14 +15,14 @@ using namespace std;
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
-#include "User.h"
+#include "Provider.h"
 
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type User::Méthode ( liste des paramètres )
+// type Provider::Méthode ( liste des paramètres )
 // Algorithme :
 //
 //{
@@ -30,7 +30,7 @@ using namespace std;
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-/*User & User::operator = ( const User & unUser )
+/*Provider & Provider::operator = ( const Provider & unProvider )
 // Algorithme :
 //
 {
@@ -38,42 +38,36 @@ using namespace std;
 */
 
 //-------------------------------------------- Constructeurs - destructeur
-User::User ( const User & unUser )
-// Algorithme :
-//
-{
-    mail = unUser.mail;
-    password = unUser.password;
-    prenom = unUser.prenom;
-    nom = unUser.nom;
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <User>" << endl;
-#endif
-} //----- Fin de User (constructeur de copie)
-
-
-User::User ( string _mail, string _password, string _prenom, string _nom )
-// Algorithme :
-//
-{
-    mail = _mail;
-    password = _password;
-    prenom = _prenom;
-    nom = _nom;
-#ifdef MAP
-    cout << "Appel au constructeur de <User>" << endl;
-#endif
-} //----- Fin de User
-
-
-User::~User ( )
+Provider::Provider ( const Provider & unProvider )
+:User(unProvider)
 // Algorithme :
 //
 {
 #ifdef MAP
-    cout << "Appel au destructeur de <User>" << endl;
+    cout << "Appel au constructeur de copie de <Provider>" << endl;
 #endif
-} //----- Fin de ~User
+} //----- Fin de Provider (constructeur de copie)
+
+
+Provider::Provider (string _mail, string _password, string _prenom, string _nom )
+:User(_mail, _password,  _prenom,  _nom)
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au constructeur de <Provider>" << endl;
+#endif
+} //----- Fin de Provider
+
+
+Provider::~Provider ( )
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au destructeur de <Provider>" << endl;
+#endif
+} //----- Fin de ~Provider
 
 
 //------------------------------------------------------------------ PRIVE

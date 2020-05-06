@@ -1,30 +1,28 @@
 /*************************************************************************
-                           User  -  description
+                           GovAgency  -  description
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
     e-mail               : $gheorghe.tutunaru@insa-lyonfr$
 *************************************************************************/
 
-//---------- Interface de la classe <User> (fichier User.h) ----------------
-#if ! defined ( User_H )
-#define User_H
+//---------- Interface de la classe <GovAgency> (fichier GovAgency.h) ----------------
+#if ! defined ( GovAgency_H )
+#define GovAgency_H
 
 //--------------------------------------------------- Interfaces utilisées
-#include <iostream>
-#include <string>
-using namespace std;
+#include "User.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <User>
+// Rôle de la classe <GovAgency>
 //
 //
 //------------------------------------------------------------------------
 
-class User 
+class GovAgency : public User
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -36,14 +34,9 @@ public:
     // Contrat :
     //
 
-    bool viewQuality(double lat, double long, string date_start, string date_end="");
-
-    bool login(string mail, string password);
-
-    bool logout();
 
 //------------------------------------------------- Surcharge d'opérateurs
-    //User & operator = ( const User & unUser );
+    //GovAgency & operator = ( const GovAgency & unGovAgency );
     // Mode d'emploi :
     //
     // Contrat :
@@ -51,25 +44,25 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    User ( const User & unUser );
+    GovAgency ( const GovAgency & unGovAgency );
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
     //
 
-    User ();
+     GovAgency ( );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    User (string _mail, string _password, string _prenom, string _nom );
+    GovAgency (string _mail, string _password, string _prenom, string _nom );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~User ( );
+    virtual ~GovAgency ( );
     // Mode d'emploi :
     //
     // Contrat :
@@ -79,15 +72,12 @@ public:
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-    
+
 //----------------------------------------------------- Attributs protégés
-    string mail;
-    string password;
-    string prenom;
-    string nom;
+
 };
 
-//-------------------------------- Autres définitions dépendantes de <User>
+//-------------------------------- Autres définitions dépendantes de <GovAgency>
 
-#endif // User_H
+#endif // GovAgency_H
 
