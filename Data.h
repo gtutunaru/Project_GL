@@ -2,7 +2,7 @@
                            Data  -  description
                              -------------------
     début                : $06/05/2020$
-    copyright            : (C) $2020$ par $gtutunaru$
+    copyright            : (C) $2020$ par $eversmee$
     e-mail               : $erwan.versmee@insa-lyonfr$
 *************************************************************************/
 
@@ -12,13 +12,19 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
+#include <map>
+#include <list>
 #include "Measure.h"
 #include "Provider.h"
 #include "AttributeMeasure.h"
+#include "Sensor.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
-
+typedef multimap<tm,Measure> Measures;
+typedef list<Provider> Providers;
+typedef list<AttributeMeasure> Attributes;
+typedef
 //------------------------------------------------------------------------
 // Rôle de la classe <Data>
 //
@@ -31,34 +37,29 @@ class Data
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    Measure readMeasurement ( string filename );
+    Measure readMeasurements ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Provider readProvider ( string filename );
+    Provider readProviders ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    AttributeMeasure readAttribute ( string filename);
+    AttributeMeasure readAttributes ( string filename);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    
-
-
-//------------------------------------------------- Surcharge d'opérateurs
-    //Data & operator = ( const Data & Data );
+    Sensor readSensors ( string filename);
     // Mode d'emploi :
     //
     // Contrat :
     //
-
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );
@@ -74,6 +75,15 @@ public:
     //
     // Contrat :
     //
+
+    //------------------------------------------------------------------ PRIVE
+
+protected:
+
+//----------------------------------------------------- Attributs protégés
+    
+
+};
 
 };
 
