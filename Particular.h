@@ -84,12 +84,7 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
     int nbPoints;
-<<<<<<< HEAD
-    double latitude;
-    double longitude;
-=======
     Sensor sensor;
->>>>>>> b7b7532369e7fb55c55784d20221307115158c6d
 
 };
 

@@ -32,6 +32,11 @@ Measure Data::readMeasurements ( string filename)
         cerr<< "Problem with file " << filename << ". Unable to open." << endl;
     } else {
         while (!file.eof()) {
+            string timestamp_buffer;
+            string sensorId_buffer;
+            string attributeId_buffer;
+            string value_buffer;
+
             
         }
     }

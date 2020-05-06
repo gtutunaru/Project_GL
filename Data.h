@@ -22,7 +22,7 @@
 #include "Cleaner.h"
 #include "Particular.h"
 //------------------------------------------------------------- Constantes
-
+const char SEP =';';
 //------------------------------------------------------------------ Types
 typedef list<AttributeMeasure> Attributes;
 typedef list<Cleaner> Cleaners;
