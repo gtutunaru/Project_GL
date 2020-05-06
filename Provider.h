@@ -74,7 +74,7 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-
+    //list<Cleaner> cleaners;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Provider>

@@ -49,8 +49,8 @@ Provider::Provider ( const Provider & unProvider )
 } //----- Fin de Provider (constructeur de copie)
 
 
-Provider::Provider (string _mail, string _password, string _prenom, string _nom )
-:User(_mail, _password,  _prenom,  _nom)
+Provider::Provider (string _username, string _password )
+:User(_username,  _password)
 // Algorithme :
 //
 {
