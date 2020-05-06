@@ -37,25 +37,14 @@ void Particular::setNbPoints(int _nbPoints)
     nbPoints = _nbPoints;
 }
 
-double Particular::getLatitude()
+Sensor Particular::getSensor()
 {
-    return latitude;
+    return sensor;
 }
 
-void Particular::setLatitude(double _latitude)
+void Particular::setSensor(Sensor _sensor)
 {
-    latitude = _latitude;
-}
-
-double Particular::getLongitude()
-{
-    return longitude;
-}
-
-
-void Particular::setLongitude(double _longitude)
-{
-    longitude = _longitude;
+    sensor = _sensor;
 }
 
 
@@ -79,13 +68,12 @@ Particular::Particular ( const Particular & unParticular )
 } //----- Fin de Particular (constructeur de copie)
 
 
-Particular::Particular (string _username, string _password, double _latitude, double _longitude )
+Particular::Particular (string _username, string _password, Sensor _sensor )
 :User(_username,  _password)
 // Algorithme :
 //
 {
-    latitude = _latitude;
-    longitude = _longitude;
+    sensor = _sensor;
     nbPoints = 0;
 #ifdef MAP
     cout << "Appel au constructeur de <Particular>" << endl;

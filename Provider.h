@@ -12,6 +12,8 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include "User.h"
+#include "Cleaner.h"
+#include <list>
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -33,6 +35,8 @@ public:
     //
     // Contrat :
     //
+
+    list<Cleaner> getCleaners();
 
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -74,7 +78,8 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-    //list<Cleaner> cleaners;
+    list<Cleaner> cleaners;
+
 };
 
 //-------------------------------- Autres définitions dépendantes de <Provider>

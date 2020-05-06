@@ -57,7 +57,7 @@ public:
     // Contrat :
     //
     
-    Measure (string timestamp,string value,bool falseData );
+    Measure (string timestamp, int sensorId, string attributeId, double value, bool falseData );
     // Mode d'emploi :
     //
     // Contrat :
@@ -75,8 +75,10 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-    string timestamp;
-    string value;
+    tm timestamp;
+    int sensorId;
+    string attributeId;
+    double value;
     bool falseData;
 
 };

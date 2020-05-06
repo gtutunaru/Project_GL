@@ -12,6 +12,7 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include "User.h"
+#include "Sensor.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -33,13 +34,10 @@ public:
     //
     // Contrat :
     //
-    void setLongitude(double _longitude);
 
-    double getLongitude();
+    void setSensor(Sensor _sensor);
 
-    void setLatitude(double _latitude);
-
-    double getLatitude();
+    Sensor getSensor();
 
     void setNbPoints(int _nbPoints);
 
@@ -67,7 +65,7 @@ public:
     // Contrat :
     //
 
-    Particular (string _username, string _password, double _latitude, double _longitude );
+    Particular (string _username, string _password, Sensor _sensor );
     // Mode d'emploi :
     //
     // Contrat :
@@ -86,8 +84,7 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
     int nbPoints;
-    double latitude;
-    double longitude; 
+    Sensor sensor;
 
 };
 
