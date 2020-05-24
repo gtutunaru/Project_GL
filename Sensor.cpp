@@ -92,17 +92,6 @@ Sensor::Sensor (int _id, double _latitude, double _longitude)
 #endif
 } //----- Fin de Sensor
 
-Sensor::Sensor ()
-// Algorithme :
-//
-{
-
-#ifdef MAP
-    cout << "Appel au constructeur de <Sensor>" << endl;
-#endif
-} //----- Fin de Sensor
-
-
 Sensor::~Sensor ( )
 // Algorithme :
 //

@@ -165,17 +165,6 @@ void Data::readProviders ( string filename ){
     }
 }
 
-//-------------------------------------------- Constructeurs - destructeur
-
-Data::Data ( const Data & unData )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <Data>" << endl;
-#endif
-} //----- Fin de Data (constructeur de copie)
-
 void Data::readAttributes ( string filename)
 {
   fstream entree(filename);
