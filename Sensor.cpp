@@ -70,10 +70,9 @@ Sensor::~Sensor ( )
 #endif
 } //----- Fin de ~Sensor
 
-int Sensor::getSensorId() return sensorId;
-double Sensor::getLatitude() return latitude;
-double Sensor::getLongitude() return longitude;
-string Sensor::getDescription() return description;
+int Sensor::getSensorId(){ return sensorId; } 
+double Sensor::getLatitude(){ return latitude; } 
+double Sensor::getLongitude(){ return longitude; }
 
 void Sensor::setLatitude(double _latitude)
 {
@@ -84,11 +83,3 @@ void Sensor::setLongitude(double _longitude)
 {
   longitude = _longitude;
 }
-
-void Sensor::setDescription(string _description)
-{
-  description = _description;
-}
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées
