@@ -11,8 +11,13 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
 
+#include <iostream>
+#include <fstream>
+#include <cstring>
+#include <string>
+#include <sstream>
+using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Data.h"
 
@@ -64,7 +69,7 @@ void Data::readMeasurements ( string filename)
 
                 }
             }*/
-            
+
         }
     }
 } //----- Fin de readMeasurements
@@ -171,6 +176,25 @@ Data::Data ( const Data & unData )
 #endif
 } //----- Fin de Data (constructeur de copie)
 
+void readAttributes ( string filename)
+{
+  fstream entree(filename);
+  entree.open(filename,ios::in);
+
+  string attributeID, unit, description;
+  string tmp,line;
+
+  while (entree>>tmp)
+  {
+    getline(entree, line);
+    istringstream iss(line);
+    getline(iss, attributeID, ';');
+    getline(iss, unit, ';');
+    getline(iss, description, ';');
+
+    AttributeMeasure attM = AttributeMeasure(attributeID, unit, description);
+  }
+}
 
 Data::Data ()
 // Algorithme :
