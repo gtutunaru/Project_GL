@@ -28,6 +28,30 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
+int Sensor::getSensorId()
+{
+  return sensorId;
+}
+
+double Sensor::getLatitude()
+{
+  return latitude;
+}
+
+double Sensor::getLongitude()
+{
+  return longitude;
+}
+
+void Sensor::setLatitude(double _latitude)
+{
+  latitude = _latitude;
+}
+
+void Sensor::setLongitude(double _longitude)
+{
+  longitude = _longitude;
+}
 
 //------------------------------------------------- Surcharge d'opérateurs
 /*Sensor & Sensor::operator = ( const Sensor & unSensor )
@@ -70,16 +94,7 @@ Sensor::~Sensor ( )
 #endif
 } //----- Fin de ~Sensor
 
-int Sensor::getSensorId(){ return sensorId; } 
-double Sensor::getLatitude(){ return latitude; } 
-double Sensor::getLongitude(){ return longitude; }
 
-void Sensor::setLatitude(double _latitude)
-{
-  latitude = _latitude;
-}
+//------------------------------------------------------------------ PRIVE
 
-void Sensor::setLongitude(double _longitude)
-{
-  longitude = _longitude;
-}
+//----------------------------------------------------- Méthodes protégées

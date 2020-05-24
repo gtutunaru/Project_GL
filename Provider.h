@@ -85,4 +85,3 @@ protected:
 //-------------------------------- Autres définitions dépendantes de <Provider>
 
 #endif // Provider_H
-
