@@ -55,8 +55,8 @@ void Data::readMeasures ( string filename)
             string attributeId_buffer;
             string value_buffer;
 
-            getline(file,timestamp_buffer,SEP);
-            file.ignore(256,SEP_SENS);
+            getline(file,timestamp_buffer,SEP); //j'ai declare SEP dans le .h comme const char SEP = ';'
+            //file.ignore(256,SEP_SENS); ca cause des erreurs et je ne sais pas a quoi ca sert
             getline(file,sensorId_buffer,SEP);
             getline(file,attributeId_buffer,SEP);
             getline(file,value_buffer,SEP);
@@ -111,10 +111,10 @@ void Data::readCleaners ( string filename ){
                 string end = s.substr(0, pos);
 
                 Cleaner * c = new Cleaner(id, lat, longitude, description, start, end);
-                cout<<(*c).toString()<<endl;
+                //cout<<(*c).toString()<<endl;
                 cleaners.insert(std::make_pair(id, c));
 
-                cout<<cleaners.find(id)->second->toString()<<endl;
+                //cout<<cleaners.find(id)->second->toString()<<endl;
 
             }
         }
@@ -137,31 +137,36 @@ void Data::readProviders ( string filename ){
     } else {
         while (!file.eof()) {
             std::getline(file,s);
+            //cout<<"line "<<s<<endl;
             if (s!=""){
                 int pos = s.find(";");
                 //cout<<s.substr(7, pos-7)<<endl;
                 string username = s.substr(0, pos);
                 s=s.substr(pos+1, s.length()-pos);
 
-                Provider p = Provider(username, "mdp");
+                Provider * p = new Provider(username, "mdp");
 
                 //There should be a line by provider in the csv file
                 //if a provider has more cleaners, they will be all on the same line
                 // e.g. Provider10;Cleaner10;Cleaner11;Cleaner12;
                 while (s!=""){
+                    //cout<<"left of line "<<s<<endl;
                     pos = s.find(";");
                     int id = stoi(s.substr(7, pos-7));
-                    cout<<id<<endl;
+                    //cout<<"id "<<id<<endl;
                     Cleaner * c = cleaners.find(id)->second;
-                    cout<<(*c).toString()<<endl;
-                    p.ajouterCleaner(c);
+                    //cout<<"String of cleaner found "<<(*c).toString()<<endl;
+                    p->ajouterCleaner(c);
                     s=s.substr(pos+1, s.length()-pos);
                 }
 
                 providers.push_back(p);
-                cout<<p.toString()<<endl;
+                //cout<<"String of provider"<<p.toString()<<endl;
             }
         }
+    }
+    for (const auto & i : providers) {
+        cout<< (i)->toString() <<endl;
     }
 }
 

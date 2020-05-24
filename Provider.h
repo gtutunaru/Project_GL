@@ -40,7 +40,7 @@ public:
 
     void ajouterCleaner(Cleaner * c);
 
-    string toString();
+    string toString() const;
 
 
 //------------------------------------------------- Surcharge d'opérateurs

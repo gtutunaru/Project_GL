@@ -36,13 +36,14 @@ void Provider::ajouterCleaner(Cleaner * c){
     cleaners.push_back(c);
 }
 
-string Provider::toString(){
+string Provider::toString() const{
     string res = username + ' ' + password + '\n';
     for (auto const& i : cleaners) {
         res += (*i).toString();
     }
     return res;
 }
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 
