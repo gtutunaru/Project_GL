@@ -12,9 +12,12 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
+#include <iostream>
 #include <map>
 #include <set>
 #include <list>
+#include <fstream>
+#include <sstream>
 #include "Measure.h"
 #include "Provider.h"
 #include "AttributeMeasure.h"
@@ -25,7 +28,7 @@
 
 //------------------------------------------------------------------ Types
 typedef list<AttributeMeasure> Attributes;
-typedef list<Cleaner> Cleaners;
+typedef map<int, Cleaner*> Cleaners;
 typedef multimap<tm,Measure> Measures;
 typedef list<Provider> Providers;
 typedef set<Sensor> Sensors;
@@ -48,19 +51,19 @@ public:
     // Contrat :
     //
 
-    Particular readParticulars ( string filename );
+    void readParticulars ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Cleaner readCleaners ( string filename );
+    void readCleaners ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Provider readProviders ( string filename );
+    void readProviders ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
@@ -74,7 +77,7 @@ public:
 
     string AttributesToString() const;
 
-    Sensor readSensors ( string filename);
+    void readSensors ( string filename);
     // Mode d'emploi :
     //
     // Contrat :

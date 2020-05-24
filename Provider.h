@@ -36,7 +36,11 @@ public:
     // Contrat :
     //
 
-    list<Cleaner> getCleaners();
+    list<Cleaner*> getCleaners();
+
+    void ajouterCleaner(Cleaner * c);
+
+    string toString();
 
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -78,7 +82,7 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-    list<Cleaner> cleaners;
+    list<Cleaner*> cleaners;
 
 };
 

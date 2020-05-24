@@ -11,12 +11,13 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
+
 #include <iostream>
 #include <fstream>
 #include <cstring>
 #include <string>
 #include <sstream>
+using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Data.h"
 
@@ -73,7 +74,109 @@ void Data::readMeasures ( string filename)
     }
 } //----- Fin de readMeasurements
 
-void Data::readAttributes (string filename)
+
+void Data::readCleaners ( string filename ){
+    //Cleaners
+    ifstream file;
+    string s;
+    file.open(filename);
+    if(!file) {
+        cerr<< "Problem with file " << filename << ". Unable to open." << endl;
+    } else {
+        while (!file.eof()) {
+            std::getline(file,s);
+            if (s!=""){
+                int pos = s.find(";");
+                //cout<<s.substr(7, pos-7)<<endl;
+                int id = stoi(s.substr(7, pos-7));
+                s=s.substr(pos+1, s.length()-pos);
+
+                pos = s.find(";");
+                double lat = stod(s.substr(0, pos));
+
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                double longitude = stod(s.substr(0, pos));
+
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                string description = s.substr(0, pos);
+
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                string start = s.substr(0, pos);
+
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                string end = s.substr(0, pos);
+
+                Cleaner * c = new Cleaner(id, lat, longitude, description, start, end);
+                cout<<(*c).toString()<<endl;
+                cleaners.insert(std::make_pair(id, c));
+
+                cout<<cleaners.find(id)->second->toString()<<endl;
+
+            }
+        }
+    }
+    /*std::map<int, Cleaner*>::iterator it = cleaners.begin();
+    while(it != cleaners.end())
+    {
+        cout<<it->first<<" "<<(it->second)->toString()<<endl;
+        it++;
+    }*/
+}
+
+void Data::readProviders ( string filename ){
+    //Cleaners
+    ifstream file;
+    string s;
+    file.open(filename);
+    if(!file) {
+        cerr<< "Problem with file " << filename << ". Unable to open." << endl;
+    } else {
+        while (!file.eof()) {
+            std::getline(file,s);
+            if (s!=""){
+                int pos = s.find(";");
+                //cout<<s.substr(7, pos-7)<<endl;
+                string username = s.substr(0, pos);
+                s=s.substr(pos+1, s.length()-pos);
+
+                Provider p = Provider(username, "mdp");
+
+                //There should be a line by provider in the csv file
+                //if a provider has more cleaners, they will be all on the same line
+                // e.g. Provider10;Cleaner10;Cleaner11;Cleaner12;
+                while (s!=""){
+                    pos = s.find(";");
+                    int id = stoi(s.substr(7, pos-7));
+                    cout<<id<<endl;
+                    Cleaner * c = cleaners.find(id)->second;
+                    cout<<(*c).toString()<<endl;
+                    p.ajouterCleaner(c);
+                    s=s.substr(pos+1, s.length()-pos);
+                }
+
+                providers.push_back(p);
+                cout<<p.toString()<<endl;
+            }
+        }
+    }
+}
+
+//-------------------------------------------- Constructeurs - destructeur
+
+Data::Data ( const Data & unData )
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au constructeur de copie de <Data>" << endl;
+#endif
+} //----- Fin de Data (constructeur de copie)
+
+void Data::readAttributes ( string filename)
 {
   fstream entree(filename);
   entree.open(filename,ios::in);

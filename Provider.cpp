@@ -27,11 +27,22 @@ using namespace std;
 //
 //{
 //} //----- Fin de Méthode
-list<Cleaner> Provider::getCleaners()
+list<Cleaner*> Provider::getCleaners()
 {
     return cleaners;
 }
 
+void Provider::ajouterCleaner(Cleaner * c){
+    cleaners.push_back(c);
+}
+
+string Provider::toString(){
+    string res = username + ' ' + password + '\n';
+    for (auto const& i : cleaners) {
+        res += (*i).toString();
+    }
+    return res;
+}
 //------------------------------------------------- Surcharge d'opérateurs
 
 

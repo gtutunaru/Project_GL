@@ -15,6 +15,9 @@ int main(){
     //cout<<"hello"<<endl;
     //Camilo was here
     //Erwan
+    Data d = Data();
+    d.readCleaners("dataset/cleaners.csv");
+    d.readProviders("dataset/providers.csv");
 
     /*string date = "2019-11-21 12:00:00";
     string s_annee= date.substr(0,4);
@@ -31,7 +34,7 @@ int main(){
     timestamp.tm_hour=stoi(s_heure);
     timestamp.tm_min=stoi(s_min);
     timestamp.tm_sec=stoi(s_sec);
-
+/*
     cout << timestamp.tm_year << endl;
     cout << timestamp.tm_mon << endl;
     cout << timestamp.tm_mday << endl;

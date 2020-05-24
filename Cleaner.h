@@ -37,9 +37,9 @@ public:
     // Contrat :
     //
 
-
+    string toString() const;
 //------------------------------------------------- Surcharge d'opérateurs
-    Cleaner & operator = ( const Cleaner & unCleaner );
+    //Cleaner & operator = ( const Cleaner & unCleaner );
     // Mode d'emploi :
     //
     // Contrat :
