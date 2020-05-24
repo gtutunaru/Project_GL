@@ -39,7 +39,7 @@ bool compareDate(tm date1,tm date2) {
     return dateEgale;
 }
 
-void Data::readMeasurements ( string filename)
+void Data::readMeasures ( string filename)
 // Algorithme :
 //
 {
@@ -73,18 +73,7 @@ void Data::readMeasurements ( string filename)
     }
 } //----- Fin de readMeasurements
 
-//-------------------------------------------- Constructeurs - destructeur
-
-Data::Data ( const Data & unData )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <Data>" << endl;
-#endif
-} //----- Fin de Data (constructeur de copie)
-
-void readAttributes ( string filename);
+void Data::readAttributes (string filename)
 {
   fstream entree(filename);
   entree.open(filename,ios::in);
@@ -96,13 +85,37 @@ void readAttributes ( string filename);
   {
     getline(entree, line);
     istringstream iss(line);
-    getline(iss, attributeID, ';'));
-    getline(iss, unit, ';'));
-    getline(iss, description, ';'));
+    getline(iss, attributeID, ';');
+    getline(iss, unit, ';');
+    getline(iss, description, ';');
 
     AttributeMeasure attM = AttributeMeasure(attributeID, unit, description);
+    attributes.push_back(attM);
   }
+
 }
+
+string Data::AttributesToString() const
+{
+  string mes = "";
+  for(const auto& attribut : attributes)
+  {
+    mes += attribut.toString();
+    mes += "\n";
+  }
+  return mes;
+}
+
+//-------------------------------------------- Constructeurs - destructeur
+
+Data::Data ( const Data & unData )
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au constructeur de copie de <Data>" << endl;
+#endif
+} //----- Fin de Data (constructeur de copie)
 
 Data::Data ()
 // Algorithme :

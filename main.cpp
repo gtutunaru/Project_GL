@@ -1,6 +1,14 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 using namespace std;
+#include "Measure.h"
+#include "Provider.h"
+#include "AttributeMeasure.h"
+#include "Sensor.h"
+#include "Cleaner.h"
+#include "Particular.h"
+#include "Data.h"
+
 
 int main(){
     //cout<<"hi"<<endl;
@@ -8,7 +16,7 @@ int main(){
     //Camilo was here
     //Erwan
 
-    string date = "2019-11-21 12:00:00";
+    /*string date = "2019-11-21 12:00:00";
     string s_annee= date.substr(0,4);
     string s_mois = date.substr(5,7);
     string s_jour = date.substr(8,10);
@@ -29,9 +37,11 @@ int main(){
     cout << timestamp.tm_mday << endl;
     cout << timestamp.tm_hour << endl;
     cout << timestamp.tm_min << endl;
-    cout << timestamp.tm_sec << endl;
+    cout << timestamp.tm_sec << endl;*/
 
-
+    Data data = Data();
+    data.readAttributes("./dataset/attributes.csv");
+    cout<<data.AttributesToString();
     //cout << s_annee << endl;
 
 

@@ -28,6 +28,15 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
+string AttributeMeasure::toString() const
+{
+  string mes = "Attribute \n";
+  mes+= ("Id : "+ attributeID+"\n");
+  mes+= ("Unit : "+ unit+"\n");
+  mes+= ("description : "+ description+"\n");
+  return mes;
+}
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 
@@ -81,5 +90,3 @@ AttributeMeasure::~AttributeMeasure ( )
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
-
-

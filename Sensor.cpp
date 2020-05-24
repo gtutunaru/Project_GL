@@ -62,7 +62,7 @@ void Sensor::setLongitude(double _longitude)
 
 
 //-------------------------------------------- Constructeurs - destructeur
-/*Sensor::Sensor ( const Sensor & unSensor )
+Sensor::Sensor ( const Sensor & unSensor )
 // Algorithme :
 //
 {
@@ -70,7 +70,15 @@ void Sensor::setLongitude(double _longitude)
     cout << "Appel au constructeur de copie de <Sensor>" << endl;
 #endif
 } //----- Fin de Sensor (constructeur de copie)
-*/
+
+Sensor::Sensor ()
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au constructeur de <Sensor>" << endl;
+#endif
+} //----- Fin de Sensor
 
 Sensor::Sensor (int _id, double _latitude, double _longitude)
 // Algorithme :

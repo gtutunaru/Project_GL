@@ -38,15 +38,15 @@ using namespace std;
 */
 
 //-------------------------------------------- Constructeurs - destructeur
-/*Cleaner::Cleaner ( const Cleaner & unCleaner )
+Cleaner::Cleaner ( const Cleaner & unCleaner )
 // Algorithme :
 //
 {
-    
+
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Cleaner>" << endl;
 #endif
-} *///----- Fin de Cleaner (constructeur de copie)
+} //----- Fin de Cleaner (constructeur de copie)
 
 
 Cleaner :: Cleaner (int _id, double _latitude, double _longitude, string _description, string _start, string _end)
