@@ -14,6 +14,9 @@
 using namespace std;
 #include <iostream>
 #include <fstream>
+#include <cstring>
+#include <string>
+#include <sstream>
 //------------------------------------------------------ Include personnel
 #include "Data.h"
 
@@ -32,7 +35,7 @@ Measure Data::readMeasurements ( string filename)
         cerr<< "Problem with file " << filename << ". Unable to open." << endl;
     } else {
         while (!file.eof()) {
-            
+
         }
     }
 } //----- Fin de readMeasurements
@@ -49,6 +52,25 @@ Data::Data ( const Data & unData )
 #endif
 } //----- Fin de Data (constructeur de copie)
 
+void readAttributes ( string filename);
+{
+  fstream entree(filename);
+  entree.open(filename,ios::in);
+
+  string attributeID, unit, description;
+  string tmp,line;
+
+  while (entree>>tmp)
+  {
+    getline(entree, line);
+    istringstream iss(line);
+    getline(iss, attributeID, ';'));
+    getline(iss, attributeID, ';'));
+    getline(iss, attributeID, ';'));
+
+    AttributeMeasure attM = AttributeMeasure(attributeID, unit, description);
+  }
+}
 
 Data::Data ()
 // Algorithme :
