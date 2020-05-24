@@ -38,6 +38,10 @@ public:
 
     list<Cleaner> getCleaners();
 
+    void ajouterCleaner(Cleaner c);
+
+    string toString();
+
 
 //------------------------------------------------- Surcharge d'opérateurs
     //Provider & operator = ( const Provider & unProvider );

@@ -28,6 +28,13 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
+string Cleaner::toString() const{
+    string s= to_string(cleanerId) + '\n' + to_string(latitude) + '\n' + to_string(longitude);
+    s += '\n' + description + "\n" + start + '\n' + end + '\n';
+    s=to_string(cleanerId);
+    return s;
+}
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 /*Cleaner & Cleaner::operator = ( const Cleaner & unCleaner )
@@ -37,8 +44,10 @@ using namespace std;
 } //----- Fin de operator =
 */
 
+
+
 //-------------------------------------------- Constructeurs - destructeur
-/*Cleaner::Cleaner ( const Cleaner & unCleaner )
+Cleaner::Cleaner ( const Cleaner & unCleaner )
 // Algorithme :
 //
 {
@@ -46,7 +55,7 @@ using namespace std;
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Cleaner>" << endl;
 #endif
-} *///----- Fin de Cleaner (constructeur de copie)
+} //----- Fin de Cleaner (constructeur de copie)
 
 
 Cleaner :: Cleaner (int _id, double _latitude, double _longitude, string _description, string _start, string _end)

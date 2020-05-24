@@ -32,6 +32,9 @@ list<Cleaner> Provider::getCleaners()
     return cleaners;
 }
 
+void Provider::ajouterCleaner(Cleaner c){
+    cleaners.push_back(c);
+}
 //------------------------------------------------- Surcharge d'opérateurs
 
 

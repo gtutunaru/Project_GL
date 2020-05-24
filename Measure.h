@@ -13,6 +13,7 @@
 using namespace std;
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
+#include <ctime> 
 
 //------------------------------------------------------------- Constantes
 

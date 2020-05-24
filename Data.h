@@ -12,9 +12,12 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
+#include <iostream>
 #include <map>
 #include <set>
 #include <list>
+#include <fstream>
+#include <sstream>
 #include "Measure.h"
 #include "Provider.h"
 #include "AttributeMeasure.h"
@@ -42,37 +45,37 @@ class Data
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    Measure readMeasurements ( string filename );
+    void readMeasurements ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Particular readParticulars ( string filename );
+    void readParticulars ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Cleaner readCleaners ( string filename );
+    void readCleaners ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Provider readProviders ( string filename );
+    void readProviders ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    AttributeMeasure readAttributes ( string filename);
+    void readAttributes ( string filename);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Sensor readSensors ( string filename);
+    void readSensors ( string filename);
     // Mode d'emploi :
     //
     // Contrat :
