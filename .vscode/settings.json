@@ -45,7 +45,16 @@
         "sstream": "cpp",
         "vector": "cpp",
         "xhash": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "chrono": "cpp",
+        "iomanip": "cpp",
+        "ratio": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp",
+        "locale": "cpp",
+        "xlocbuf": "cpp",
+        "xlocmes": "cpp"
     },
-    "genGetSet.classic": true
+    "genGetSet.classic": true,
+    "C_Cpp.errorSquiggles": "Disabled"
 }
