@@ -44,7 +44,7 @@ class Data
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    Measure readMeasurements ( string filename );
+    void readMeasurements ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
@@ -79,6 +79,8 @@ public:
     //
     // Contrat :
     //
+
+    bool compareDate(tm,tm);
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );

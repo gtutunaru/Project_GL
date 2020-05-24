@@ -35,8 +35,17 @@ public:
     //
     // Contrat :
     //
+    int getSensorId();
+    tm getTimestamp();
+    string getAttributeId();
+    double getValue();
+    bool isFalseData();
 
-
+    void setSensorId(int);
+    void setTimestamp(tm);
+    void setAttributeId(string);
+    void setValue(double);
+    void setFalseData(bool);
 //------------------------------------------------- Surcharge d'opérateurs
     // Mode d'emploi :
     //
@@ -80,7 +89,6 @@ protected:
     string attributeId;
     double value;
     bool falseData;
-
 };
 
 //-------------------------------- Autres définitions dépendantes de <AttributeMeasure>

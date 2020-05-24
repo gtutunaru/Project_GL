@@ -19,14 +19,67 @@ using namespace std;
 
 //------------------------------------------------------------- Constantes
 
-//----------------------------------------------------------------- PUBLIC
+//----------------------------------------------------------------- 
 
-//----------------------------------------------------- Méthodes publiques
+//------Measure::----------------------------------------------- Méthodes publiques
 // type Measure::Méthode ( liste des paramètres )
 // Algorithme :
 //
 //{
 //} //----- Fin de Méthode
+int Measure::getSensorId()
+{
+    return this->sensorId;
+}
+
+void Measure::setSensorId(int sensorId)
+{
+    this->sensorId = sensorId;
+}
+
+tm Measure::getTimestamp()
+{
+    return this->timestamp;
+}
+
+void Measure::setTimestamp(tm timestamp)
+{
+    this->timestamp = timestamp;
+}
+
+
+string Measure:: getAttributeId()
+{
+    return this->attributeId;
+}
+
+
+void Measure::setAttributeId(string attributeId)
+{
+        this->attributeId = attributeId;
+}
+
+double Measure::getValue()
+{
+        return this->value;
+}
+
+
+void Measure::setValue(double value)
+{
+        this->value = value;
+}
+
+bool Measure::isFalseData()
+{
+        return this->falseData;
+}
+
+
+void Measure::setFalseData(bool falseData)
+{
+        this->falseData = falseData;
+}
 
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -62,7 +115,20 @@ Measure::Measure (string _timestamp, int _sensorId, string _attributeId, double 
 #ifdef MAP
     cout << "Appel au constructeur de <Measure>" << endl;
 #endif
-    //timestamp = ...
+    string s_annee= _timestamp.substr(0,4);
+    string s_mois = _timestamp.substr(5,7);
+    string s_jour = _timestamp.substr(8,10);
+    string s_heure = _timestamp.substr(11,13);
+    string s_min = _timestamp.substr(14,16);
+    string s_sec = _timestamp.substr(17,19);
+
+    timestamp.tm_year=stoi(s_annee);
+    timestamp.tm_mon=stoi(s_mois);
+    timestamp.tm_mday=stoi(s_jour);
+    timestamp.tm_hour=stoi(s_heure);
+    timestamp.tm_min=stoi(s_min);
+    timestamp.tm_sec=stoi(s_sec);
+
     sensorId = _sensorId;
     attributeId = _attributeId;
     value = _value;
