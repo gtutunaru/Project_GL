@@ -25,8 +25,6 @@
 #include "Cleaner.h"
 #include "Particular.h"
 //------------------------------------------------------------- Constantes
-const char SEP =';';
-const char SEP_SENS ='r';
 
 //------------------------------------------------------------------ Types
 typedef list<AttributeMeasure> Attributes;
@@ -47,7 +45,7 @@ class Data
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    void readMeasurements ( string filename );
+    void readMeasures ( string filename );
     // Mode d'emploi :
     //
     // Contrat :
@@ -71,19 +69,19 @@ public:
     // Contrat :
     //
 
-    void readAttributes ( string filename);
+    void readAttributes (string filename);
     // Mode d'emploi :
     //
     // Contrat :
     //
+
+    string AttributesToString() const;
 
     void readSensors ( string filename);
     // Mode d'emploi :
     //
     // Contrat :
     //
-
-    bool compareDate(tm,tm);
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );
@@ -114,4 +112,3 @@ protected:
 };
 
 #endif // DATA_H
-

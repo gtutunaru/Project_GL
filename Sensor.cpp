@@ -71,6 +71,14 @@ Sensor::Sensor ( const Sensor & unSensor )
 #endif
 } //----- Fin de Sensor (constructeur de copie)
 
+Sensor::Sensor ()
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au constructeur de <Sensor>" << endl;
+#endif
+} //----- Fin de Sensor
 
 Sensor::Sensor (int _id, double _latitude, double _longitude)
 // Algorithme :
@@ -83,17 +91,6 @@ Sensor::Sensor (int _id, double _latitude, double _longitude)
     cout << "Appel au constructeur de <Sensor>" << endl;
 #endif
 } //----- Fin de Sensor
-
-Sensor::Sensor ()
-// Algorithme :
-//
-{
-
-#ifdef MAP
-    cout << "Appel au constructeur de <Sensor>" << endl;
-#endif
-} //----- Fin de Sensor
-
 
 Sensor::~Sensor ( )
 // Algorithme :

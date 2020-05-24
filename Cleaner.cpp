@@ -51,7 +51,7 @@ Cleaner::Cleaner ( const Cleaner & unCleaner )
 // Algorithme :
 //
 {
-    
+
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Cleaner>" << endl;
 #endif

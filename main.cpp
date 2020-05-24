@@ -1,10 +1,17 @@
 #include <iostream>
 #include "Data.h"
-#include <string.h>
 #include <ctime>        // struct std::tm
-//#include <sstream>
-//#include <locale>
+#include <string>
+#include "Measure.h"
+#include "Provider.h"
+#include "AttributeMeasure.h"
+#include "Sensor.h"
+#include "Cleaner.h"
+#include "Particular.h"
+#include "Data.h"
+
 using namespace std;
+
 
 //compares 2 dates: return the difference in seconds
 //return a negative value if date1 is smaller (before date2)
@@ -43,7 +50,9 @@ int main(){
 
     struct tm tm2;
     string s2 = "2019-11-20 12:00:00";
+    //parses s2 into tm2 struct
     strptime(s2.c_str(), "%Y-%m-%d %H:%M:%S", &tm2);
+    //transforms tm2 into string
     cout << asctime( &tm2 ) << endl;
 
     cout<<compareDates(&tm, &tm2)<<endl;
@@ -73,7 +82,10 @@ int main(){
     cout << timestamp.tm_min << endl;
     cout << timestamp.tm_sec << endl;
 
-    //cout << s_annee << endl;
+    Data data = Data();
+    data.readAttributes("./dataset/attributes.csv");
+    cout<<data.AttributesToString();
+
 
     cout << asctime( &timestamp ) << endl ;
 

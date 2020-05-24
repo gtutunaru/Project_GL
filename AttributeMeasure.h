@@ -35,7 +35,7 @@ public:
     //
     // Contrat :
     //
-
+string toString() const;
 
 //------------------------------------------------- Surcharge d'opérateurs
     // Mode d'emploi :
@@ -56,7 +56,7 @@ public:
     //
     // Contrat :
     //
-    
+
     AttributeMeasure (string unAttributeID,string unUnit,string unDescription );
     // Mode d'emploi :
     //
@@ -84,5 +84,3 @@ protected:
 //-------------------------------- Autres définitions dépendantes de <AttributeMeasure>
 
 #endif // AttributeMeasure_H
-
-

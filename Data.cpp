@@ -40,7 +40,7 @@ bool compareDate(tm date1,tm date2) {
     return dateEgale;
 }
 
-void Data::readMeasurements ( string filename)
+void Data::readMeasures ( string filename)
 // Algorithme :
 //
 {
@@ -113,9 +113,9 @@ void Data::readCleaners ( string filename ){
                 Cleaner * c = new Cleaner(id, lat, longitude, description, start, end);
                 cout<<(*c).toString()<<endl;
                 cleaners.insert(std::make_pair(id, c));
- 
+
                 cout<<cleaners.find(id)->second->toString()<<endl;
-                
+
             }
         }
     }
@@ -165,18 +165,7 @@ void Data::readProviders ( string filename ){
     }
 }
 
-//-------------------------------------------- Constructeurs - destructeur
-
-Data::Data ( const Data & unData )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <Data>" << endl;
-#endif
-} //----- Fin de Data (constructeur de copie)
-
-void readAttributes ( string filename)
+void Data::readAttributes ( string filename)
 {
   fstream entree(filename);
   entree.open(filename,ios::in);
@@ -193,8 +182,32 @@ void readAttributes ( string filename)
     getline(iss, description, ';');
 
     AttributeMeasure attM = AttributeMeasure(attributeID, unit, description);
+    attributes.push_back(attM);
   }
+
 }
+
+string Data::AttributesToString() const
+{
+  string mes = "";
+  for(const auto& attribut : attributes)
+  {
+    mes += attribut.toString();
+    mes += "\n";
+  }
+  return mes;
+}
+
+//-------------------------------------------- Constructeurs - destructeur
+
+Data::Data ( const Data & unData )
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au constructeur de copie de <Data>" << endl;
+#endif
+} //----- Fin de Data (constructeur de copie)
 
 Data::Data ()
 // Algorithme :
