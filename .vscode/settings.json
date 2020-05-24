@@ -37,5 +37,6 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "list": "cpp"
-    }
+    },
+    "genGetSet.classic": true
 }
