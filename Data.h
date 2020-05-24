@@ -25,6 +25,8 @@
 #include "Cleaner.h"
 #include "Particular.h"
 //------------------------------------------------------------- Constantes
+const char SEP =';';
+const char SEP_SENS ='r';
 
 //------------------------------------------------------------------ Types
 typedef list<AttributeMeasure> Attributes;
@@ -80,6 +82,8 @@ public:
     //
     // Contrat :
     //
+
+    bool compareDate(tm,tm);
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );
