@@ -27,7 +27,7 @@ int main(){
     timestamp.tm_hour=stoi(s_heure);
     timestamp.tm_min=stoi(s_min);
     timestamp.tm_sec=stoi(s_sec);
-
+/*
     cout << timestamp.tm_year << endl;
     cout << timestamp.tm_mon << endl;
     cout << timestamp.tm_mday << endl;
@@ -35,7 +35,7 @@ int main(){
     cout << timestamp.tm_min << endl;
     cout << timestamp.tm_sec << endl;
 
-
+*/
     //cout << s_annee << endl;
 
 

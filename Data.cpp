@@ -105,12 +105,21 @@ void Data::readCleaners ( string filename ){
                 pos = s.find(";");
                 string end = s.substr(0, pos);
 
-                Cleaner c = Cleaner(id, lat, longitude, description, start, end);
-
-                cleaners.push_back(c);
+                Cleaner * c = new Cleaner(id, lat, longitude, description, start, end);
+                cout<<(*c).toString()<<endl;
+                cleaners.insert(std::make_pair(id, c));
+ 
+                cout<<cleaners.find(id)->second->toString()<<endl;
+                
             }
         }
     }
+    /*std::map<int, Cleaner*>::iterator it = cleaners.begin();
+    while(it != cleaners.end())
+    {
+        cout<<it->first<<" "<<(it->second)->toString()<<endl;
+        it++;
+    }*/
 }
 
 void Data::readProviders ( string filename ){
@@ -137,14 +146,15 @@ void Data::readProviders ( string filename ){
                 while (s!=""){
                     pos = s.find(";");
                     int id = stoi(s.substr(7, pos-7));
-                    auto it1 = std::next(cleaners.begin(), id);
-                    Cleaner c = *it1;
-                    cout<<c.toString()<<endl;
+                    cout<<id<<endl;
+                    Cleaner * c = cleaners.find(id)->second;
+                    cout<<(*c).toString()<<endl;
                     p.ajouterCleaner(c);
                     s=s.substr(pos+1, s.length()-pos);
                 }
 
                 providers.push_back(p);
+                cout<<p.toString()<<endl;
             }
         }
     }

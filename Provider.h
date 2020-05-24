@@ -36,9 +36,9 @@ public:
     // Contrat :
     //
 
-    list<Cleaner> getCleaners();
+    list<Cleaner*> getCleaners();
 
-    void ajouterCleaner(Cleaner c);
+    void ajouterCleaner(Cleaner * c);
 
     string toString();
 
@@ -82,7 +82,7 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-    list<Cleaner> cleaners;
+    list<Cleaner*> cleaners;
 
 };
 

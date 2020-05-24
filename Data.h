@@ -30,7 +30,7 @@ const char SEP_SENS ='r';
 
 //------------------------------------------------------------------ Types
 typedef list<AttributeMeasure> Attributes;
-typedef list<Cleaner> Cleaners;
+typedef map<int, Cleaner*> Cleaners;
 typedef multimap<tm,Measure> Measures;
 typedef list<Provider> Providers;
 typedef set<Sensor> Sensors;
