@@ -37,11 +37,16 @@ Measure Data::readMeasurements ( string filename)
             string attributeId_buffer;
             string value_buffer;
 
+            getline(file,timestamp_buffer,SEP);
+            file.ignore(256,SEP_SENS);
+            getline(file,sensorId_buffer,SEP);
+            getline(file,attributeId_buffer,SEP);
+            getline(file,value_buffer,SEP);
+
             
         }
     }
 } //----- Fin de readMeasurements
-
 
 //-------------------------------------------- Constructeurs - destructeur
 

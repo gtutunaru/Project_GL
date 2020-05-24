@@ -23,6 +23,8 @@
 #include "Particular.h"
 //------------------------------------------------------------- Constantes
 const char SEP =';';
+const char SEP_SENS ='r';
+
 //------------------------------------------------------------------ Types
 typedef list<AttributeMeasure> Attributes;
 typedef list<Cleaner> Cleaners;
