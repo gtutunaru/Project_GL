@@ -45,7 +45,7 @@ const char SEP_SENS = 'r';
 class Data
 {
 //----------------------------------------------------------------- PUBLIC
-    
+
 public:
 
 //----------------------------------------------------- Méthodes publiques
@@ -55,7 +55,9 @@ public:
     // Contrat :
     //
 
-    void checkImpact ( int cleanId ) const;
+    void checkImpactValue ( int cleanId, struct tm endDate, int r) const;
+
+    void checkImpactRadius ( int cleanId, struct tm endDate ) const;
     // Mode d'emploi :
     //
     // Contrat :
