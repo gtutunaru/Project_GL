@@ -24,6 +24,7 @@
 #include <bits/stdc++.h>
 #include <time.h>
 #include <ctime>
+#include <cmath>
 
 
 using namespace std;
@@ -431,10 +432,13 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
     return res;
 }
 
-void checkImpact ( int cleanId ) //const
+void checkImpactRadius ( int cleanId, struct tm endDate ) const
 {
     Cleaner * clean;
     double impact[4];
+    double note;
+    int r=10; //radius
+    bool isImpact = false;
     for(const auto& cleaner : cleaners)
     {
         if (cleanId == cleaner.cleanerId)
@@ -442,13 +446,70 @@ void checkImpact ( int cleanId ) //const
             clean = &cleaner;
         }
     }
-    struct tm tm2;
-    string s2 = "2019-11-20 12:00:00";
+    struct tm startDate;
     //parses s2 into tm2 struct
-    DatePlusDays( struct tm* date, int days )
-    strptime(s2.c_str(), "%Y-%m-%d %H:%M:%S", &tm2);
-    double avant[] = viewQuality(clean->latitude, clean->longitude, rayon, tm2, );
-    double apres[] = ;
+    strptime(clean->start.c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
+
+    while(!isImpact)
+    {
+        //Quality Before
+        double * before = viewQuality(clean->latitude, clean->longitude, r, *DatePlusDays( startDate, -30), startDate);
+        //Quality After
+        double * after = viewQuality(clean->latitude, clean->longitude, r, startDate, endDate);
+        //Impact
+        for (int i = 0; i<0;i++)
+        {
+            impact[i]= after[i]-before[i];
+            if (abs(impact[i])>start[i]/10.0)
+            {
+                isImpact = true;
+            }
+            SO2,NO2, PM10
+        }
+        if(isImpact)
+        {
+            cout<<"Impact Radius : "<<r<<" km"<<endl<<endl;
+            cout<<"Difference O3 : "<<impact[0]<<endl;
+            cout<<"Difference SO2 : "<<impact[1]<<endl;
+            cout<<"Difference NO2 : "<<impact[2]<<endl;
+            cout<<"Difference PM10 : "<<impact[3]<<endl;
+        }
+        r+=10;
+    }
+}
+
+void checkImpactValue ( int cleanId, struct tm endDate, int r) const
+{
+    Cleaner * clean;
+    double impact[4];
+    double note;
+    int r=10; //radius
+    bool isImpact = false;
+    for(const auto& cleaner : cleaners)
+    {
+        if (cleanId == cleaner.cleanerId)
+        {
+            clean = &cleaner;
+        }
+    }
+    struct tm startDate;
+    //parses s2 into tm2 struct
+    strptime(clean->start.c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
+
+    //Quality Before
+    double * before = viewQuality(clean->latitude, clean->longitude, r, *DatePlusDays( startDate, -30), startDate);
+    //Quality After
+    double * after = viewQuality(clean->latitude, clean->longitude, r, startDate, endDate);
+    //Impact
+    for (int i = 0; i<0;i++)
+    {
+        impact[i]= after[i]-before[i];
+    }
+    cout<<"On a radius of "<<r<<" km the impact is :"<<endl<<endl;
+    cout<<"Difference O3 : "<<impact[0]<<endl;
+    cout<<"Difference SO2 : "<<impact[1]<<endl;
+    cout<<"Difference NO2 : "<<impact[2]<<endl;
+    cout<<"Difference PM10 : "<<impact[3]<<endl;
 }
 
 //-------------------------------------------- Constructeurs - destructeur
