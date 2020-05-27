@@ -362,26 +362,57 @@ string Data::AttributesToString() const
     return mes;
 }
 
-void viewQuality(double c_lat, double c_long, double radius, tm time){
-    //list<Measure*> goodMeasures;
-
-    typedef std::multimap<tm,Measure*>::iterator MMAPIterator;
- 
+double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
+    list<Measure*> goodMeasures;
+    
 	// It returns a pair representing the range of elements with key equal to time
-	pair<MMAPIterator,MMAPIterator> result = measures.equal_range(time);
- 
+    pair<Measures::iterator,Measures::iterator> result = measures.equal_range(time);
+    //auto result = measures.equal_range(time);
 	cout << "All values for key "<<asctime( &time )<<" are," << endl;
  
-	// Iterate over the range
-	for (multimap<tm,Measure*>::iterator it = result.first; it != result.second; it++)
-		std::cout << it->second->toString() << std::endl;
-    
-    //for (const auto & i : goodMeasures) {
-            
-    //}
+	 //Iterate over the range
+	for (multimap<tm,Measure*>::iterator it = result.first; it != result.second; it++){
+        int id_sensor = it->second->getSensorId();
+        Sensor * s = sensors.find(id)->second;
+        double s_lat = s->getLatitude();
+        double s_long = s->getLongitude(); 
+        if (distance(c_lat, c_long, s_lat, s_long) < radius){
+            goodMeasures.push_back(it->second);
+        }    
+    }
+    double o3_tot = 0
+    double no2_tot = 0;
+	double so2_tot = 0;
+    double pm10_tot = 0;
+    double count_o3 = 0;
+    double count_no2 = 0;
+    double count_so2 = 0;
+    double count_pm10 = 0;
+
+    for (const auto & i : goodMeasures) {
+        if (i->getAttributeId()=="O3"){
+            count_o3++;
+            o3_tot += i->getValue();
+        } else if (i->getAttributeId()=="SO2"){
+            count_so2++;
+            so2_tot += i->getValue();
+        } else if (i->getAttributeId()=="NO2"){
+            count_no2++;
+            no2_tot += i->getValue();
+        } else if(i->getAttributeId()=="PM10"){
+            count_pm10++;
+            pm10_tot += i->getValue();
+        }
+    }
+    static double res[4];
+    res[0]=o3_tot/count_o3;
+    res[1]=so2_tot/count_so2;
+    res[2]=no2_tot/count_no2;
+    res[3]=pm10_tot/count_pm10;
+    return res;
 }
 
-void checkImpact ( int cleanId ) const
+void checkImpact ( int cleanId ) //const
 {
 
 }
