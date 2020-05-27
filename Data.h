@@ -29,7 +29,7 @@
 //------------------------------------------------------------------ Types
 typedef list<AttributeMeasure *> Attributes;
 typedef map<int, Cleaner*> Cleaners;
-typedef multimap<tm,Measure> Measures;
+typedef multimap<tm,Measure*> Measures;
 typedef list<Provider *> Providers;
 typedef map<int, Sensor *> Sensors;
 typedef list<Particular*> Particulars;
@@ -83,6 +83,10 @@ public:
     //
     // Contrat :
     //
+
+    void viewQuality(double c_lat, double c_long, double radius, tm time);
+
+    void viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );

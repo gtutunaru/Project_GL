@@ -17,6 +17,7 @@
 #include <cstring>
 #include <string>
 #include <sstream>
+#include <bits/stdc++.h> 
 using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Data.h"
@@ -26,6 +27,51 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
+//source: of toRadiand and distance https://www.geeksforgeeks.org/program-distance-two-points-earth/
+// Utility function for  
+// converting degrees to radians 
+long double toRadians(const long double degree) 
+{ 
+    // cmath library in C++  
+    // defines the constant 
+    // M_PI as the value of 
+    // pi accurate to 1e-30 
+    long double one_deg = (M_PI) / 180; 
+    return (one_deg * degree); 
+} 
+  
+long double distance(long double lat1, long double long1,  
+                     long double lat2, long double long2) 
+{ 
+    // Convert the latitudes  
+    // and longitudes 
+    // from degree to radians. 
+    lat1 = toRadians(lat1); 
+    long1 = toRadians(long1); 
+    lat2 = toRadians(lat2); 
+    long2 = toRadians(long2); 
+      
+    // Haversine Formula 
+    long double dlong = long2 - long1; 
+    long double dlat = lat2 - lat1; 
+  
+    long double ans = pow(sin(dlat / 2), 2) +  
+                          cos(lat1) * cos(lat2) *  
+                          pow(sin(dlong / 2), 2); 
+  
+    ans = 2 * asin(sqrt(ans)); 
+  
+    // Radius of Earth in  
+    // Kilometers, R = 6371 
+    // Use R = 3956 for miles 
+    long double R = 6371; 
+      
+    // Calculate the result 
+    ans = ans * R; 
+  
+    return ans; 
+} 
+  
 
 bool compareDate(tm date1,tm date2) {
     bool dateEgale = false;
@@ -270,6 +316,26 @@ string Data::AttributesToString() const
     mes += "\n";
     }
     return mes;
+}
+
+void viewQuality(double c_lat, double c_long, double radius, tm time){
+    List <Measure*> goodMeasures;
+
+    typedef std::multimap<tm, Measure*>::iterator MMAPIterator;
+ 
+	// It returns a pair representing the range of elements with key equal to 'c'
+	std::pair<MMAPIterator, MMAPIterator> result = mmapOfPos.equal_range(time);
+ 
+	cout << "All values for key "<<asctime( &time )<<" are," << endl;
+ 
+	// Iterate over the range
+	for (MMAPIterator it = result.first; it != result.second; it++)
+		std::cout << it->second->toString() << std::endl;
+    
+    for (const auto & i : goodMeasures) {
+            
+    }
+
 }
 
 //-------------------------------------------- Constructeurs - destructeur
