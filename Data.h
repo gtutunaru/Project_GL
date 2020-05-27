@@ -24,6 +24,7 @@
 #include "Sensor.h"
 #include "Cleaner.h"
 #include "Particular.h"
+using namespace std;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -44,11 +45,17 @@ const char SEP_SENS = 'r';
 class Data
 {
 //----------------------------------------------------------------- PUBLIC
-
+    
 public:
 
 //----------------------------------------------------- Méthodes publiques
     void readMeasures ( string filename );
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    void checkImpact ( int cleanId ) const;
     // Mode d'emploi :
     //
     // Contrat :
@@ -86,6 +93,9 @@ public:
     // Contrat :
     //
 
+    double * viewQuality(double c_lat, double c_long, double radius, tm time);
+
+    double * viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
     //bool operator < (tm a, tm b);
 
 //-------------------------------------------- Constructeurs - destructeur

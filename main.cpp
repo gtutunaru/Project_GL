@@ -41,11 +41,11 @@ int main(){
     //Camilo was here
     //Erwan
     Data d = Data();
-    d.readCleaners("dataset/cleaners.csv");
+    /*d.readCleaners("dataset/cleaners.csv");
     d.readProviders("dataset/providers.csv");
     d.readSensors("dataset/sensors.csv");
-    //d.readAttributes("dataset/attributes.csv");
-    //cout<<d.AttributesToString()<<endl;
+    d.readAttributes("dataset/attributes.csv");
+    cout<<d.AttributesToString()<<endl;
     d.readParticulars("dataset/users.csv");
 /*
     struct tm tm;
@@ -92,7 +92,7 @@ int main(){
     cout<<data.AttributesToString();*/
 
     data.readMeasures("./dataset/measurements.csv");
-    
+
 
 
     /*cout << asctime( &timestamp ) << endl ;
@@ -113,15 +113,23 @@ int main(){
     date.tm_mon = month - 1 ;  // note: zero indexed
     date.tm_mday = day ;       // note: not zero indexed
 */
+
     
-//    Sensor* s= new Sensor(0, 44, -1);
-//    Sensor* s2= new Sensor(1, 44, -0.3);
-//    Sensor* s3= new Sensor(2, 44, -0.3);
-//    GovAgency* a=new GovAgency("username", "password");
-//    bool result = a->similarSensor(s,s2);
-//    bool result2 = a->similarSensor(s,s3);
-//    cout << result << endl;
-//    cout << result2 << endl;
-    
+
+    while(1)
+    {
+        printf("menu:\n");
+        printf("\t1: View Quality\n");
+        printf("\t2: Check Impact\n");
+        printf("\t3: Recherche de Parcours\n");
+        printf("\t0: quitter\n");
+        int choix;
+        scanf("%d", &choix);
+        switch(choix)
+        {
+
+        }
+    }
+
     return 0;
 }
