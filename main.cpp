@@ -39,14 +39,18 @@ int main(){
     //cout<<"hello"<<endl;
     //Camilo was here
     //Erwan
-    //Data d = Data();
-    //d.readCleaners("dataset/cleaners.csv");
-    //d.readProviders("dataset/providers.csv");
-
-    //struct tm tm;
-    //string s = "2019-11-21 12:00:00";
-    //strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm);
-    //cout << asctime( &tm ) << endl;
+    Data d = Data();
+    d.readCleaners("dataset/cleaners.csv");
+    d.readProviders("dataset/providers.csv");
+    d.readSensors("dataset/sensors.csv");
+    //d.readAttributes("dataset/attributes.csv");
+    //cout<<d.AttributesToString()<<endl;
+    d.readParticulars("dataset/users.csv");
+/*
+    struct tm tm;
+    string s = "2019-11-21 12:00:00";
+    strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm);
+    cout << asctime( &tm ) << endl;
 
     //struct tm tm2;
     //string s2 = "2019-11-20 12:00:00";
@@ -93,7 +97,7 @@ int main(){
     /*cout << asctime( &timestamp ) << endl ;
 
     // Date, add 10 days
-    DatePlusDays( &timestamp, 10 ) ; 
+    DatePlusDays( &timestamp, 10 ) ;
 
     // Show time/date using default formatting
     cout << asctime( &timestamp ) << endl ;*/

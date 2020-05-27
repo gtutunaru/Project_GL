@@ -28,6 +28,11 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
+string Sensor::toString(){
+  string res = "Sensor" + to_string(sensorId) + "\nLat: " + to_string(latitude) + "\nLongitude: " + to_string(longitude) +"\n" ;
+  return res;
+}
+
 int Sensor::getSensorId()
 {
   return sensorId;

@@ -35,13 +35,15 @@ public:
     // Contrat :
     //
 
-    void setSensor(Sensor _sensor);
+    void setSensor(Sensor * _sensor);
 
-    Sensor getSensor();
+    Sensor * getSensor();
 
     void setNbPoints(int _nbPoints);
 
     int getNbPoints();
+
+    string toString();
 
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -65,7 +67,7 @@ public:
     // Contrat :
     //
 
-    Particular (string _username, string _password, Sensor _sensor );
+    Particular (string _username, string _password, Sensor * _sensor );
     // Mode d'emploi :
     //
     // Contrat :
@@ -84,7 +86,7 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
     int nbPoints;
-    Sensor sensor;
+    Sensor * sensor;
 
 };
 

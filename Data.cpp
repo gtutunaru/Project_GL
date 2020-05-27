@@ -150,16 +150,85 @@ void Data::readCleaners ( string filename ){
             }
         }
     }
-    /*std::map<int, Cleaner*>::iterator it = cleaners.begin();
+    std::map<int, Cleaner*>::iterator it = cleaners.begin();
     while(it != cleaners.end())
     {
-        cout<<it->first<<" "<<(it->second)->toString()<<endl;
+        cout<<(it->second)->toString()<<endl;
         it++;
-    }*/
+    }
+}
+
+void Data::readSensors ( string filename ){
+    ifstream file;
+    string s;
+    file.open(filename);
+    if(!file) {
+        cerr<< "Problem with file " << filename << ". Unable to open." << endl;
+    } else {
+        while (!file.eof()) {
+            std::getline(file,s);
+            //cout<<"line "<<s<<endl;
+            if (s!=""){
+                int pos = s.find(";");
+                //cout<<s.substr(7, pos-7)<<endl;
+                int id = stoi(s.substr(6, pos-6));
+                s=s.substr(pos+1, s.length()-pos);
+
+                pos = s.find(";");
+                double lat = stod(s.substr(0, pos));
+
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                double longitude = stod(s.substr(0, pos));
+
+                Sensor * s=new Sensor(id, lat, longitude);
+
+                sensors.insert(std::make_pair(id, s));
+                //cout<<"String of provider"<<p.toString()<<endl;
+            }
+        }
+    }
+    std::map<int, Sensor*>::iterator it = sensors.begin();
+    while(it != sensors.end())
+    {
+        cout<<(it->second)->toString()<<endl;
+        it++;
+    }
+}
+
+void Data::readParticulars ( string filename ){
+    ifstream file;
+    string s;
+    file.open(filename);
+    if(!file) {
+        cerr<< "Problem with file " << filename << ". Unable to open." << endl;
+    } else {
+        while (!file.eof()) {
+            std::getline(file,s);
+            //cout<<"line "<<s<<endl;
+            if (s!=""){
+                int pos = s.find(";");
+
+                string username = s.substr(0, pos);
+                s=s.substr(pos+1, s.length()-pos);
+
+                pos = s.find(";");
+                int id = stoi(s.substr(6, pos-6));
+                //cout<<"id "<<id<<endl;
+                Sensor * sensor = sensors.find(id)->second;
+                //cout<<"String of cleaner found "<<(*c).toString()<<endl;
+                Particular * p = new Particular(username, "mdp", sensor);
+                particulars.push_back(p);
+                //cout<<"String of provider"<<p.toString()<<endl;
+            }
+        }
+    }
+    for (const auto & i : particulars) {
+        cout<< (i)->toString() <<endl;
+    }
 }
 
 void Data::readProviders ( string filename ){
-    //Cleaners
     ifstream file;
     string s;
     file.open(filename);
@@ -203,35 +272,61 @@ void Data::readProviders ( string filename ){
 
 void Data::readAttributes ( string filename)
 {
-  fstream entree(filename);
+    ifstream file;
+    string s;
+    file.open(filename);
+    if(!file) {
+        cerr<< "Problem with file " << filename << ". Unable to open." << endl;
+    } else {
+        while (!file.eof()) {
+            std::getline(file,s);
+            //cout<<"line "<<s<<endl;
+            if (s!=""){
+                int pos = s.find(";");
+                string attributeID = s.substr(0, pos);
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                string unit = s.substr(0, pos);
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                string description = s.substr(0, pos);
+
+                //cout<<attributeID<<endl<<unit<<endl<<description<<endl<<endl;
+
+                AttributeMeasure * attM = new AttributeMeasure(attributeID, unit, description);
+
+                attributes.push_back(attM);
+
+                //cout<<"String of provider"<<p.toString()<<endl;
+            }
+        }
+    }
+  /*fstream entree(filename);
   entree.open(filename,ios::in);
 
   string attributeID, unit, description;
   string tmp,line;
 
-  while (entree>>tmp)
-  {
-    getline(entree, line);
-    istringstream iss(line);
-    getline(iss, attributeID, ';');
-    getline(iss, unit, ';');
-    getline(iss, description, ';');
+    string attributeID, unit, description;
+    string tmp,line;
 
-    AttributeMeasure attM = AttributeMeasure(attributeID, unit, description);
+    cout<<attributeID<<endl<<unit<<endl<<description<<endl<<endl;
+
+    AttributeMeasure * attM = new AttributeMeasure(attributeID, unit, description);
     attributes.push_back(attM);
-  }
+}*/
 
 }
 
 string Data::AttributesToString() const
 {
-  string mes = "";
-  for(const auto& attribut : attributes)
-  {
-    mes += attribut.toString();
+    string mes = "";
+    for(const auto& attribut : attributes)
+    {
+    mes += attribut->toString();
     mes += "\n";
-  }
-  return mes;
+    }
+    return mes;
 }
 
 //-------------------------------------------- Constructeurs - destructeur
