@@ -89,6 +89,8 @@ int main(){
     Data data = Data();
     /*data.readAttributes("./dataset/attributes.csv");
     cout<<data.AttributesToString();*/
+    data.readSensors("./dataset/sensors.csv");
+    data.readParticulars("./dataset/users.csv");
 
     data.readMeasures("./dataset/measurements.csv");
 
@@ -113,7 +115,7 @@ int main(){
     date.tm_mday = day ;       // note: not zero indexed
 */
 
-    while(1)
+    /*while(1)
     {
         printf("menu:\n");
         printf("\t1: View Quality\n");
@@ -126,7 +128,7 @@ int main(){
         {
 
         }
-    }
+    }*/
 
     return 0;
 }

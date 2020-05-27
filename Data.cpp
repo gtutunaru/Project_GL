@@ -30,6 +30,48 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
+long double toRadians(const long double degree) 
+{ 
+    // cmath library in C++
+    // defines the constant 
+    // M_PI as the value of 
+    // pi accurate to 1e-30 
+    long double one_deg = (M_PI) / 180; 
+    return (one_deg * degree); 
+} 
+
+long double distance(double lat1, double long1,
+                     double lat2, double long2) 
+{ 
+    // Convert the latitudes
+    // and longitudes 
+    // from degree to radians. 
+    lat1 = toRadians(lat1); 
+    long1 = toRadians(long1); 
+    lat2 = toRadians(lat2); 
+    long2 = toRadians(long2); 
+
+    // Haversine Formula 
+    long double dlong = long2 - long1; 
+    long double dlat = lat2 - lat1; 
+
+    long double ans = pow(sin(dlat / 2), 2) +
+                          cos(lat1) * cos(lat2) *
+                          pow(sin(dlong / 2), 2); 
+
+    ans = 2 * asin(sqrt(ans)); 
+
+    // Radius of Earth in
+    // Kilometers, R = 6371 
+    // Use R = 3956 for miles 
+    long double R = 6371; 
+
+    // Calculate the result 
+    ans = ans * R; 
+
+    return ans; 
+}
+
 bool operator < (const std::tm & date1, const ::tm & date2){
     bool dateEgale = false;
     if(date1.tm_hour == date2.tm_hour &&
@@ -41,6 +83,19 @@ bool operator < (const std::tm & date1, const ::tm & date2){
             dateEgale = true;
     }
     return dateEgale;
+}
+
+int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
+    auto it = sensors.begin();
+    int nbSensors=0;
+    while(it!=sensors.end()){
+        double lat = (it)->second->getLatitude();
+        double longt = (it)->second->getLongitude();
+        double dist = distance(lat,longt,c_lat,c_long);
+        if(dist<radius) nbSensors++;
+        it++;
+    }
+    return nbSensors;
 }
 
 void Data::readMeasures ( string filename)
@@ -74,10 +129,18 @@ void Data::readMeasures ( string filename)
             getline(file,value_buffer,'\n');
             
             Measure* mes = new Measure(timestamp_buffer,stoi(sensorId_buffer),attributeId_buffer,stod(value_buffer),false);
-            auto it = particulars.begin();
-            while(it!=particulars.end()) {
-                if(mes->getSensorId()==(*it)->getSensor()->getSensorId()) {
-                    
+            double radius = 10;
+            int nbSensor = 0;
+            for(const auto& part : particulars) {
+                if(mes->getSensorId()==(part)->getSensor()->getSensorId() && mes->getTimestamp().tm_mon==02 && mes->getTimestamp().tm_mday == 01 ) {
+                    Sensor* sensor = part->getSensor();
+                    nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
+                    while(nbSensor<5) {
+                        nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
+                        radius +=10;
+                    }
+                    cout << "OK rayon : "<< radius << "sensor id "<< mes->getSensorId() << "nbSensor " << nbSensor <<  endl;
+                    //viewQuality(sensor->getLatitude(),sensor->getLongitude(),1,)
                     break;
                 }
             }
@@ -176,12 +239,12 @@ void Data::readSensors ( string filename ){
             }
         }
     }
-    std::map<int, Sensor*>::iterator it = sensors.begin();
+    /*std::map<int, Sensor*>::iterator it = sensors.begin();
     while(it != sensors.end())
     {
         cout<<(it->second)->toString()<<endl;
         it++;
-    }
+    }*/
 }
 
 void Data::readParticulars ( string filename ){
@@ -302,7 +365,7 @@ string Data::AttributesToString() const
     return mes;
 }
 
-void viewQuality(double c_lat, double c_long, double radius, tm time){
+void Data::viewQuality(double c_lat, double c_long, double radius, tm time){
     //list<Measure*> goodMeasures;
 
     typedef std::multimap<tm,Measure*>::iterator MMAPIterator;
@@ -321,7 +384,7 @@ void viewQuality(double c_lat, double c_long, double radius, tm time){
     //}
 }
 
-void checkImpact ( int cleanId ) const
+void checkImpact ( int cleanId )
 {
 
 }
