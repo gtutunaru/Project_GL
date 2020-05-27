@@ -32,18 +32,18 @@ using namespace std;
 //source: of toRadiand and distance https://www.geeksforgeeks.org/program-distance-two-points-earth/
 // Utility function for  
 // converting degrees to radians 
-long double toRadians(const long double degree) 
+ double toRadians(const  double degree) 
 { 
     // cmath library in C++  
     // defines the constant 
     // M_PI as the value of 
     // pi accurate to 1e-30 
-    long double one_deg = (M_PI) / 180; 
+    double one_deg = (M_PI) / 180; 
     return (one_deg * degree); 
 } 
   
-long double distance(long double lat1, long double long1,  
-                     long double lat2, long double long2) 
+ double distance( double lat1,  double long1,  
+                double lat2,  double long2) 
 { 
     // Convert the latitudes  
     // and longitudes 
@@ -54,10 +54,10 @@ long double distance(long double lat1, long double long1,
     long2 = toRadians(long2); 
       
     // Haversine Formula 
-    long double dlong = long2 - long1; 
-    long double dlat = lat2 - lat1; 
+    double dlong = long2 - long1; 
+    double dlat = lat2 - lat1; 
   
-    long double ans = pow(sin(dlat / 2), 2) +  
+    double ans = pow(sin(dlat / 2), 2) +  
                           cos(lat1) * cos(lat2) *  
                           pow(sin(dlong / 2), 2); 
   
@@ -66,7 +66,7 @@ long double distance(long double lat1, long double long1,
     // Radius of Earth in  
     // Kilometers, R = 6371 
     // Use R = 3956 for miles 
-    long double R = 6371; 
+    double R = 6371; 
       
     // Calculate the result 
     ans = ans * R; 
@@ -361,7 +361,8 @@ string Data::AttributesToString() const
     }
     return mes;
 }
-
+//return table with averages of values on a day from sensors in a circle  
+//1st value of o3, 2nd of so2, 3rd of no2 and 4th of pm10
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
     list<Measure*> goodMeasures;
     
@@ -380,6 +381,60 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
             goodMeasures.push_back(it->second);
         }    
     }
+    double o3_tot = 0
+    double no2_tot = 0;
+	double so2_tot = 0;
+    double pm10_tot = 0;
+    double count_o3 = 0;
+    double count_no2 = 0;
+    double count_so2 = 0;
+    double count_pm10 = 0;
+
+    for (const auto & i : goodMeasures) {
+        if (i->getAttributeId()=="O3"){
+            count_o3++;
+            o3_tot += i->getValue();
+        } else if (i->getAttributeId()=="SO2"){
+            count_so2++;
+            so2_tot += i->getValue();
+        } else if (i->getAttributeId()=="NO2"){
+            count_no2++;
+            no2_tot += i->getValue();
+        } else if(i->getAttributeId()=="PM10"){
+            count_pm10++;
+            pm10_tot += i->getValue();
+        }
+    }
+    static double res[4];
+    res[0]=o3_tot/count_o3;
+    res[1]=so2_tot/count_so2;
+    res[2]=no2_tot/count_no2;
+    res[3]=pm10_tot/count_pm10;
+    return res;
+}
+
+double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end){
+    list<Measure*> goodMeasures;
+
+    while (start<end == false){
+
+        pair<Measures::iterator,Measures::iterator> result = measures.equal_range(time);
+        cout << "All values for key "<<asctime( &time )<<" are," << endl;
+    
+        //Iterate over the range
+        for (multimap<tm,Measure*>::iterator it = result.first; it != result.second; it++){
+            int id_sensor = it->second->getSensorId();
+            Sensor * s = sensors.find(id)->second;
+            double s_lat = s->getLatitude();
+            double s_long = s->getLongitude(); 
+            if (distance(c_lat, c_long, s_lat, s_long) < radius){
+                goodMeasures.push_back(it->second);
+            }    
+        }
+        start = 
+    }
+    
+    
     double o3_tot = 0
     double no2_tot = 0;
 	double so2_tot = 0;
