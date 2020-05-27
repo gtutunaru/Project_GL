@@ -27,11 +27,11 @@
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
-typedef list<AttributeMeasure> Attributes;
+typedef list<AttributeMeasure *> Attributes;
 typedef map<int, Cleaner*> Cleaners;
 typedef multimap<tm,Measure> Measures;
 typedef list<Provider *> Providers;
-typedef set<Sensor> Sensors;
+typedef set<Sensor *> Sensors;
 typedef list<Particular> Particulars;
 const char SEP =';';
 //------------------------------------------------------------------------

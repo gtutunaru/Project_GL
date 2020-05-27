@@ -127,8 +127,42 @@ void Data::readCleaners ( string filename ){
     }*/
 }
 
+void Data::readSensors ( string filename ){
+    ifstream file;
+    string s;
+    file.open(filename);
+    if(!file) {
+        cerr<< "Problem with file " << filename << ". Unable to open." << endl;
+    } else {
+        while (!file.eof()) {
+            std::getline(file,s);
+            //cout<<"line "<<s<<endl;
+            if (s!=""){
+                int pos = s.find(";");
+                //cout<<s.substr(7, pos-7)<<endl;
+                int id = stoi(s.substr(6, pos-6));
+                s=s.substr(pos+1, s.length()-pos);
+
+                pos = s.find(";");
+                double lat = stod(s.substr(0, pos));
+
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                double longitude = stod(s.substr(0, pos));
+
+                Sensor * s=new Sensor(id, lat, longitude);
+                
+                sensors.insert(s);
+                //cout<<"String of provider"<<p.toString()<<endl;
+            }
+        }
+    }
+    for (const auto & i : sensors) {
+        cout<< (i)->toString() <<endl;
+    }
+}
+
 void Data::readProviders ( string filename ){
-    //Cleaners
     ifstream file;
     string s;
     file.open(filename);
@@ -186,7 +220,7 @@ void Data::readAttributes ( string filename)
     getline(iss, unit, ';');
     getline(iss, description, ';');
 
-    AttributeMeasure attM = AttributeMeasure(attributeID, unit, description);
+    AttributeMeasure * attM = new AttributeMeasure(attributeID, unit, description);
     attributes.push_back(attM);
   }
 
@@ -197,7 +231,7 @@ string Data::AttributesToString() const
   string mes = "";
   for(const auto& attribut : attributes)
   {
-    mes += attribut.toString();
+    mes += attribut->toString();
     mes += "\n";
   }
   return mes;

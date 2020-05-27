@@ -36,7 +36,14 @@ public:
     //
     // Contrat :
     //
+    int getSensorId();
+    double getLatitude();
+    double getLongitude();
 
+    void setLatitude(double _latitude);
+    void setLongitude(double _longitude);
+
+    string toString();
 
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -68,12 +75,7 @@ public:
     // Contrat :
     //
 
-    int getSensorId();
-    double getLatitude();
-    double getLongitude();
-
-    void setLatitude(double _latitude);
-    void setLongitude(double _longitude);
+    
 //------------------------------------------------------------------ PRIVE
 
 protected:
