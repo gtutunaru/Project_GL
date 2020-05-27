@@ -246,12 +246,12 @@ void Data::readCleaners ( string filename ){
             }
         }
     }
-    std::map<int, Cleaner*>::iterator it = cleaners.begin();
+    /*std::map<int, Cleaner*>::iterator it = cleaners.begin();
     while(it != cleaners.end())
     {
         cout<<(it->second)->toString()<<endl;
         it++;
-    }
+    }*/
 }
 
 void Data::readSensors ( string filename ){
@@ -319,9 +319,9 @@ void Data::readParticulars ( string filename ){
             }
         }
     }
-    for (const auto & i : particulars) {
+    /*for (const auto & i : particulars) {
         cout<< (i)->toString() <<endl;
-    }
+    }*/
 }
 
 void Data::readProviders ( string filename ){
@@ -361,9 +361,9 @@ void Data::readProviders ( string filename ){
             }
         }
     }
-    for (const auto & i : providers) {
+    /*for (const auto & i : providers) {
         cout<< (i)->toString() <<endl;
-    }
+    }*/
 }
 
 void Data::readAttributes ( string filename)
@@ -427,7 +427,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
         double s_long = s->getLongitude();
         //cout<<"hi"<<endl;
         if (distance(c_lat, c_long, s_lat, s_long) < radius){
-            cout<<"hi"<<endl;
+            //cout<<"hi"<<endl;
             goodMeasures.push_back(it->second);
         }
     }
@@ -456,7 +456,6 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
         }
     }
     static double res[4];
-    cout<<o3_tot<<endl;
     res[0]=o3_tot/count_o3;
     res[1]=so2_tot/count_so2;
     res[2]=no2_tot/count_no2;
@@ -467,10 +466,10 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end){
     list<Measure*> goodMeasures;
 
-    while (start<end == false){
+    while (start<end == true){
 
         pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&start));
-        cout << "All values for key "<<asctime( &start )<<" are," << endl;
+        //cout << "All values for key "<<asctime( &start )<<" are," << endl;
 
         //Iterate over the range
         for (multimap<string,Measure*>::iterator it = result.first; it != result.second; it++){
