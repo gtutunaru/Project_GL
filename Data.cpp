@@ -119,12 +119,12 @@ void Data::readCleaners ( string filename ){
             }
         }
     }
-    /*std::map<int, Cleaner*>::iterator it = cleaners.begin();
+    std::map<int, Cleaner*>::iterator it = cleaners.begin();
     while(it != cleaners.end())
     {
-        cout<<it->first<<" "<<(it->second)->toString()<<endl;
+        cout<<(it->second)->toString()<<endl;
         it++;
-    }*/
+    }
 }
 
 void Data::readSensors ( string filename ){
@@ -152,12 +152,47 @@ void Data::readSensors ( string filename ){
 
                 Sensor * s=new Sensor(id, lat, longitude);
 
-                sensors.insert(s);
+                sensors.insert(std::make_pair(id, s));
                 //cout<<"String of provider"<<p.toString()<<endl;
             }
         }
     }
-    for (const auto & i : sensors) {
+    std::map<int, Sensor*>::iterator it = sensors.begin();
+    while(it != sensors.end())
+    {
+        cout<<(it->second)->toString()<<endl;
+        it++;
+    }
+}
+
+void Data::readParticulars ( string filename ){
+    ifstream file;
+    string s;
+    file.open(filename);
+    if(!file) {
+        cerr<< "Problem with file " << filename << ". Unable to open." << endl;
+    } else {
+        while (!file.eof()) {
+            std::getline(file,s);
+            //cout<<"line "<<s<<endl;
+            if (s!=""){
+                int pos = s.find(";");
+
+                string username = s.substr(0, pos);
+                s=s.substr(pos+1, s.length()-pos);
+
+                pos = s.find(";");
+                int id = stoi(s.substr(6, pos-6));
+                //cout<<"id "<<id<<endl;
+                Sensor * sensor = sensors.find(id)->second;
+                //cout<<"String of cleaner found "<<(*c).toString()<<endl;
+                Particular * p = new Particular(username, "mdp", sensor);
+                particulars.push_back(p);
+                //cout<<"String of provider"<<p.toString()<<endl;
+            }
+        }
+    }
+    for (const auto & i : particulars) {
         cout<< (i)->toString() <<endl;
     }
 }
@@ -241,13 +276,8 @@ void Data::readAttributes ( string filename)
   string attributeID, unit, description;
   string tmp,line;
 
-  while (entree>>tmp)
-  {
-    getline(entree, line);
-    istringstream iss(line);
-    getline(iss, attributeID, ';');
-    getline(iss, unit, ';');
-    getline(iss, description, ';');
+    string attributeID, unit, description;
+    string tmp,line;
 
     cout<<attributeID<<endl<<unit<<endl<<description<<endl<<endl;
 
@@ -259,13 +289,13 @@ void Data::readAttributes ( string filename)
 
 string Data::AttributesToString() const
 {
-  string mes = "";
-  for(const auto& attribut : attributes)
-  {
+    string mes = "";
+    for(const auto& attribut : attributes)
+    {
     mes += attribut->toString();
     mes += "\n";
-  }
-  return mes;
+    }
+    return mes;
 }
 
 //-------------------------------------------- Constructeurs - destructeur
