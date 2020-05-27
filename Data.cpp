@@ -38,13 +38,13 @@ using namespace std;
 //source: of toRadiand and distance https://www.geeksforgeeks.org/program-distance-two-points-earth/
 // Utility function for
 // converting degrees to radians
-long double toRadians(const long double degree)
+double toRadians(const double degree)
 {
     // cmath library in C++
     // defines the constant
     // M_PI as the value of
     // pi accurate to 1e-30
-    long double one_deg = (M_PI) / 180;
+    double one_deg = (M_PI) / 180;
     return (one_deg * degree);
 }
 
@@ -61,8 +61,20 @@ struct tm* DatePlusDays( struct tm* date, int days )
     return dateBis;
 }
 
-long double distance(long double lat1, long double long1,
-                     long double lat2, long double long2)
+void AddDay( struct tm* date )
+{
+    const time_t ONE_DAY = 24 * 60 * 60 ;
+
+    // Seconds since start of epoch
+    time_t date_seconds = mktime( date ) + (ONE_DAY) ;
+
+    // Update caller's date
+    // Use localtime because mktime converts to UTC so may change date
+    *date = *localtime( &date_seconds ) ;
+}
+
+double distance(double lat1, double long1,
+                     double lat2, double long2)
 {
     // Convert the latitudes
     // and longitudes
@@ -73,10 +85,10 @@ long double distance(long double lat1, long double long1,
     long2 = toRadians(long2);
 
     // Haversine Formula
-    long double dlong = long2 - long1;
-    long double dlat = lat2 - lat1;
+    double dlong = long2 - long1;
+    double dlat = lat2 - lat1;
 
-    long double ans = pow(sin(dlat / 2), 2) +
+    double ans = pow(sin(dlat / 2), 2) +
                           cos(lat1) * cos(lat2) *
                           pow(sin(dlong / 2), 2);
 
@@ -85,7 +97,7 @@ long double distance(long double lat1, long double long1,
     // Radius of Earth in
     // Kilometers, R = 6371
     // Use R = 3956 for miles
-    long double R = 6371;
+    double R = 6371;
 
     // Calculate the result
     ans = ans * R;
@@ -148,7 +160,11 @@ void Data::readMeasures ( string filename)
             getline(file,value_buffer,'\n');
 
             Measure* mes = new Measure(timestamp_buffer,stoi(sensorId_buffer),attributeId_buffer,stod(value_buffer),false);
-            double radius = 10;
+            tm time=mes->getTimestamp();
+            string s= asctime(&time);
+            measures.insert(std::make_pair( s,mes));
+            
+            /*double radius = 10;
             int nbSensor = 0;
             for(const auto& part : particulars) {
                 if(mes->getSensorId()==(part)->getSensor()->getSensorId() && mes->getTimestamp().tm_mon==02 && mes->getTimestamp().tm_mday == 01 ) {
@@ -163,15 +179,15 @@ void Data::readMeasures ( string filename)
                     //double data[4]= viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,)
                     break;
                 }
-            }
-            measures.insert(std::make_pair(mes->getTimestamp(),mes));
+            }*/
+            //measures.insert(std::make_pair(mes->getTimestamp(),mes));
         }
     }
     /*Measures::iterator it_start = measures.begin();
     Measures::iterator it_end = measures.end();
     while(it_start != it_end)
     {
-        cout<<it_start->first.tm_mday <<" ET "<<(it_start->second)->toString()<<endl;
+        cout<<it_start->first<<" ET "<<(it_start->second)->toString()<<endl;
         it_start++;
     }*/
 } //----- Fin de readMeasurements
@@ -384,26 +400,29 @@ string Data::AttributesToString() const
     }
     return mes;
 }
-
-/*double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
+//return table with averages of values on a day from sensors in a circle  
+//1st value of o3, 2nd of so2, 3rd of no2 and 4th of pm10
+double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
     list<Measure*> goodMeasures;
 
 	// It returns a pair representing the range of elements with key equal to time
-    pair<Measures::iterator,Measures::iterator> result = measures.equal_range(time);
+    pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&time));
     //auto result = measures.equal_range(time);
-	cout << "All values for key "<<asctime( &time )<<" are," << endl;
+	//cout << "All values for key "<<asctime( &time )<<" are," << endl;
 
 	 //Iterate over the range
-	for (multimap<tm,Measure*>::iterator it = result.first; it != result.second; it++){
+	for (multimap<string,Measure*>::iterator it = result.first; it != result.second; it++){
         int id_sensor = it->second->getSensorId();
-        Sensor * s = sensors.find(it)->second;
+        Sensor * s = sensors.find(id_sensor)->second;
         double s_lat = s->getLatitude();
         double s_long = s->getLongitude();
+        //cout<<"hi"<<endl;
         if (distance(c_lat, c_long, s_lat, s_long) < radius){
+            cout<<"hi"<<endl;
             goodMeasures.push_back(it->second);
         }
     }
-    double o3_tot = 0
+    double o3_tot = 0;
     double no2_tot = 0;
 	double so2_tot = 0;
     double pm10_tot = 0;
@@ -428,6 +447,7 @@ string Data::AttributesToString() const
         }
     }
     static double res[4];
+    cout<<o3_tot<<endl;
     res[0]=o3_tot/count_o3;
     res[1]=so2_tot/count_so2;
     res[2]=no2_tot/count_no2;
@@ -435,7 +455,62 @@ string Data::AttributesToString() const
     return res;
 }*/
 
-/*void checkImpact ( int cleanId )
+double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end){
+    list<Measure*> goodMeasures;
+
+    while (start<end == false){
+
+        pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&start));
+        cout << "All values for key "<<asctime( &start )<<" are," << endl;
+    
+        //Iterate over the range
+        for (multimap<string,Measure*>::iterator it = result.first; it != result.second; it++){
+            int id_sensor = it->second->getSensorId();
+            Sensor * s = sensors.find(id_sensor)->second;
+            double s_lat = s->getLatitude();
+            double s_long = s->getLongitude(); 
+            if (distance(c_lat, c_long, s_lat, s_long) < radius){
+                goodMeasures.push_back(it->second);
+            }    
+        }
+        AddDay(&start);
+    }
+    
+    
+    double o3_tot = 0;
+    double no2_tot = 0;
+	double so2_tot = 0;
+    double pm10_tot = 0;
+    double count_o3 = 0;
+    double count_no2 = 0;
+    double count_so2 = 0;
+    double count_pm10 = 0;
+
+    for (const auto & i : goodMeasures) {
+        if (i->getAttributeId()=="O3"){
+            count_o3++;
+            o3_tot += i->getValue();
+        } else if (i->getAttributeId()=="SO2"){
+            count_so2++;
+            so2_tot += i->getValue();
+        } else if (i->getAttributeId()=="NO2"){
+            count_no2++;
+            no2_tot += i->getValue();
+        } else if(i->getAttributeId()=="PM10"){
+            count_pm10++;
+            pm10_tot += i->getValue();
+        }
+    }
+    static double res[4];
+
+    res[0]=o3_tot/count_o3;
+    res[1]=so2_tot/count_so2;
+    res[2]=no2_tot/count_no2;
+    res[3]=pm10_tot/count_pm10;
+    return res;
+}
+/*
+void checkImpact ( int cleanId ) //const
 {
     Cleaner * clean;
     double impact[4];
@@ -451,8 +526,8 @@ string Data::AttributesToString() const
     //parses s2 into tm2 struct
     DatePlusDays( struct tm* date, int days )
     strptime(s2.c_str(), "%Y-%m-%d %H:%M:%S", &tm2);
-    //double avant[] = viewQuality(clean->latitude, clean->longitude, rayon, tm2, );
-    //double apres[] = ;
+    double avant[] = viewQuality(clean->latitude, clean->longitude, rayon, tm2, );
+    double apres[] = ;
 }*/
 
 //-------------------------------------------- Constructeurs - destructeur
