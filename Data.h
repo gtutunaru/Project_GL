@@ -52,6 +52,12 @@ public:
     // Contrat :
     //
 
+    void checkImpact ( int cleanId ) const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
     void readParticulars ( string filename );
     // Mode d'emploi :
     //

@@ -270,21 +270,6 @@ void Data::readAttributes ( string filename)
             }
         }
     }
-  /*fstream entree(filename);
-  entree.open(filename,ios::in);
-
-  string attributeID, unit, description;
-  string tmp,line;
-
-    string attributeID, unit, description;
-    string tmp,line;
-
-    cout<<attributeID<<endl<<unit<<endl<<description<<endl<<endl;
-
-    AttributeMeasure * attM = new AttributeMeasure(attributeID, unit, description);
-    attributes.push_back(attM);
-}*/
-
 }
 
 string Data::AttributesToString() const
@@ -296,6 +281,11 @@ string Data::AttributesToString() const
     mes += "\n";
     }
     return mes;
+}
+
+void checkImpact ( int cleanId ) const
+{
+
 }
 
 //-------------------------------------------- Constructeurs - destructeur

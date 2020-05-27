@@ -40,12 +40,12 @@ int main(){
     //Camilo was here
     //Erwan
     Data d = Data();
-    d.readCleaners("dataset/cleaners.csv");
+    /*d.readCleaners("dataset/cleaners.csv");
     d.readProviders("dataset/providers.csv");
     d.readSensors("dataset/sensors.csv");
     //d.readAttributes("dataset/attributes.csv");
     //cout<<d.AttributesToString()<<endl;
-    d.readParticulars("dataset/users.csv");
+    d.readParticulars("dataset/users.csv");*/
 /*
     struct tm tm;
     string s = "2019-11-21 12:00:00";
@@ -110,9 +110,20 @@ int main(){
     date.tm_mday = day ;       // note: not zero indexed
 */
 
+    while(1)
+    {
+        printf("menu:\n");
+        printf("\t1: View Quality\n");
+        printf("\t2: Check Impact\n");
+        printf("\t3: Recherche de Parcours\n");
+        printf("\t0: quitter\n");
+        int choix;
+        scanf("%d", &choix);
+        switch(choix)
+        {
 
-
-
+        }
+    }
 
     return 0;
 }
