@@ -40,15 +40,16 @@ int main(){
     //Camilo was here
     //Erwan
     Data d = Data();
-    /*d.readCleaners("dataset/cleaners.csv");
+    d.readCleaners("dataset/cleaners.csv");
     d.readProviders("dataset/providers.csv");
     d.readSensors("dataset/sensors.csv");
     d.readAttributes("dataset/attributes.csv");
     cout<<d.AttributesToString()<<endl;
     d.readParticulars("dataset/users.csv");
-/*
+    d.readMeasures("./dataset/measurements.csv");
+
     struct tm tm;
-    string s = "2019-11-21 12:00:00";
+    string s = "2019-01-01 12:00:00";
     strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm);
     cout << asctime( &tm ) << endl;
 
@@ -86,11 +87,11 @@ int main(){
     cout << timestamp.tm_min << endl;
     cout << timestamp.tm_sec << endl;*/
 
-    Data data = Data();
+    //Data data = Data();
     /*data.readAttributes("./dataset/attributes.csv");
     cout<<data.AttributesToString();*/
 
-    data.readMeasures("./dataset/measurements.csv");
+    //data.readMeasures("./dataset/measurements.csv");
 
 
 
@@ -113,7 +114,7 @@ int main(){
     date.tm_mday = day ;       // note: not zero indexed
 */
 
-    while(1)
+   /* while(1)
     {
         printf("menu:\n");
         printf("\t1: View Quality\n");
@@ -126,6 +127,11 @@ int main(){
         {
 
         }
+    }*/
+
+    double* res = d.viewQuality(44.1,0,200,tm);
+    for (int i=0;i<4; i++){
+        cout<<res[i]<<endl;
     }
 
     return 0;
