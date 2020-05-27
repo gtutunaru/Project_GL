@@ -34,6 +34,7 @@ typedef list<Provider *> Providers;
 typedef map<int, Sensor *> Sensors;
 typedef list<Particular*> Particulars;
 const char SEP =';';
+const char SEP_SENS = 'r';
 //------------------------------------------------------------------------
 // Rôle de la classe <Data>
 //
@@ -45,6 +46,7 @@ class Data
 //----------------------------------------------------------------- PUBLIC
 
 public:
+
 //----------------------------------------------------- Méthodes publiques
     void readMeasures ( string filename );
     // Mode d'emploi :
@@ -87,6 +89,7 @@ public:
     void viewQuality(double c_lat, double c_long, double radius, tm time);
 
     void viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
+    //bool operator < (tm a, tm b);
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );

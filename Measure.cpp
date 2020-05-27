@@ -81,8 +81,15 @@ void Measure::setFalseData(bool falseData)
         this->falseData = falseData;
 }
 
-
+string Measure::toString() {
+    char t[80];
+    strftime(t,100, "%Y-%m-%d %H:%M:%S", &timestamp);
+    string s = "Measure " + to_string(sensorId) + " " + t
+    + " " + attributeId + " " + to_string(value) + " " + to_string(falseData) + '\n';
+    return s;
+}
 //------------------------------------------------- Surcharge d'opérateurs
+//Particular & operator = ( const Particular & unParticular );
 
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -115,7 +122,7 @@ Measure::Measure (string _timestamp, int _sensorId, string _attributeId, double 
 #ifdef MAP
     cout << "Appel au constructeur de <Measure>" << endl;
 #endif
-    string s_annee= _timestamp.substr(0,4);
+    /*string s_annee= _timestamp.substr(0,4);
     string s_mois = _timestamp.substr(5,7);
     string s_jour = _timestamp.substr(8,10);
     string s_heure = _timestamp.substr(11,13);
@@ -127,7 +134,9 @@ Measure::Measure (string _timestamp, int _sensorId, string _attributeId, double 
     timestamp.tm_mday=stoi(s_jour);
     timestamp.tm_hour=stoi(s_heure);
     timestamp.tm_min=stoi(s_min);
-    timestamp.tm_sec=stoi(s_sec);
+    timestamp.tm_sec=stoi(s_sec);*/
+
+    strptime(_timestamp.c_str(), "%Y-%m-%d %H:%M:%S", &timestamp);
 
     sensorId = _sensorId;
     attributeId = _attributeId;

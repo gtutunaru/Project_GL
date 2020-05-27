@@ -72,8 +72,30 @@ long double distance(long double lat1, long double long1,
     return ans; 
 } 
   
+/*bool operator < (tm const  a, tm const b){
+    time_t date_seconds1 = mktime( a );
+    time_t date_seconds2 = mktime( b );
+    double diff = difftime(date_seconds1, date_seconds2);
+    bool sontEgales = false;
+    if(diff==0){
+        sontEgales = true;
+    }
+    return sontEgales;
+}*/
 
-bool compareDate(tm date1,tm date2) {
+/*bool operator < (const std::tm & t1, const std::tm & t2)
+{
+    time_t date_seconds1 = mktime( t1 );
+    time_t date_seconds2 = mktime( t2 );
+    double diff = difftime(date_seconds1, date_seconds2);
+    bool sontEgales = false;
+    if(diff==0){
+        sontEgales = true;
+    }
+    return sontEgales;
+}*/
+
+bool operator < (const std::tm & date1, const ::tm & date2){
     bool dateEgale = false;
     if(date1.tm_hour == date2.tm_hour &&
         date1.tm_mday == date2.tm_mday &&
@@ -95,28 +117,37 @@ void Data::readMeasures ( string filename)
     if(!file) {
         cerr<< "Problem with file " << filename << ". Unable to open." << endl;
     } else {
-        while (!file.eof()) {
-            string timestamp_buffer;
-            string sensorId_buffer;
-            string attributeId_buffer;
-            string value_buffer;
+        string timestamp_buffer;
+        string sensorId_buffer;
+        string attributeId_buffer;
+        string value_buffer;
 
-            getline(file,timestamp_buffer,SEP); //j'ai declare SEP dans le .h comme const char SEP = ';'
-            //file.ignore(256,SEP_SENS); ca cause des erreurs et je ne sais pas a quoi ca sert
+        while (!file.eof()) {
+
+            int pos = file.tellg();
+            getline(file,timestamp_buffer);
+
+            if(timestamp_buffer.find(':')==string::npos) {
+                break;
+            }
+            file.seekg(pos,ios_base::beg);
+
+            getline(file,timestamp_buffer,SEP);
+            file.ignore(256,SEP_SENS); 
             getline(file,sensorId_buffer,SEP);
             getline(file,attributeId_buffer,SEP);
-            getline(file,value_buffer,SEP);
-
+            getline(file,value_buffer,'\n');
+            
             Measure* mes = new Measure(timestamp_buffer,stoi(sensorId_buffer),attributeId_buffer,stod(value_buffer),false);
-            Measures::iterator it_start = measures.begin();
-            Measures::iterator it_end = measures.end();
-            /*while(it_start!=it_end) {
-                if(it_start->second == *mes) {
-
-                }
-            }*/
-
+            measures.insert(std::make_pair(mes->getTimestamp(),mes));
         }
+    }
+    Measures::iterator it_start = measures.begin();
+    Measures::iterator it_end = measures.end();
+    while(it_start != it_end)
+    {
+        cout<<it_start->first.tm_mday <<" ET "<<(it_start->second)->toString()<<endl;
+        it_start++;
     }
 } //----- Fin de readMeasurements
 
@@ -197,7 +228,7 @@ void Data::readSensors ( string filename ){
                 double longitude = stod(s.substr(0, pos));
 
                 Sensor * s=new Sensor(id, lat, longitude);
-                
+
                 sensors.insert(std::make_pair(id, s));
                 //cout<<"String of provider"<<p.toString()<<endl;
             }
@@ -287,23 +318,49 @@ void Data::readProviders ( string filename ){
 
 void Data::readAttributes ( string filename)
 {
-    fstream entree(filename);
-    entree.open(filename,ios::in);
+    ifstream file;
+    string s;
+    file.open(filename);
+    if(!file) {
+        cerr<< "Problem with file " << filename << ". Unable to open." << endl;
+    } else {
+        while (!file.eof()) {
+            std::getline(file,s);
+            //cout<<"line "<<s<<endl;
+            if (s!=""){
+                int pos = s.find(";");
+                string attributeID = s.substr(0, pos);
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                string unit = s.substr(0, pos);
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                string description = s.substr(0, pos);
+
+                //cout<<attributeID<<endl<<unit<<endl<<description<<endl<<endl;
+
+                AttributeMeasure * attM = new AttributeMeasure(attributeID, unit, description);
+
+                attributes.push_back(attM);
+
+                //cout<<"String of provider"<<p.toString()<<endl;
+            }
+        }
+    }
+  /*fstream entree(filename);
+  entree.open(filename,ios::in);
+
+  string attributeID, unit, description;
+  string tmp,line;
 
     string attributeID, unit, description;
     string tmp,line;
 
-    while (entree>>tmp)
-    {
-        getline(entree, line);
-        istringstream iss(line);
-        getline(iss, attributeID, ';');
-        getline(iss, unit, ';');
-        getline(iss, description, ';');
+    cout<<attributeID<<endl<<unit<<endl<<description<<endl<<endl;
 
-        AttributeMeasure * attM = new AttributeMeasure(attributeID, unit, description);
-        attributes.push_back(attM);
-    }
+    AttributeMeasure * attM = new AttributeMeasure(attributeID, unit, description);
+    attributes.push_back(attM);
+}*/
 
 }
 
