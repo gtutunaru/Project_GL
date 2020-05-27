@@ -67,8 +67,80 @@ GovAgency::~GovAgency ( )
 #ifdef MAP
     cout << "Appel au destructeur de <GovAgency>" << endl;
 #endif
+    
 } //----- Fin de ~GovAgency
 
+bool GovAgency::similarSensor(Sensor s1, Sensor s2)
+{
+    valueSensor s1_list;
+    valueSensor s2_list;
+    string s;
+    ifstream file;
+    file.open("dataset/measurements.csv");
+    if(!file) {
+        cerr<< "Problem with file " << "measurements" << ". Unable to open." << endl;
+        return 0;
+    } else {
+        while (!file.eof()) {
+            std::getline(file,s);
+            if (s!=""){
+                
+                
+                int pos = s.find(";");
+                string stime = s.substr(0, pos);
+                s=s.substr(pos+1, s.length()-pos);
+
+                pos = s.find(";");
+                int id = stoi(s.substr(6, pos-6));
+                s=s.substr(pos+1, s.length()-pos);
+                
+                if (id!=s1.getSensorId()&&id!=s2.getSensorId())
+                {
+                    continue;
+                }
+
+                pos = s.find(";");
+                string attributeId = s.substr(0, pos);
+                s=s.substr(pos+1, s.length()-pos);
+            
+                pos = s.find(";");
+                double valeur = stod(s.substr(0, pos));
+
+                result r={attributeId,valeur};
+                
+                if(id==s1.getSensorId())
+                {
+                    s1_list.insert(std::make_pair(stime,&r));
+                }else
+                {
+                    s2_list.insert(std::make_pair(stime,&r));
+                }
+                
+            }
+        }
+    }
+    
+    double tolerance = 1.0;
+    std::multimap<string,result*>::iterator it = s1_list.begin();
+    while(it != s1_list.end())
+    {
+        std::multimap<string,result*>::iterator iter;
+        auto pr = s2_list.equal_range(it->first);
+        if(pr.first != std::end(s2_list))
+        {
+            for (auto iter = pr.first ; iter != pr.second; ++iter)
+            {
+                if(iter->second->attributeId==it->second->attributeId&&abs(iter->second->value-it->second->value)>tolerance)
+                    {
+                        return 0;
+                    }
+            }
+        }
+    }
+    
+        return 1;
+        
+}
 
 //------------------------------------------------------------------ PRIVE
 

@@ -349,21 +349,6 @@ void Data::readAttributes ( string filename)
             }
         }
     }
-  /*fstream entree(filename);
-  entree.open(filename,ios::in);
-
-  string attributeID, unit, description;
-  string tmp,line;
-
-    string attributeID, unit, description;
-    string tmp,line;
-
-    cout<<attributeID<<endl<<unit<<endl<<description<<endl<<endl;
-
-    AttributeMeasure * attM = new AttributeMeasure(attributeID, unit, description);
-    attributes.push_back(attM);
-}*/
-
 }
 
 string Data::AttributesToString() const
@@ -394,6 +379,8 @@ void viewQuality(double c_lat, double c_long, double radius, tm time){
     //for (const auto & i : goodMeasures) {
             
     //}
+void checkImpact ( int cleanId ) const
+{
 
 }
 

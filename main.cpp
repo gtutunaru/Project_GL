@@ -40,7 +40,7 @@ int main(){
     //Camilo was here
     //Erwan
     Data d = Data();
-    d.readCleaners("dataset/cleaners.csv");
+    /*d.readCleaners("dataset/cleaners.csv");
     d.readProviders("dataset/providers.csv");
     d.readSensors("dataset/sensors.csv");
     d.readAttributes("dataset/attributes.csv");
@@ -91,7 +91,7 @@ int main(){
     cout<<data.AttributesToString();*/
 
     data.readMeasures("./dataset/measurements.csv");
-    
+
 
 
     /*cout << asctime( &timestamp ) << endl ;
@@ -112,5 +112,21 @@ int main(){
     date.tm_mon = month - 1 ;  // note: zero indexed
     date.tm_mday = day ;       // note: not zero indexed
 */
+
+    while(1)
+    {
+        printf("menu:\n");
+        printf("\t1: View Quality\n");
+        printf("\t2: Check Impact\n");
+        printf("\t3: Recherche de Parcours\n");
+        printf("\t0: quitter\n");
+        int choix;
+        scanf("%d", &choix);
+        switch(choix)
+        {
+
+        }
+    }
+
     return 0;
 }

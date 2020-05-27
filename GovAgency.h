@@ -12,6 +12,23 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include "User.h"
+#include "Particular.h"
+#include "Sensor.h"
+#include <map>
+#include <string>
+#include <ctime>
+#include <cmath>
+#include <fstream>
+#include <sstream>
+
+typedef struct tm tm;
+
+typedef struct SAMPLE
+{
+    string attributeId;
+    double value;
+} result;
+typedef multimap<string, result*> valueSensor;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -28,7 +45,7 @@ class GovAgency : public User
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
+    bool similarSensor(Sensor s1, Sensor s2);
     // Mode d'emploi :
     //
     // Contrat :
