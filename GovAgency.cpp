@@ -106,14 +106,19 @@ bool GovAgency::similarSensor(Sensor* s1, Sensor* s2)
                 pos = s.find(";");
                 double valeur = stod(s.substr(0, pos));
 
-                result r={attributeId,valeur};
+                result* r= (result*)malloc(sizeof (result));
+                
+                r->attributeId = attributeId;
+                r->value = valeur;
                 
                 if(id==s1->getSensorId())
                 {
-                    s1_list.insert(std::make_pair(stime,&r));
+                    s1_list.insert(std::make_pair(stime,r));
+                    
                 }else
                 {
-                    s2_list.insert(std::make_pair(stime,&r));
+                    s2_list.insert(std::make_pair(stime,r));
+                   
                 }
                 
             }
@@ -123,21 +128,19 @@ bool GovAgency::similarSensor(Sensor* s1, Sensor* s2)
     double tolerance = 1.0;
     for (std::multimap<string,result*>::iterator it=s1_list.begin(); it!=s1_list.end(); ++it)
     {
-        cout<<it->second->value<<endl;
+        
         std::multimap<string,result*>::iterator iter;
         auto pr = s2_list.equal_range(it->first);
         if(pr.first != std::end(s2_list))
         {
             for (auto iter = pr.first ; iter != pr.second; ++iter)
             {
-                    cout<<iter->second->value<<endl;
                 if(iter->second->attributeId==it->second->attributeId&&abs(iter->second->value-it->second->value)>tolerance)
                     {
                         return false;
                     }
             }
         }
-        
     }
     
     return true;
