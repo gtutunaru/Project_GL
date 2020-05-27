@@ -24,6 +24,7 @@
 #include "Sensor.h"
 #include "Cleaner.h"
 #include "Particular.h"
+using namespace std;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -44,7 +45,7 @@ const char SEP_SENS = 'r';
 class Data
 {
 //----------------------------------------------------------------- PUBLIC
-
+    
 public:
 
 //----------------------------------------------------- Méthodes publiques
@@ -92,9 +93,9 @@ public:
     // Contrat :
     //
 
-    void viewQuality(double c_lat, double c_long, double radius, tm time);
+    double * viewQuality(double c_lat, double c_long, double radius, tm time);
 
-    void viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
+    double * viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
     //bool operator < (tm a, tm b);
 
     int nbSensorInArea(double, double, double);
