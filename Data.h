@@ -98,6 +98,8 @@ public:
     double * viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
     //bool operator < (tm a, tm b);
 
+    int nbSensorInArea(double, double, double);
+
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );
 

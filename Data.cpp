@@ -116,29 +116,26 @@ double distance(double lat1, double long1,
     return sontEgales;
 }*/
 
-/*bool operator < (const std::tm & t1, const std::tm & t2)
-{
-    time_t date_seconds1 = mktime( t1 );
-    time_t date_seconds2 = mktime( t2 );
-    double diff = difftime(date_seconds1, date_seconds2);
-    bool sontEgales = false;
-    if(diff==0){
-        sontEgales = true;
-    }
-    return sontEgales;
-}*/
+bool operator < (const tm & date1, const tm & date2){
+    tm d1 = date1;
+    tm d2 = date2;
+    time_t t1 = mktime(&d1);
+    time_t t2 = mktime(&d2);
+    double diffSecs = difftime(t1, t2);
+    return (diffSecs<0);
+}
 
-bool operator < (const std::tm & date1, const ::tm & date2){
-    bool dateEgale = false;
-    if(date1.tm_hour == date2.tm_hour &&
-        date1.tm_mday == date2.tm_mday &&
-        date1.tm_min == date2.tm_min &&
-        date1.tm_mon == date2.tm_mon &&
-        date1.tm_year == date2.tm_year) {
-
-            dateEgale = true;
+int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
+    auto it = sensors.begin();
+    int nbSensors=0;
+    while(it!=sensors.end()){
+        double lat = (it)->second->getLatitude();
+        double longt = (it)->second->getLongitude();
+        double dist = distance(lat,longt,c_lat,c_long);
+        if(dist<radius) nbSensors++;
+        it++;
     }
-    return dateEgale;
+    return nbSensors;
 }
 
 void Data::readMeasures ( string filename)
@@ -174,7 +171,24 @@ void Data::readMeasures ( string filename)
             Measure* mes = new Measure(timestamp_buffer,stoi(sensorId_buffer),attributeId_buffer,stod(value_buffer),false);
             //tm time=mes->getTimestamp();
             //string s= asctime(&time);
-            measures.insert(std::make_pair( mes->getTimestamp(),mes));
+            //measures.insert(std::make_pair( mes->getTimestamp(),mes));
+            
+            double radius = 10;
+            int nbSensor = 0;
+            for(const auto& part : particulars) {
+                if(mes->getSensorId()==(part)->getSensor()->getSensorId() && mes->getTimestamp().tm_mon==02 && mes->getTimestamp().tm_mday == 01 ) {
+                    Sensor* sensor = part->getSensor();
+                    nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
+                    while(nbSensor<5) {
+                        nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
+                        radius +=10;
+                    }
+                    cout << "OK rayon : "<< radius << "sensor id "<< mes->getSensorId() << "nbSensor " << nbSensor <<  endl;
+                    //viewQuality(sensor->getLatitude(),sensor->getLongitude(),1,)
+                    break;
+                }
+            }
+            measures.insert(std::make_pair(mes->getTimestamp(),mes));
         }
     }
     /*Measures::iterator it_start = measures.begin();
@@ -269,12 +283,12 @@ void Data::readSensors ( string filename ){
             }
         }
     }
-    std::map<int, Sensor*>::iterator it = sensors.begin();
+    /*std::map<int, Sensor*>::iterator it = sensors.begin();
     while(it != sensors.end())
     {
         cout<<(it->second)->toString()<<endl;
         it++;
-    }
+    }*/
 }
 
 void Data::readParticulars ( string filename ){
