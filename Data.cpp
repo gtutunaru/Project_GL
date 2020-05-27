@@ -518,17 +518,19 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
     res[3]=pm10_tot/count_pm10;
     return res;
 }
-/*
-void checkImpactRadius ( int cleanId ) //const
+//Faire Getters de Cleaner!!!
+void Data::checkImpactRadius (  int cleanId, struct tm endDate  ) const
 {
     Cleaner * clean;
     double impact[4];
     double note;
     int r=10; //radius
     bool isImpact = false;
+
+    //Ceci est faux j'avais pas remarqué que c'est mappé par ID à revoir
     for(const auto& cleaner : cleaners)
     {
-        if (cleanId == cleaner.cleanerId)
+        if (cleanId == cleaner.second().cleanerId)
         {
             clean = &cleaner;
         }
@@ -565,7 +567,7 @@ void checkImpactRadius ( int cleanId ) //const
     }
 }
 
-void checkImpactValue ( int cleanId, struct tm endDate, int r) const
+void Data::checkImpactValue ( int cleanId, struct tm endDate, int r) const
 {
     Cleaner * clean;
     double impact[4];
