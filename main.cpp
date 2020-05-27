@@ -43,8 +43,9 @@ int main(){
     d.readCleaners("dataset/cleaners.csv");
     d.readProviders("dataset/providers.csv");
     d.readSensors("dataset/sensors.csv");
-    d.readAttributes("dataset/attributes.csv");
-    cout<<d.AttributesToString()<<endl;
+    //d.readAttributes("dataset/attributes.csv");
+    //cout<<d.AttributesToString()<<endl;
+    d.readParticulars("dataset/users.csv");
 /*
     struct tm tm;
     string s = "2019-11-21 12:00:00";

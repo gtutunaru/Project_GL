@@ -37,14 +37,19 @@ void Particular::setNbPoints(int _nbPoints)
     nbPoints = _nbPoints;
 }
 
-Sensor Particular::getSensor()
+Sensor * Particular::getSensor()
 {
     return sensor;
 }
 
-void Particular::setSensor(Sensor _sensor)
+void Particular::setSensor(Sensor * _sensor)
 {
     sensor = _sensor;
+}
+
+string Particular::toString(){
+    string res = username + "\nNb points = " + to_string(nbPoints) + "\n" + sensor->toString();
+    return res;
 }
 
 
@@ -68,7 +73,7 @@ Particular::Particular ( const Particular & unParticular )
 } //----- Fin de Particular (constructeur de copie)
 
 
-Particular::Particular (string _username, string _password, Sensor _sensor )
+Particular::Particular (string _username, string _password, Sensor * _sensor )
 :User(_username,  _password)
 // Algorithme :
 //
