@@ -113,5 +113,15 @@ int main(){
     date.tm_mon = month - 1 ;  // note: zero indexed
     date.tm_mday = day ;       // note: not zero indexed
 */
+    
+//    Sensor* s= new Sensor(0, 44, -1);
+//    Sensor* s2= new Sensor(1, 44, -0.3);
+//    Sensor* s3= new Sensor(2, 44, -0.3);
+//    GovAgency* a=new GovAgency("username", "password");
+//    bool result = a->similarSensor(s,s2);
+//    bool result2 = a->similarSensor(s,s3);
+//    cout << result << endl;
+//    cout << result2 << endl;
+    
     return 0;
 }
