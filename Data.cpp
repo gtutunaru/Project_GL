@@ -12,6 +12,8 @@
 
 //-------------------------------------------------------- Include système
 
+#define _XOPEN_SOURCE
+
 #include <iostream>
 #include <fstream>
 #include <list>
@@ -19,7 +21,11 @@
 #include <cstring>
 #include <string>
 #include <sstream>
-#include <bits/stdc++.h> 
+#include <bits/stdc++.h>
+#include <time.h>
+#include <ctime>
+
+
 using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Data.h"
@@ -30,50 +36,63 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 //source: of toRadiand and distance https://www.geeksforgeeks.org/program-distance-two-points-earth/
-// Utility function for  
-// converting degrees to radians 
-long double toRadians(const long double degree) 
-{ 
-    // cmath library in C++  
-    // defines the constant 
-    // M_PI as the value of 
-    // pi accurate to 1e-30 
-    long double one_deg = (M_PI) / 180; 
-    return (one_deg * degree); 
-} 
-  
-long double distance(long double lat1, long double long1,  
-                     long double lat2, long double long2) 
-{ 
-    // Convert the latitudes  
-    // and longitudes 
-    // from degree to radians. 
-    lat1 = toRadians(lat1); 
-    long1 = toRadians(long1); 
-    lat2 = toRadians(lat2); 
-    long2 = toRadians(long2); 
-      
-    // Haversine Formula 
-    long double dlong = long2 - long1; 
-    long double dlat = lat2 - lat1; 
-  
-    long double ans = pow(sin(dlat / 2), 2) +  
-                          cos(lat1) * cos(lat2) *  
-                          pow(sin(dlong / 2), 2); 
-  
-    ans = 2 * asin(sqrt(ans)); 
-  
-    // Radius of Earth in  
-    // Kilometers, R = 6371 
-    // Use R = 3956 for miles 
-    long double R = 6371; 
-      
-    // Calculate the result 
-    ans = ans * R; 
-  
-    return ans; 
-} 
-  
+// Utility function for
+// converting degrees to radians
+long double toRadians(const long double degree)
+{
+    // cmath library in C++
+    // defines the constant
+    // M_PI as the value of
+    // pi accurate to 1e-30
+    long double one_deg = (M_PI) / 180;
+    return (one_deg * degree);
+}
+
+struct tm* DatePlusDays( struct tm* date, int days )
+{
+    const time_t ONE_DAY = 24 * 60 * 60 ;
+    struct tm* dateBis;
+    // Seconds since start of epoch
+    time_t date_seconds = mktime( date ) + (days * ONE_DAY) ;
+
+    // Update caller's date
+    // Use localtime because mktime converts to UTC so may change date
+    *dateBis = *localtime( &date_seconds ) ;
+    return dateBis;
+}
+
+long double distance(long double lat1, long double long1,
+                     long double lat2, long double long2)
+{
+    // Convert the latitudes
+    // and longitudes
+    // from degree to radians.
+    lat1 = toRadians(lat1);
+    long1 = toRadians(long1);
+    lat2 = toRadians(lat2);
+    long2 = toRadians(long2);
+
+    // Haversine Formula
+    long double dlong = long2 - long1;
+    long double dlat = lat2 - lat1;
+
+    long double ans = pow(sin(dlat / 2), 2) +
+                          cos(lat1) * cos(lat2) *
+                          pow(sin(dlong / 2), 2);
+
+    ans = 2 * asin(sqrt(ans));
+
+    // Radius of Earth in
+    // Kilometers, R = 6371
+    // Use R = 3956 for miles
+    long double R = 6371;
+
+    // Calculate the result
+    ans = ans * R;
+
+    return ans;
+}
+
 /*bool operator < (tm const  a, tm const b){
     time_t date_seconds1 = mktime( a );
     time_t date_seconds2 = mktime( b );
@@ -135,11 +154,11 @@ void Data::readMeasures ( string filename)
             file.seekg(pos,ios_base::beg);
 
             getline(file,timestamp_buffer,SEP);
-            file.ignore(256,SEP_SENS); 
+            file.ignore(256,SEP_SENS);
             getline(file,sensorId_buffer,SEP);
             getline(file,attributeId_buffer,SEP);
             getline(file,value_buffer,'\n');
-            
+
             Measure* mes = new Measure(timestamp_buffer,stoi(sensorId_buffer),attributeId_buffer,stod(value_buffer),false);
             measures.insert(std::make_pair(mes->getTimestamp(),mes));
         }
@@ -356,8 +375,8 @@ string Data::AttributesToString() const
     string mes = "";
     for(const auto& attribut : attributes)
     {
-    mes += attribut->toString();
-    mes += "\n";
+        mes += attribut->toString();
+        mes += "\n";
     }
     return mes;
 }
@@ -366,24 +385,38 @@ void viewQuality(double c_lat, double c_long, double radius, tm time){
     //list<Measure*> goodMeasures;
 
     typedef std::multimap<tm,Measure*>::iterator MMAPIterator;
- 
+
 	// It returns a pair representing the range of elements with key equal to time
 	pair<MMAPIterator,MMAPIterator> result = measures.equal_range(time);
- 
+
 	cout << "All values for key "<<asctime( &time )<<" are," << endl;
- 
+
 	// Iterate over the range
 	for (multimap<tm,Measure*>::iterator it = result.first; it != result.second; it++)
 		std::cout << it->second->toString() << std::endl;
-    
+
     //for (const auto & i : goodMeasures) {
-            
+
     //}
-}
 
-void checkImpact ( int cleanId ) const
+void Data::checkImpact ( int cleanId ) const
 {
-
+    Cleaner * clean;
+    double impact[4];
+    for(const auto& cleaner : cleaners)
+    {
+        if (cleanId == cleaner.cleanerId)
+        {
+            clean = &cleaner;
+        }
+    }
+    struct tm tm2;
+    string s2 = "2019-11-20 12:00:00";
+    //parses s2 into tm2 struct
+    DatePlusDays( struct tm* date, int days )
+    strptime(s2.c_str(), "%Y-%m-%d %H:%M:%S", &tm2);
+    double avant[] = viewQuality(clean->latitude, clean->longitude, rayon, tm2, );
+    double apres[] = ;
 }
 
 //-------------------------------------------- Constructeurs - destructeur
