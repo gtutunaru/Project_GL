@@ -45,7 +45,7 @@ class GovAgency : public User
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    bool similarSensor(Sensor s1, Sensor s2);
+    bool similarSensor(Sensor* s1, Sensor* s2);
     // Mode d'emploi :
     //
     // Contrat :
