@@ -72,17 +72,13 @@ long double distance(double lat1, double long1,
     return ans; 
 }
 
-bool operator < (const std::tm & date1, const ::tm & date2){
-    bool dateEgale = false;
-    if(date1.tm_hour == date2.tm_hour &&
-        date1.tm_mday == date2.tm_mday &&
-        date1.tm_min == date2.tm_min &&
-        date1.tm_mon == date2.tm_mon &&
-        date1.tm_year == date2.tm_year) {
-
-            dateEgale = true;
-    }
-    return dateEgale;
+bool operator < (const tm & date1, const tm & date2){
+    tm d1 = date1;
+    tm d2 = date2;
+    time_t t1 = mktime(&d1);
+    time_t t2 = mktime(&d2);
+    double diffSecs = difftime(t1, t2);
+    return (diffSecs<0);
 }
 
 int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
