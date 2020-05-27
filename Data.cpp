@@ -379,6 +379,8 @@ void viewQuality(double c_lat, double c_long, double radius, tm time){
     //for (const auto & i : goodMeasures) {
             
     //}
+}
+
 void checkImpact ( int cleanId ) const
 {
 
