@@ -40,9 +40,9 @@ int main(){
     //Camilo was here
     //Erwan
     Data d = Data();
-    d.readCleaners("dataset/cleaners.csv");
-    d.readProviders("dataset/providers.csv");
-    d.readSensors("dataset/sensors.csv");
+    //d.readCleaners("dataset/cleaners.csv");
+    //d.readProviders("dataset/providers.csv");
+    //d.readSensors("dataset/sensors.csv");
     d.readAttributes("dataset/attributes.csv");
     cout<<d.AttributesToString()<<endl;
 /*
@@ -93,7 +93,7 @@ int main(){
     cout << asctime( &timestamp ) << endl ;
 
     // Date, add 10 days
-    DatePlusDays( &timestamp, 10 ) ; 
+    DatePlusDays( &timestamp, 10 ) ;
 
     // Show time/date using default formatting
     cout << asctime( &timestamp ) << endl ;*/
@@ -109,9 +109,9 @@ int main(){
     date.tm_mday = day ;       // note: not zero indexed
 */
 
-   
 
-    
+
+
 
     return 0;
 }

@@ -151,7 +151,7 @@ void Data::readSensors ( string filename ){
                 double longitude = stod(s.substr(0, pos));
 
                 Sensor * s=new Sensor(id, lat, longitude);
-                
+
                 sensors.insert(s);
                 //cout<<"String of provider"<<p.toString()<<endl;
             }
@@ -206,7 +206,36 @@ void Data::readProviders ( string filename ){
 
 void Data::readAttributes ( string filename)
 {
-  fstream entree(filename);
+    ifstream file;
+    string s;
+    file.open(filename);
+    if(!file) {
+        cerr<< "Problem with file " << filename << ". Unable to open." << endl;
+    } else {
+        while (!file.eof()) {
+            std::getline(file,s);
+            //cout<<"line "<<s<<endl;
+            if (s!=""){
+                int pos = s.find(";");
+                string attributeID = s.substr(0, pos);
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                string unit = s.substr(0, pos);
+                s=s.substr(pos+1, s.length()-pos);
+                pos = s.find(";");
+                string description = s.substr(0, pos);
+
+                //cout<<attributeID<<endl<<unit<<endl<<description<<endl<<endl;
+
+                AttributeMeasure * attM = new AttributeMeasure(attributeID, unit, description);
+
+                attributes.push_back(attM);
+
+                //cout<<"String of provider"<<p.toString()<<endl;
+            }
+        }
+    }
+  /*fstream entree(filename);
   entree.open(filename,ios::in);
 
   string attributeID, unit, description;
@@ -220,9 +249,11 @@ void Data::readAttributes ( string filename)
     getline(iss, unit, ';');
     getline(iss, description, ';');
 
+    cout<<attributeID<<endl<<unit<<endl<<description<<endl<<endl;
+
     AttributeMeasure * attM = new AttributeMeasure(attributeID, unit, description);
     attributes.push_back(attM);
-  }
+}*/
 
 }
 
