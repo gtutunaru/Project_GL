@@ -169,11 +169,11 @@ void Data::readMeasures ( string filename)
             getline(file,value_buffer,'\n');
 
             Measure* mes = new Measure(timestamp_buffer,stoi(sensorId_buffer),attributeId_buffer,stod(value_buffer),false);
-            //tm time=mes->getTimestamp();
-            //string s= asctime(&time);
-            //measures.insert(std::make_pair( mes->getTimestamp(),mes));
+            tm time=mes->getTimestamp();
+            string s= asctime(&time);
+            measures.insert(std::make_pair( s,mes));
             
-            double radius = 10;
+            /*double radius = 10;
             int nbSensor = 0;
             for(const auto& part : particulars) {
                 if(mes->getSensorId()==(part)->getSensor()->getSensorId() && mes->getTimestamp().tm_mon==02 && mes->getTimestamp().tm_mday == 01 ) {
@@ -187,8 +187,8 @@ void Data::readMeasures ( string filename)
                     //viewQuality(sensor->getLatitude(),sensor->getLongitude(),1,)
                     break;
                 }
-            }
-            measures.insert(std::make_pair(mes->getTimestamp(),mes));
+            }*/
+            //measures.insert(std::make_pair(mes->getTimestamp(),mes));
         }
     }
     /*Measures::iterator it_start = measures.begin();
@@ -414,19 +414,19 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
     list<Measure*> goodMeasures;
 
 	// It returns a pair representing the range of elements with key equal to time
-    pair<Measures::iterator,Measures::iterator> result = measures.equal_range(time);
+    pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&time));
     //auto result = measures.equal_range(time);
 	//cout << "All values for key "<<asctime( &time )<<" are," << endl;
 
 	 //Iterate over the range
-	for (multimap<tm,Measure*>::iterator it = result.first; it != result.second; it++){
+	for (multimap<string,Measure*>::iterator it = result.first; it != result.second; it++){
         int id_sensor = it->second->getSensorId();
         Sensor * s = sensors.find(id_sensor)->second;
         double s_lat = s->getLatitude();
         double s_long = s->getLongitude();
         //cout<<"hi"<<endl;
         if (distance(c_lat, c_long, s_lat, s_long) < radius){
-            //cout<<"hi"<<endl;
+            cout<<"hi"<<endl;
             goodMeasures.push_back(it->second);
         }
     }
@@ -468,11 +468,11 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
 
     while (start<end == false){
 
-        pair<Measures::iterator,Measures::iterator> result = measures.equal_range(start);
+        pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&start));
         cout << "All values for key "<<asctime( &start )<<" are," << endl;
     
         //Iterate over the range
-        for (multimap<tm,Measure*>::iterator it = result.first; it != result.second; it++){
+        for (multimap<string,Measure*>::iterator it = result.first; it != result.second; it++){
             int id_sensor = it->second->getSensorId();
             Sensor * s = sensors.find(id_sensor)->second;
             double s_lat = s->getLatitude();

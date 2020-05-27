@@ -30,7 +30,7 @@ using namespace std;
 //------------------------------------------------------------------ Types
 typedef list<AttributeMeasure *> Attributes;
 typedef map<int, Cleaner*> Cleaners;
-typedef multimap<tm,Measure*> Measures;
+typedef multimap<string,Measure*> Measures;
 typedef list<Provider *> Providers;
 typedef map<int, Sensor *> Sensors;
 typedef list<Particular*> Particulars;
