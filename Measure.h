@@ -1,5 +1,5 @@
 /*************************************************************************
-                           User  -  description
+                           Measure  -  description
                              -------------------
     début                : $DATE$
     copyright            : (C) $YEAR$ par $AUTHOR$
@@ -20,7 +20,7 @@ using namespace std;
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <AttributeMeasure>
+// Rôle de la classe <Measure>
 //
 //
 //------------------------------------------------------------------------
@@ -47,12 +47,13 @@ public:
     void setAttributeId(string);
     void setValue(double);
     void setFalseData(bool);
+
+    string toString();
 //------------------------------------------------- Surcharge d'opérateurs
     // Mode d'emploi :
     //
     // Contrat :
     //
-
 
 //-------------------------------------------- Constructeurs - destructeur
     Measure ( const Measure & unMeasure );
@@ -92,8 +93,8 @@ protected:
     bool falseData;
 };
 
-//-------------------------------- Autres définitions dépendantes de <AttributeMeasure>
+//-------------------------------- Autres définitions dépendantes de <Measure>
 
-#endif // AttributeMeasure_H
+#endif // MEASURE_H
 
 

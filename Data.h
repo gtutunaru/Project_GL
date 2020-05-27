@@ -29,11 +29,12 @@
 //------------------------------------------------------------------ Types
 typedef list<AttributeMeasure *> Attributes;
 typedef map<int, Cleaner*> Cleaners;
-typedef multimap<tm,Measure> Measures;
+typedef multimap<tm,Measure*> Measures;
 typedef list<Provider *> Providers;
 typedef map<int, Sensor *> Sensors;
 typedef list<Particular*> Particulars;
 const char SEP =';';
+const char SEP_SENS = 'r';
 //------------------------------------------------------------------------
 // Rôle de la classe <Data>
 //
@@ -45,6 +46,7 @@ class Data
 //----------------------------------------------------------------- PUBLIC
 
 public:
+
 //----------------------------------------------------- Méthodes publiques
     void readMeasures ( string filename );
     // Mode d'emploi :
@@ -89,6 +91,8 @@ public:
     //
     // Contrat :
     //
+
+    //bool operator < (tm a, tm b);
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );
