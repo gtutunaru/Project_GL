@@ -431,7 +431,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
                 goodMeasures.push_back(it->second);
             }    
         }
-        start = 
+        start = DatePlusDays(start, 1);
     }
     
     
