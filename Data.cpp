@@ -14,6 +14,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <list>
+#include <algorithm>
 #include <cstring>
 #include <string>
 #include <sstream>
@@ -376,22 +378,22 @@ string Data::AttributesToString() const
 }
 
 void viewQuality(double c_lat, double c_long, double radius, tm time){
-    List <Measure*> goodMeasures;
+    //list<Measure*> goodMeasures;
 
-    typedef std::multimap<tm, Measure*>::iterator MMAPIterator;
+    typedef std::multimap<tm,Measure*>::iterator MMAPIterator;
  
-	// It returns a pair representing the range of elements with key equal to 'c'
-	std::pair<MMAPIterator, MMAPIterator> result = mmapOfPos.equal_range(time);
+	// It returns a pair representing the range of elements with key equal to time
+	pair<MMAPIterator,MMAPIterator> result = measures.equal_range(time);
  
 	cout << "All values for key "<<asctime( &time )<<" are," << endl;
  
 	// Iterate over the range
-	for (MMAPIterator it = result.first; it != result.second; it++)
+	for (multimap<tm,Measure*>::iterator it = result.first; it != result.second; it++)
 		std::cout << it->second->toString() << std::endl;
     
-    for (const auto & i : goodMeasures) {
+    //for (const auto & i : goodMeasures) {
             
-    }
+    //}
 
 }
 
