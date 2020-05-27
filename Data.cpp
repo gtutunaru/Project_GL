@@ -26,28 +26,6 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-/*bool operator < (tm const  a, tm const b){
-    time_t date_seconds1 = mktime( a );
-    time_t date_seconds2 = mktime( b );
-    double diff = difftime(date_seconds1, date_seconds2);
-    bool sontEgales = false;
-    if(diff==0){
-        sontEgales = true;
-    }
-    return sontEgales;
-}*/
-
-/*bool operator < (const std::tm & t1, const std::tm & t2)
-{
-    time_t date_seconds1 = mktime( t1 );
-    time_t date_seconds2 = mktime( t2 );
-    double diff = difftime(date_seconds1, date_seconds2);
-    bool sontEgales = false;
-    if(diff==0){
-        sontEgales = true;
-    }
-    return sontEgales;
-}*/
 
 bool operator < (const std::tm & date1, const ::tm & date2){
     bool dateEgale = false;
@@ -93,16 +71,23 @@ void Data::readMeasures ( string filename)
             getline(file,value_buffer,'\n');
             
             Measure* mes = new Measure(timestamp_buffer,stoi(sensorId_buffer),attributeId_buffer,stod(value_buffer),false);
+            auto it = particulars.begin();
+            while(it!=particulars.end()) {
+                if(mes->getSensorId()==(*it)->getSensor()->getSensorId()) {
+                    
+                    break;
+                }
+            }
             measures.insert(std::make_pair(mes->getTimestamp(),mes));
         }
     }
-    Measures::iterator it_start = measures.begin();
+    /*Measures::iterator it_start = measures.begin();
     Measures::iterator it_end = measures.end();
     while(it_start != it_end)
     {
         cout<<it_start->first.tm_mday <<" ET "<<(it_start->second)->toString()<<endl;
         it_start++;
-    }
+    }*/
 } //----- Fin de readMeasurements
 
 
