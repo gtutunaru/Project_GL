@@ -596,7 +596,7 @@ void checkImpactValue ( int cleanId, struct tm endDate, int r) const
     cout<<"Difference SO2 : "<<impact[1]<<endl;
     cout<<"Difference NO2 : "<<impact[2]<<endl;
     cout<<"Difference PM10 : "<<impact[3]<<endl;
-}
+}*/
 
 //-------------------------------------------- Constructeurs - destructeur
 
