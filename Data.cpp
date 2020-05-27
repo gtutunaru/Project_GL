@@ -104,15 +104,6 @@ long double distance(long double lat1, long double long1,
     return sontEgales;
 }*/
 
-bool operator < (const tm & date1, const tm & date2){
-    tm d1 = date1;
-    tm d2 = date2;
-    time_t t1 = mktime(&d1);
-    time_t t2 = mktime(&d2);
-    double diffSecs = difftime(t1, t2);
-    return (diffSecs<0);
-}
-
 int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
     auto it = sensors.begin();
     int nbSensors=0;
@@ -168,7 +159,8 @@ void Data::readMeasures ( string filename)
                         radius +=10;
                     }
                     cout << "OK rayon : "<< radius << "sensor id "<< mes->getSensorId() << "nbSensor " << nbSensor <<  endl;
-                    //viewQuality(sensor->getLatitude(),sensor->getLongitude(),1,)
+                    //tm = 
+                    //double data[4]= viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,)
                     break;
                 }
             }
@@ -393,7 +385,7 @@ string Data::AttributesToString() const
     return mes;
 }
 
-double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
+/*double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
     list<Measure*> goodMeasures;
 
 	// It returns a pair representing the range of elements with key equal to time
@@ -404,7 +396,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
 	 //Iterate over the range
 	for (multimap<tm,Measure*>::iterator it = result.first; it != result.second; it++){
         int id_sensor = it->second->getSensorId();
-        Sensor * s = sensors.find(id)->second;
+        Sensor * s = sensors.find(it)->second;
         double s_lat = s->getLatitude();
         double s_long = s->getLongitude();
         if (distance(c_lat, c_long, s_lat, s_long) < radius){
@@ -441,9 +433,9 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
     res[2]=no2_tot/count_no2;
     res[3]=pm10_tot/count_pm10;
     return res;
-}
+}*/
 
-void checkImpact ( int cleanId )
+/*void checkImpact ( int cleanId )
 {
     Cleaner * clean;
     double impact[4];
@@ -459,9 +451,9 @@ void checkImpact ( int cleanId )
     //parses s2 into tm2 struct
     DatePlusDays( struct tm* date, int days )
     strptime(s2.c_str(), "%Y-%m-%d %H:%M:%S", &tm2);
-    double avant[] = viewQuality(clean->latitude, clean->longitude, rayon, tm2, );
-    double apres[] = ;
-}
+    //double avant[] = viewQuality(clean->latitude, clean->longitude, rayon, tm2, );
+    //double apres[] = ;
+}*/
 
 //-------------------------------------------- Constructeurs - destructeur
 
