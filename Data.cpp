@@ -14,9 +14,12 @@
 
 #include <iostream>
 #include <fstream>
+#include <list>
+#include <algorithm>
 #include <cstring>
 #include <string>
 #include <sstream>
+#include <bits/stdc++.h> 
 using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Data.h"
@@ -299,6 +302,23 @@ string Data::AttributesToString() const
     return mes;
 }
 
+void viewQuality(double c_lat, double c_long, double radius, tm time){
+    //list<Measure*> goodMeasures;
+
+    typedef std::multimap<tm,Measure*>::iterator MMAPIterator;
+ 
+	// It returns a pair representing the range of elements with key equal to time
+	pair<MMAPIterator,MMAPIterator> result = measures.equal_range(time);
+ 
+	cout << "All values for key "<<asctime( &time )<<" are," << endl;
+ 
+	// Iterate over the range
+	for (multimap<tm,Measure*>::iterator it = result.first; it != result.second; it++)
+		std::cout << it->second->toString() << std::endl;
+    
+    //for (const auto & i : goodMeasures) {
+            
+    //}
 void checkImpact ( int cleanId ) const
 {
 

@@ -92,6 +92,9 @@ public:
     // Contrat :
     //
 
+    void viewQuality(double c_lat, double c_long, double radius, tm time);
+
+    void viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
     //bool operator < (tm a, tm b);
 
 //-------------------------------------------- Constructeurs - destructeur
