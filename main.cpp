@@ -15,14 +15,14 @@ using namespace std;
 
 //compares 2 dates: return the difference in seconds
 //return a negative value if date1 is smaller (before date2)
-double compareDates(struct tm *date1, struct tm * date2){
+/*double compareDates(struct tm *date1, struct tm * date2){
     time_t date_seconds1 = mktime( date1 );
     time_t date_seconds2 = mktime( date2 );
     double diff = difftime(date_seconds1, date_seconds2);
     return diff;
-}
+}*/
 
-void DatePlusDays( struct tm* date, int days )
+/*void DatePlusDays( struct tm* date, int days )
 {
     const time_t ONE_DAY = 24 * 60 * 60 ;
 
@@ -32,34 +32,34 @@ void DatePlusDays( struct tm* date, int days )
     // Update caller's date
     // Use localtime because mktime converts to UTC so may change date
     *date = *localtime( &date_seconds ) ;
-}
+}*/
 
 int main(){
     //cout<<"hi"<<endl;
     //cout<<"hello"<<endl;
     //Camilo was here
     //Erwan
-    Data d = Data();
-    d.readCleaners("dataset/cleaners.csv");
-    d.readProviders("dataset/providers.csv");
+    //Data d = Data();
+    //d.readCleaners("dataset/cleaners.csv");
+    //d.readProviders("dataset/providers.csv");
 
-    struct tm tm;
-    string s = "2019-11-21 12:00:00";
-    strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm);
-    cout << asctime( &tm ) << endl;
+    //struct tm tm;
+    //string s = "2019-11-21 12:00:00";
+    //strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm);
+    //cout << asctime( &tm ) << endl;
 
-    struct tm tm2;
-    string s2 = "2019-11-20 12:00:00";
+    //struct tm tm2;
+    //string s2 = "2019-11-20 12:00:00";
     //parses s2 into tm2 struct
-    strptime(s2.c_str(), "%Y-%m-%d %H:%M:%S", &tm2);
+    //strptime(s2.c_str(), "%Y-%m-%d %H:%M:%S", &tm2);
     //transforms tm2 into string
-    cout << asctime( &tm2 ) << endl;
+    //cout << asctime( &tm2 ) << endl;
 
-    cout<<compareDates(&tm, &tm2)<<endl;
+    //cout<<compareDates(&tm, &tm2)<<endl;
 
 
 
-    string date = "2019-11-21 12:00:00";
+   /* string date = "2019-11-21 12:00:00";
     string s_annee= date.substr(0,4);
     string s_mois = date.substr(5,7);
     string s_jour = date.substr(8,10);
@@ -80,20 +80,23 @@ int main(){
     cout << timestamp.tm_mday << endl;
     cout << timestamp.tm_hour << endl;
     cout << timestamp.tm_min << endl;
-    cout << timestamp.tm_sec << endl;
+    cout << timestamp.tm_sec << endl;*/
 
     Data data = Data();
-    data.readAttributes("./dataset/attributes.csv");
-    cout<<data.AttributesToString();
+    /*data.readAttributes("./dataset/attributes.csv");
+    cout<<data.AttributesToString();*/
+
+    data.readMeasures("./dataset/measurements.csv");
+    
 
 
-    cout << asctime( &timestamp ) << endl ;
+    /*cout << asctime( &timestamp ) << endl ;
 
     // Date, add 10 days
     DatePlusDays( &timestamp, 10 ) ; 
 
     // Show time/date using default formatting
-    cout << asctime( &timestamp ) << endl ;
+    cout << asctime( &timestamp ) << endl ;*/
 
     /*struct tm date = { 0, 0, 12 } ;  // nominal time midday (arbitrary).
     int year = 2010 ;
@@ -105,10 +108,5 @@ int main(){
     date.tm_mon = month - 1 ;  // note: zero indexed
     date.tm_mday = day ;       // note: not zero indexed
 */
-
-   
-
-    
-
     return 0;
 }

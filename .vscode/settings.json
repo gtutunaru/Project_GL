@@ -53,7 +53,8 @@
         "xloctime": "cpp",
         "locale": "cpp",
         "xlocbuf": "cpp",
-        "xlocmes": "cpp"
+        "xlocmes": "cpp",
+        "*.tcc": "cpp"
     },
     "genGetSet.classic": true,
     "C_Cpp.errorSquiggles": "Disabled"
