@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS = -Wall -pedantic -std=c++11
+CFLAGS = -Wall -g -pedantic -std=c++11
 CFLAGS += $(FOO) #il est possible d'utiliser make FOO=-DMAP pour pouvoir voir le traçage des appels aux constructeurs / destructeurs
 
 MAIN= exec

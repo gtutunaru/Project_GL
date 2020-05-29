@@ -117,13 +117,13 @@ double distance(double lat1, double long1,
     return sontEgales;
 }*/
 
-bool operator < (const tm & date1, const tm & date2){
+bool operator <= (const tm & date1, const tm & date2){
     tm d1 = date1;
     tm d2 = date2;
     time_t t1 = mktime(&d1);
     time_t t2 = mktime(&d2);
     double diffSecs = difftime(t1, t2);
-    return (diffSecs<0);
+    return (diffSecs<=0);
 }
 
 int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
@@ -425,9 +425,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
         Sensor * s = sensors.find(id_sensor)->second;
         double s_lat = s->getLatitude();
         double s_long = s->getLongitude();
-        //cout<<"hi"<<endl;
         if (distance(c_lat, c_long, s_lat, s_long) < radius){
-            //cout<<"hi"<<endl;
             goodMeasures.push_back(it->second);
         }
     }
@@ -466,7 +464,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end){
     list<Measure*> goodMeasures;
 
-    while (start<end == true){
+    while (start<=end == true){
 
         pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&start));
         //cout << "All values for key "<<asctime( &start )<<" are," << endl;
