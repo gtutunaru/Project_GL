@@ -38,6 +38,12 @@ public:
     //
 
     string toString() const;
+    int getCleanerId() const;
+    double getLatitude() const;
+    double getLongitude() const;
+    string getDescription() const;
+    string getStart() const;
+    string getEnd() const;
 //------------------------------------------------- Surcharge d'opérateurs
     //Cleaner & operator = ( const Cleaner & unCleaner );
     // Mode d'emploi :

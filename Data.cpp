@@ -246,12 +246,12 @@ void Data::readCleaners ( string filename ){
             }
         }
     }
-    /*std::map<int, Cleaner*>::iterator it = cleaners.begin();
+    std::map<int, Cleaner*>::iterator it = cleaners.begin();
     while(it != cleaners.end())
     {
         cout<<(it->second)->toString()<<endl;
         it++;
-    }*/
+    }
 }
 
 void Data::readSensors ( string filename ){
@@ -411,7 +411,8 @@ string Data::AttributesToString() const
 }
 //return table with averages of values on a day from sensors in a circle
 //1st value of o3, 2nd of so2, 3rd of no2 and 4th of pm10
-double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
+double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
+{
     list<Measure*> goodMeasures;
 
 	// It returns a pair representing the range of elements with key equal to time
@@ -463,7 +464,8 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
     return res;
 }
 
-double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end){
+double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end)
+{
     list<Measure*> goodMeasures;
 
     while (start<end == true){
@@ -518,41 +520,31 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
     return res;
 }
 //Faire Getters de Cleaner!!!
-void Data::checkImpactRadius (  int cleanId, struct tm endDate  ) const
+void Data::checkImpactRadius (  int cleanId, struct tm endDate  )
 {
-    Cleaner * clean;
     double impact[4];
-    double note;
     int r=10; //radius
     bool isImpact = false;
 
-    //Ceci est faux j'avais pas remarqué que c'est mappé par ID à revoir
-    for(const auto& cleaner : cleaners)
-    {
-        if (cleanId == cleaner.second().cleanerId)
-        {
-            clean = &cleaner;
-        }
-    }
     struct tm startDate;
     //parses s2 into tm2 struct
-    strptime(clean->start.c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
+    strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
 
     while(!isImpact)
     {
         //Quality Before
-        double * before = viewQuality(clean->latitude, clean->longitude, r, *DatePlusDays( startDate, -30), startDate);
+        double * before = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, *DatePlusDays( &startDate, -30), startDate);
         //Quality After
-        double * after = viewQuality(clean->latitude, clean->longitude, r, startDate, endDate);
+        double * after = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, endDate);
         //Impact
-        for (int i = 0; i<0;i++)
+        for (int i = 0; i<4;i++)
         {
             impact[i]= after[i]-before[i];
-            if (abs(impact[i])>start[i]/10.0)
+            if (abs(impact[i])>before[i]/10.0)
             {
                 isImpact = true;
             }
-            SO2,NO2, PM10
+            //SO2,NO2, PM10
         }
         if(isImpact)
         {
@@ -566,38 +558,32 @@ void Data::checkImpactRadius (  int cleanId, struct tm endDate  ) const
     }
 }
 
-void Data::checkImpactValue ( int cleanId, struct tm endDate, int r) const
+void Data::checkImpactValue ( int cleanId, struct tm endDate, int r)
 {
-    Cleaner * clean;
     double impact[4];
-    double note;
-    int r=10; //radius
-    bool isImpact = false;
-    for(const auto& cleaner : cleaners)
-    {
-        if (cleanId == cleaner.cleanerId)
-        {
-            clean = &cleaner;
-        }
-    }
+    cout<<"So far so good 3"<<endl;
     struct tm startDate;
     //parses s2 into tm2 struct
-    strptime(clean->start.c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
-
-    //Quality Before
-    double * before = viewQuality(clean->latitude, clean->longitude, r, *DatePlusDays( startDate, -30), startDate);
-    //Quality After
-    double * after = viewQuality(clean->latitude, clean->longitude, r, startDate, endDate);
+    strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
+    //cout<<asctime(&startDate)<<endl;
+    //Quality before
+    double * before = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, *DatePlusDays( &startDate, -30), startDate);
+    /*//Quality After
+    double * after = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, endDate);
     //Impact
-    for (int i = 0; i<0;i++)
+    cout<<"Test before"<<endl;
+    for (int i = 0; i<4;i++)
     {
         impact[i]= after[i]-before[i];
+        cout<<before[i]<<endl;
     }
     cout<<"On a radius of "<<r<<" km the impact is :"<<endl<<endl;
     cout<<"Difference O3 : "<<impact[0]<<endl;
     cout<<"Difference SO2 : "<<impact[1]<<endl;
     cout<<"Difference NO2 : "<<impact[2]<<endl;
     cout<<"Difference PM10 : "<<impact[3]<<endl;
+    */
+    cout<<"finished value"<<endl;
 }
 
 //-------------------------------------------- Constructeurs - destructeur

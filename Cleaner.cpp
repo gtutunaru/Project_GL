@@ -35,6 +35,35 @@ string Cleaner::toString() const{
     return s;
 }
 
+int Cleaner::getCleanerId() const
+{
+    return cleanerId;
+}
+
+double Cleaner::getLatitude() const
+{
+    return latitude;
+}
+
+double Cleaner::getLongitude() const
+{
+    return longitude;
+}
+
+string Cleaner::getDescription() const
+{
+    return description;
+}
+
+string Cleaner::getStart() const
+{
+    return start;
+}
+
+string Cleaner::getEnd() const
+{
+    return end;
+}
 
 //------------------------------------------------- Surcharge d'opérateurs
 /*Cleaner & Cleaner::operator = ( const Cleaner & unCleaner )
@@ -51,7 +80,12 @@ Cleaner::Cleaner ( const Cleaner & unCleaner )
 // Algorithme :
 //
 {
-
+    cleanerId = unCleaner.getCleanerId();
+    latitude = unCleaner.getLatitude();
+    longitude = unCleaner.getLongitude();
+    description = unCleaner.getDescription();
+    start = unCleaner.getStart();
+    end = unCleaner.getEnd();
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Cleaner>" << endl;
 #endif

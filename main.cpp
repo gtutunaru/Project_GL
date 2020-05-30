@@ -54,24 +54,37 @@ int main(){
     strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm);
     //cout << asctime( &tm ) << endl;
 
-    cout<<"Air quality on  "<<asctime(&tm)<<endl;
+    /*cout<<"Air quality on  "<<asctime(&tm)<<endl;
     double* res = d.viewQuality(44.1,0,200,tm);
     cout<<"O3 = "<<res[0]<<endl;
     cout<<"SO2 = "<<res[1]<<endl;
     cout<<"NO2= "<<res[2]<<endl;
-    cout<<"PM10 = "<<res[3]<<endl;
+    cout<<"PM10 = "<<res[3]<<endl;*/
 
     struct tm tm2;
     s = "2019-02-01 12:00:00";
     strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm2);
     cout << asctime( &tm2 ) << endl;
 
-    res = d.viewQuality(44.1,0,200,tm, tm2);
+    /*res = d.viewQuality(44.1,0,200,tm, tm2);
     cout<<"Air quality on period "<<asctime(&tm)<< " - " <<asctime(&tm2)<<endl;
     cout<<"O3 = "<<res[0]<<endl;
     cout<<"SO2 = "<<res[1]<<endl;
     cout<<"NO2= "<<res[2]<<endl;
-    cout<<"PM10 = "<<res[3]<<endl;
+    cout<<"PM10 = "<<res[3]<<endl;*/
+    cout<<endl;
+    //Cleaner clean = Cleaner()
+
+    double* res = d.viewQuality(45.333333,1.333333,100,tm,tm2);
+
+    cout<<"Air quality on period "<<asctime(&tm)<< " - " <<asctime(&tm2)<<endl;
+    cout<<"O3 = "<<res[0]<<endl;
+    cout<<"SO2 = "<<res[1]<<endl;
+    cout<<"NO2= "<<res[2]<<endl;
+    cout<<"PM10 = "<<res[3]<<endl<<endl;
+    cout<<"So far so good"<<endl;
+    d.checkImpactValue(0,tm2,100);
+    //d.checkImpactRadius(0,tm2);
 
     //struct tm tm2;
     //string s2 = "2019-11-20 12:00:00";
@@ -136,7 +149,7 @@ int main(){
     date.tm_mday = day ;       // note: not zero indexed
 */
 
-    
+
 
     /*while(1)
     {
@@ -153,7 +166,7 @@ int main(){
         }
     }*/
 
-    
+
 
     return 0;
 }
