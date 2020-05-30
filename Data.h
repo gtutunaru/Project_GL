@@ -38,6 +38,7 @@ typedef list<Provider *> Providers;
 typedef map<int, Sensor *> Sensors;
 typedef list<Particular*> Particulars;
 
+typedef multimap<int, Measure*>::iterator measures_iterator;
 //------------------------------------------------------------------------
 // Rôle de la classe <Data>
 //
@@ -57,7 +58,7 @@ public:
     // Contrat :
     //
 
-    void checkImpactValue ( int cleanId, int nbDays, int r);
+    void checkImpactValue ( int cleanId, int nbDays, double r);
 
     void checkImpactRadius ( int cleanId, int nbDays );
     // Mode d'emploi :
@@ -102,9 +103,9 @@ public:
     double * viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
     //bool operator < (tm a, tm b);
 
-    int nbSensorInArea(double, double, double);
+    list<int> nbSensorInArea(double, double, double);
 
-    int filterData();
+    void filterData();
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );

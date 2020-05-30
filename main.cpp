@@ -85,7 +85,20 @@ int main(){
         cout<<"No sensors in this area"<<endl;
     }*/
 
-    d.checkImpactValue(0,30,100);
+    /*struct tm* DatePlusDays( struct tm* date, int days )
+    {
+    struct tm* dateBis;
+    // Seconds since start of epoch
+    time_t date_seconds = mktime( date ) + (days * ONE_DAY) ;
+
+    // Update caller's date
+    // Use localtime because mktime converts to UTC so may change date
+    *dateBis = *localtime( &date_seconds ) ;
+    return dateBis;
+    }*/
+
+    /*double r = 100;
+    d.checkImpactValue(0,30,r);*/
 
     //struct tm tm2;
     //string s2 = "2019-11-20 12:00:00";
