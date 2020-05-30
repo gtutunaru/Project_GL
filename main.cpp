@@ -48,8 +48,8 @@ int main(){
     //cout<<d.AttributesToString()<<endl;
     d.readParticulars("dataset/users.csv");
     d.readMeasures("./dataset/measurements.csv");
-
-    /*struct tm tm;
+/*
+    struct tm tm;
     string s = "2019-01-01 12:00:00";
     strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm);
     //cout << asctime( &tm ) << endl;
@@ -73,7 +73,9 @@ int main(){
     strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm2);
     //cout << asctime( &tm2 ) << endl;
 
-    res = d.viewQuality(44.1,-1,100,tm, tm); //average of a month on Sensor0
+    d.viewQuality(44.1,-1,100,tm, tm2, res); //average of a month on Sensor0
+    double * res2 = new double[4];
+    d.viewQuality(44.1,-1,100,tm, tm, res2); //average of a month on Sensor0
     cout<<"Air quality on period\nStart: "<<asctime(&tm)<< "End: " <<asctime(&tm2)<<"In area with coordinates:"<<endl;
     cout<<"Latitude = "<< "lat" <<", longitude = "<<"long"<<", radius = "<<"r"<<endl;
     if (res[0] >= 0){
@@ -83,9 +85,21 @@ int main(){
         cout<<"PM10 = "<<res[3]<<endl;
     } else {
         cout<<"No sensors in this area"<<endl;
+    }
+
+    
+    cout<<"Air quality on period\nStart: "<<asctime(&tm)<< "End: " <<asctime(&tm)<<"In area with coordinates:"<<endl;
+    cout<<"Latitude = "<< "lat" <<", longitude = "<<"long"<<", radius = "<<"r"<<endl;
+    if (res2[0] >= 0){
+        cout<<"O3 = "<<res2[0]<<endl;
+        cout<<"SO2 = "<<res2[1]<<endl;
+        cout<<"NO2= "<<res2[2]<<endl;
+        cout<<"PM10 = "<<res2[3]<<endl;
+    } else {
+        cout<<"No sensors in this area"<<endl;
     }*/
 
-    d.checkImpactValue(0,30,100);
+    d.checkImpactValue(0,30,100.0);
 
     //struct tm tm2;
     //string s2 = "2019-11-20 12:00:00";
