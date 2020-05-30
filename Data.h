@@ -26,16 +26,18 @@
 #include "Particular.h"
 using namespace std;
 //------------------------------------------------------------- Constantes
-
+const char SEP =';';
+const char SEP_SENS = 'r';
+const time_t ONE_DAY = 24 * 60 * 60 ;
 //------------------------------------------------------------------ Types
 typedef list<AttributeMeasure *> Attributes;
 typedef map<int, Cleaner*> Cleaners;
 typedef multimap<string,Measure*> Measures;
+typedef multimap<int,Measure*> Measures_From_Id;
 typedef list<Provider *> Providers;
 typedef map<int, Sensor *> Sensors;
 typedef list<Particular*> Particulars;
-const char SEP =';';
-const char SEP_SENS = 'r';
+
 //------------------------------------------------------------------------
 // Rôle de la classe <Data>
 //
@@ -100,6 +102,8 @@ public:
 
     int nbSensorInArea(double, double, double);
 
+    int filterData();
+
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );
 
@@ -122,6 +126,7 @@ protected:
     Attributes attributes;
     Cleaners cleaners;
     Measures measures;
+    Measures_From_Id measures_key_id;
     Providers providers;
     Sensors sensors;
     Particulars particulars;

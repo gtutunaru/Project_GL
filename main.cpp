@@ -45,14 +45,14 @@ int main(){
     d.readProviders("dataset/providers.csv");
     d.readSensors("dataset/sensors.csv");
     d.readAttributes("dataset/attributes.csv");
-    cout<<d.AttributesToString()<<endl;
+    //cout<<d.AttributesToString()<<endl;
     d.readParticulars("dataset/users.csv");
     d.readMeasures("./dataset/measurements.csv");
 
     struct tm tm;
     string s = "2019-01-01 12:00:00";
     strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm);
-    cout << asctime( &tm ) << endl;
+    //cout << asctime( &tm ) << endl;
 
     //struct tm tm2;
     //string s2 = "2019-11-20 12:00:00";
@@ -134,10 +134,10 @@ int main(){
         }
     }*/
 
-    double* res = d.viewQuality(44.1,0,200,tm);
+    /*double* res = d.viewQuality(44.1,0,200,tm);
     for (int i=0;i<4; i++){
         cout<<res[i]<<endl;
-    }
+    }*/
 
     return 0;
 }

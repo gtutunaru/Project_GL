@@ -50,7 +50,6 @@ double toRadians(const double degree)
 
 struct tm* DatePlusDays( struct tm* date, int days )
 {
-    const time_t ONE_DAY = 24 * 60 * 60 ;
     struct tm* dateBis;
     // Seconds since start of epoch
     time_t date_seconds = mktime( date ) + (days * ONE_DAY) ;
@@ -63,8 +62,6 @@ struct tm* DatePlusDays( struct tm* date, int days )
 
 void AddDay( struct tm* date )
 {
-    const time_t ONE_DAY = 24 * 60 * 60 ;
-
     // Seconds since start of epoch
     time_t date_seconds = mktime( date ) + (ONE_DAY) ;
 
@@ -105,16 +102,14 @@ double distance(double lat1, double long1,
     return ans;
 }
 
-/*bool operator < (tm const  a, tm const b){
-    time_t date_seconds1 = mktime( a );
-    time_t date_seconds2 = mktime( b );
-    double diff = difftime(date_seconds1, date_seconds2);
-    bool sontEgales = false;
-    if(diff==0){
-        sontEgales = true;
-    }
-    return sontEgales;
-}*/
+bool operator < (const tm & date1, const tm & date2){
+    tm d1 = date1;
+    tm d2 = date2;
+    time_t t1 = mktime(&d1);
+    time_t t2 = mktime(&d2);
+    double diffSecs = difftime(t1, t2);
+    return (diffSecs<0);
+}
 
 int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
     auto it = sensors.begin();
@@ -127,6 +122,27 @@ int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
         it++;
     }
     return nbSensors;
+}
+
+int Data::filterData() {
+    double radius = 10;
+    int nbSensor = 0;
+    for(const auto& part : particulars) {
+        auto it = measures_key_id.find(part->getSensor()->getSensorId())
+        if(mes->getSensorId()==(part)->getSensor()->getSensorId() && mes->getTimestamp().tm_mon==02 && mes->getTimestamp().tm_mday == 01 ) {
+            Sensor* sensor = part->getSensor();
+            nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
+            while(nbSensor<5) {
+                nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
+                radius +=10;
+            }
+            cout << "OK rayon : "<< radius << "sensor id "<< mes->getSensorId() << "nbSensor " << nbSensor <<  endl;
+            double data[4]= viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,)
+
+            break;
+        }
+    }
+
 }
 
 void Data::readMeasures ( string filename)
@@ -163,24 +179,8 @@ void Data::readMeasures ( string filename)
             tm time=mes->getTimestamp();
             string s= asctime(&time);
             measures.insert(std::make_pair( s,mes));
-            
-            /*double radius = 10;
-            int nbSensor = 0;
-            for(const auto& part : particulars) {
-                if(mes->getSensorId()==(part)->getSensor()->getSensorId() && mes->getTimestamp().tm_mon==02 && mes->getTimestamp().tm_mday == 01 ) {
-                    Sensor* sensor = part->getSensor();
-                    nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
-                    while(nbSensor<5) {
-                        nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
-                        radius +=10;
-                    }
-                    cout << "OK rayon : "<< radius << "sensor id "<< mes->getSensorId() << "nbSensor " << nbSensor <<  endl;
-                    //tm = 
-                    //double data[4]= viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,)
-                    break;
-                }
-            }*/
-            //measures.insert(std::make_pair(mes->getTimestamp(),mes));
+            measures_key_id.insert(std::make_pair(stoi(sensorId_buffer),mes))
+            filterData();
         }
     }
     /*Measures::iterator it_start = measures.begin();
@@ -237,12 +237,12 @@ void Data::readCleaners ( string filename ){
             }
         }
     }
-    std::map<int, Cleaner*>::iterator it = cleaners.begin();
+    /*std::map<int, Cleaner*>::iterator it = cleaners.begin();
     while(it != cleaners.end())
     {
         cout<<(it->second)->toString()<<endl;
         it++;
-    }
+    }*/
 }
 
 void Data::readSensors ( string filename ){
@@ -310,9 +310,9 @@ void Data::readParticulars ( string filename ){
             }
         }
     }
-    for (const auto & i : particulars) {
+    /*for (const auto & i : particulars) {
         cout<< (i)->toString() <<endl;
-    }
+    }*/
 }
 
 void Data::readProviders ( string filename ){
@@ -352,9 +352,9 @@ void Data::readProviders ( string filename ){
             }
         }
     }
-    for (const auto & i : providers) {
+    /*for (const auto & i : providers) {
         cout<< (i)->toString() <<endl;
-    }
+    }*/
 }
 
 void Data::readAttributes ( string filename)
@@ -418,7 +418,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
         double s_long = s->getLongitude();
         //cout<<"hi"<<endl;
         if (distance(c_lat, c_long, s_lat, s_long) < radius){
-            cout<<"hi"<<endl;
+            //cout<<"hi"<<endl;
             goodMeasures.push_back(it->second);
         }
     }
@@ -453,7 +453,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
     res[2]=no2_tot/count_no2;
     res[3]=pm10_tot/count_pm10;
     return res;
-}*/
+}
 
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end){
     list<Measure*> goodMeasures;
