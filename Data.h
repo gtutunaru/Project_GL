@@ -98,9 +98,9 @@ public:
     // Contrat :
     //
 
-    double * viewQuality(double c_lat, double c_long, double radius, tm time);
+    void viewQuality(double c_lat, double c_long, double radius, tm time, double * res);
 
-    double * viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
+    void viewQuality(double c_lat, double c_long, double radius, tm start, tm end, double *res);
     //bool operator < (tm a, tm b);
 
     list<int> nbSensorInArea(double, double, double);

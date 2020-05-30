@@ -49,21 +49,16 @@ double toRadians(const double degree)
     return (one_deg * degree);
 }
 
-struct tm* DatePlusDays( struct tm* date, int days )
+void DatePlusDays( struct tm* date, int days )
 {
-    tm* dateBis;
-    
+    const time_t ONE_DAY = 24 * 60 * 60 ;
+
     // Seconds since start of epoch
-    //cout << " jours en secondes " << (days * ONE_DAY) << endl;
-    //cout << "date " << mktime( date ) << endl;
     time_t date_seconds = mktime( date ) + (days * ONE_DAY) ;
-    //cout << "On est là "<< date_seconds/2592000 <<endl;
+
     // Update caller's date
     // Use localtime because mktime converts to UTC so may change date
-    dateBis = localtime( &date_seconds ) ;
-    //cout << "On va bien" << endl;
-    //cout << "la " << asctime(dateBis);
-    return dateBis;
+    *date = *localtime( &date_seconds ) ;
 }
 
 void AddDay( struct tm* date )
@@ -498,7 +493,7 @@ string Data::AttributesToString() const
 }
 //return table with averages of values on a day from sensors in a circle
 //1st value of o3, 2nd of so2, 3rd of no2 and 4th of pm10
-double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
+void Data::viewQuality(double c_lat, double c_long, double radius, tm time, double * res)
 {
     list<Measure*> goodMeasures;
 
@@ -541,7 +536,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
             pm10_tot += i->getValue();
         }
     }
-    static double res[4];
+    //static double res[4];
     if (count_o3>0){
         res[0]=o3_tot/count_o3;
         res[1]=so2_tot/count_so2;
@@ -557,7 +552,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
     return res;
 }
 
-double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end)
+void Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end, double * res)
 {
     list<Measure*> goodMeasures;
     cout <<"ok on rentre" << endl;
@@ -592,6 +587,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
     double count_pm10 = 0;
 
     for (const auto & i : goodMeasures) {
+        //cout<<i->toString()<<endl;
         if (i->getAttributeId()=="O3"){
             count_o3++;
             o3_tot += i->getValue();
@@ -606,7 +602,8 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
             pm10_tot += i->getValue();
         }
     }
-    static double res[4];
+    //cout<<o3_tot<<endl;
+    //static double res[4];
 
     if (count_o3>0){
         res[0]=o3_tot/count_o3;
@@ -619,9 +616,11 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
         res[2]=-1;
         res[3]=-1;
     }
-    return res;
+    
+    //return res;
 }
 //Faire Getters de Cleaner!!!
+/*
 void Data::checkImpactRadius (  int cleanId, int nbDays  )
 {
     double impact[4];
@@ -658,7 +657,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
         }
         r+=10;
     }
-}
+}*/
 
 void Data::checkImpactValue ( int cleanId, int nbDays, double r)
 {
@@ -667,29 +666,34 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
     tm startDate;
     //parses s2 into tm2 struct
     strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
-    //cout<<asctime(&*DatePlusDays( &startDate, -30))<<endl;
-    //cout<<asctime(&startDate)<<endl;
+
+    struct tm beforeDate =startDate; //pour ajouter des jours, faut utiliser comme ca
+    DatePlusDays(&beforeDate, -30);
+
+    cout<<asctime(&beforeDate)<<endl;
+    cout<<asctime(&startDate)<<endl;
+
+    struct tm afterDate =startDate;
+    DatePlusDays(&afterDate, 30);
+    cout<<asctime(&afterDate)<<endl;
+
     //Quality before
-    //double test = cleaners[cleanId]->getLatitude();
-    //cout << "Latitude : " << test << endl;
-    //cout << "rayon : " << r << endl;
-    //tm date_mois_avant = (*DatePlusDays( &startDate, -30));
-    //cout <<"on est bon" << endl;
-    double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, *DatePlusDays( &startDate, -30), startDate);
+    double * before = new double[4];
+    viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, startDate, before);
     //Quality After
-    //cout << "ok_1";
-    //cout<<asctime(&*DatePlusDays( &startDate, -30))<<endl;
-    double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, *DatePlusDays( &startDate, nbDays));
-    cout<<"date de début "<<asctime(&startDate)<<endl;
-    cout << "date de fin "<<asctime(&*DatePlusDays( &startDate, nbDays)) << endl;
-    cout << "un mois avant " <<asctime(&*DatePlusDays( &startDate, -30)) << endl;
+    double * after = new double[4];
+    viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, afterDate, after);
     //Impact
     cout<<"Test before"<<endl;
     for (int i = 0; i<4;i++)
     {
-        impact[i]= after[i]-before[i];
-        cout<<before[i]<<endl;
-        cout<<after[i]<<endl;
+        if (before[i]>=0 && after[i]>=0){
+            impact[i]= after[i]-before[i];
+            cout<<before[i]<<endl;
+            cout<<after[i]<<endl;
+        }
+            impact[i]= after[i]-before[i];
+        //cout<<before[i]<<endl;
     }
     cout<<"On a radius of "<<r<<" km the impact is :"<<endl<<endl;
     cout<<"Difference O3 : "<<impact[0]<<endl;
