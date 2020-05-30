@@ -178,8 +178,7 @@ void Data::filterData() {
             it--;
             //cout << endl;
 
-            double air_quality[4];
-            viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,date, air_quality);
+            double * air_quality = viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,date);
             /*cout << "03 officiel : " << air_quality[0] << endl;
             cout << "N02 officiel : " << air_quality[2] << endl;
             cout << "S02 officiel : " << air_quality[1] << endl;
@@ -557,7 +556,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
         res[3]=-1;
     }
     
-    return;// res;
+    return res;
 }
 
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end)
