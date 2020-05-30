@@ -47,7 +47,7 @@ typedef list<Particular*> Particulars;
 class Data
 {
 //----------------------------------------------------------------- PUBLIC
-    
+
 public:
 
 //----------------------------------------------------- Méthodes publiques
@@ -57,7 +57,9 @@ public:
     // Contrat :
     //
 
-    void checkImpact ( int cleanId ) const;
+    void checkImpactValue ( int cleanId, int nbDays, int r);
+
+    void checkImpactRadius ( int cleanId, int nbDays );
     // Mode d'emploi :
     //
     // Contrat :

@@ -24,6 +24,7 @@
 #include <bits/stdc++.h>
 #include <time.h>
 #include <ctime>
+#include <cmath>
 
 
 using namespace std;
@@ -102,13 +103,13 @@ double distance(double lat1, double long1,
     return ans;
 }
 
-bool operator < (const tm & date1, const tm & date2){
+bool operator <= (const tm & date1, const tm & date2){
     tm d1 = date1;
     tm d2 = date2;
     time_t t1 = mktime(&d1);
     time_t t2 = mktime(&d2);
     double diffSecs = difftime(t1, t2);
-    return (diffSecs<0);
+    return (diffSecs<=0);
 }
 
 int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
@@ -400,9 +401,10 @@ string Data::AttributesToString() const
     }
     return mes;
 }
-//return table with averages of values on a day from sensors in a circle  
+//return table with averages of values on a day from sensors in a circle
 //1st value of o3, 2nd of so2, 3rd of no2 and 4th of pm10
-double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
+double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
+{
     list<Measure*> goodMeasures;
 
 	// It returns a pair representing the range of elements with key equal to time
@@ -416,9 +418,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
         Sensor * s = sensors.find(id_sensor)->second;
         double s_lat = s->getLatitude();
         double s_long = s->getLongitude();
-        //cout<<"hi"<<endl;
         if (distance(c_lat, c_long, s_lat, s_long) < radius){
-            //cout<<"hi"<<endl;
             goodMeasures.push_back(it->second);
         }
     }
@@ -447,36 +447,44 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time){
         }
     }
     static double res[4];
-    cout<<o3_tot<<endl;
-    res[0]=o3_tot/count_o3;
-    res[1]=so2_tot/count_so2;
-    res[2]=no2_tot/count_no2;
-    res[3]=pm10_tot/count_pm10;
+    if (count_o3>0){
+        res[0]=o3_tot/count_o3;
+        res[1]=so2_tot/count_so2;
+        res[2]=no2_tot/count_no2;
+        res[3]=pm10_tot/count_pm10;
+    }else{
+        res[0]=-1;
+        res[1]=-1;
+        res[2]=-1;
+        res[3]=-1;
+    }
+    
     return res;
 }
 
-double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end){
+double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end)
+{
     list<Measure*> goodMeasures;
 
-    while (start<end == false){
+    while (start<=end == true){
 
         pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&start));
-        cout << "All values for key "<<asctime( &start )<<" are," << endl;
-    
+        //cout << "All values for key "<<asctime( &start )<<" are," << endl;
+
         //Iterate over the range
         for (multimap<string,Measure*>::iterator it = result.first; it != result.second; it++){
             int id_sensor = it->second->getSensorId();
             Sensor * s = sensors.find(id_sensor)->second;
             double s_lat = s->getLatitude();
-            double s_long = s->getLongitude(); 
+            double s_long = s->getLongitude();
             if (distance(c_lat, c_long, s_lat, s_long) < radius){
                 goodMeasures.push_back(it->second);
-            }    
+            }
         }
         AddDay(&start);
     }
-    
-    
+
+
     double o3_tot = 0;
     double no2_tot = 0;
 	double so2_tot = 0;
@@ -503,32 +511,85 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
     }
     static double res[4];
 
-    res[0]=o3_tot/count_o3;
-    res[1]=so2_tot/count_so2;
-    res[2]=no2_tot/count_no2;
-    res[3]=pm10_tot/count_pm10;
+    if (count_o3>0){
+        res[0]=o3_tot/count_o3;
+        res[1]=so2_tot/count_so2;
+        res[2]=no2_tot/count_no2;
+        res[3]=pm10_tot/count_pm10;
+    }else{
+        res[0]=-1;
+        res[1]=-1;
+        res[2]=-1;
+        res[3]=-1;
+    }
     return res;
 }
-/*
-void checkImpact ( int cleanId ) //const
+//Faire Getters de Cleaner!!!
+void Data::checkImpactRadius (  int cleanId, int nbDays  )
 {
-    Cleaner * clean;
     double impact[4];
-    for(const auto& cleaner : cleaners)
-    {
-        if (cleanId == cleaner.cleanerId)
-        {
-            clean = &cleaner;
-        }
-    }
-    struct tm tm2;
-    string s2 = "2019-11-20 12:00:00";
+    int r=10; //radius
+    bool isImpact = false;
+
+    struct tm startDate;
     //parses s2 into tm2 struct
-    DatePlusDays( struct tm* date, int days )
-    strptime(s2.c_str(), "%Y-%m-%d %H:%M:%S", &tm2);
-    double avant[] = viewQuality(clean->latitude, clean->longitude, rayon, tm2, );
-    double apres[] = ;
-}*/
+    strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
+
+    while(!isImpact)
+    {
+        //Quality Before
+        double * before = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, *DatePlusDays( &startDate, -30), startDate);
+        //Quality After
+        double * after = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, *DatePlusDays( &startDate, nbDays));
+        //Impact
+        for (int i = 0; i<4;i++)
+        {
+            impact[i]= after[i]-before[i];
+            if (abs(impact[i])>before[i]/10.0)
+            {
+                isImpact = true;
+            }
+            //SO2,NO2, PM10
+        }
+        if(isImpact)
+        {
+            cout<<"Impact Radius : "<<r<<" km"<<endl<<endl;
+            cout<<"Difference O3 : "<<impact[0]<<endl;
+            cout<<"Difference SO2 : "<<impact[1]<<endl;
+            cout<<"Difference NO2 : "<<impact[2]<<endl;
+            cout<<"Difference PM10 : "<<impact[3]<<endl;
+        }
+        r+=10;
+    }
+}
+
+void Data::checkImpactValue ( int cleanId, int nbDays, int r)
+{
+    double impact[4];
+    cout<<"So far so good 3"<<endl;
+    struct tm startDate;
+    //parses s2 into tm2 struct
+    strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
+    cout<<asctime(&*DatePlusDays( &startDate, -30))<<endl;
+    //Quality before
+    double * before = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, *DatePlusDays( &startDate, -30), startDate);
+    /*//Quality After
+    double * after = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, *DatePlusDays( &startDate, nbDays));
+    //Impact
+    cout<<"Test before"<<endl;
+    for (int i = 0; i<4;i++)
+    {
+        impact[i]= after[i]-before[i];
+        cout<<before[i]<<endl;
+    }
+    cout<<"On a radius of "<<r<<" km the impact is :"<<endl<<endl;
+    cout<<"Difference O3 : "<<impact[0]<<endl;
+    cout<<"Difference SO2 : "<<impact[1]<<endl;
+    cout<<"Difference NO2 : "<<impact[2]<<endl;
+    cout<<"Difference PM10 : "<<impact[3]<<endl;
+    */
+    cout<<"finished value"<<endl;
+}
 
 //-------------------------------------------- Constructeurs - destructeur
 
