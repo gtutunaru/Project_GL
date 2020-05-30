@@ -49,7 +49,7 @@ int main(){
     d.readParticulars("dataset/users.csv");
     d.readMeasures("./dataset/measurements.csv");
 
-    struct tm tm;
+    /*struct tm tm;
     string s = "2019-01-01 12:00:00";
     strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm);
     //cout << asctime( &tm ) << endl;
@@ -83,7 +83,9 @@ int main(){
         cout<<"PM10 = "<<res[3]<<endl;
     } else {
         cout<<"No sensors in this area"<<endl;
-    }
+    }*/
+
+    d.checkImpactValue(0,30,100);
 
     //struct tm tm2;
     //string s2 = "2019-11-20 12:00:00";

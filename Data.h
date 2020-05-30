@@ -55,9 +55,9 @@ public:
     // Contrat :
     //
 
-    void checkImpactValue ( int cleanId, struct tm endDate, int r);
+    void checkImpactValue ( int cleanId, int nbDays, int r);
 
-    void checkImpactRadius ( int cleanId, struct tm endDate );
+    void checkImpactRadius ( int cleanId, int nbDays );
     // Mode d'emploi :
     //
     // Contrat :

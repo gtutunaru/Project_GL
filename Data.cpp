@@ -518,7 +518,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
     return res;
 }
 //Faire Getters de Cleaner!!!
-void Data::checkImpactRadius (  int cleanId, struct tm endDate  )
+void Data::checkImpactRadius (  int cleanId, int nbDays  )
 {
     double impact[4];
     int r=10; //radius
@@ -533,7 +533,7 @@ void Data::checkImpactRadius (  int cleanId, struct tm endDate  )
         //Quality Before
         double * before = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, *DatePlusDays( &startDate, -30), startDate);
         //Quality After
-        double * after = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, endDate);
+        double * after = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, *DatePlusDays( &startDate, nbDays));
         //Impact
         for (int i = 0; i<4;i++)
         {
@@ -556,18 +556,18 @@ void Data::checkImpactRadius (  int cleanId, struct tm endDate  )
     }
 }
 
-void Data::checkImpactValue ( int cleanId, struct tm endDate, int r)
+void Data::checkImpactValue ( int cleanId, int nbDays, int r)
 {
     double impact[4];
     cout<<"So far so good 3"<<endl;
     struct tm startDate;
     //parses s2 into tm2 struct
     strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
-    //cout<<asctime(&startDate)<<endl;
+    cout<<asctime(&*DatePlusDays( &startDate, -30))<<endl;
     //Quality before
     double * before = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, *DatePlusDays( &startDate, -30), startDate);
     /*//Quality After
-    double * after = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, endDate);
+    double * after = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, *DatePlusDays( &startDate, nbDays));
     //Impact
     cout<<"Test before"<<endl;
     for (int i = 0; i<4;i++)
