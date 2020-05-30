@@ -455,10 +455,18 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
         }
     }
     static double res[4];
-    res[0]=o3_tot/count_o3;
-    res[1]=so2_tot/count_so2;
-    res[2]=no2_tot/count_no2;
-    res[3]=pm10_tot/count_pm10;
+    if (count_o3>0){
+        res[0]=o3_tot/count_o3;
+        res[1]=so2_tot/count_so2;
+        res[2]=no2_tot/count_no2;
+        res[3]=pm10_tot/count_pm10;
+    }else{
+        res[0]=-1;
+        res[1]=-1;
+        res[2]=-1;
+        res[3]=-1;
+    }
+    
     return res;
 }
 
@@ -511,10 +519,17 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
     }
     static double res[4];
 
-    res[0]=o3_tot/count_o3;
-    res[1]=so2_tot/count_so2;
-    res[2]=no2_tot/count_no2;
-    res[3]=pm10_tot/count_pm10;
+    if (count_o3>0){
+        res[0]=o3_tot/count_o3;
+        res[1]=so2_tot/count_so2;
+        res[2]=no2_tot/count_no2;
+        res[3]=pm10_tot/count_pm10;
+    }else{
+        res[0]=-1;
+        res[1]=-1;
+        res[2]=-1;
+        res[3]=-1;
+    }
     return res;
 }
 //Faire Getters de Cleaner!!!

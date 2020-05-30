@@ -2,3 +2,10 @@ Data.o
 Cleaner.o
 main.o
 Measure.o
+AttributeMeasure.o
+GovAgency.o
+Particular.o
+Provider.o
+Sensor.o
+User.o
+exec
