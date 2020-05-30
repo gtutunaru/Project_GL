@@ -497,7 +497,7 @@ string Data::AttributesToString() const
 }
 //return table with averages of values on a day from sensors in a circle
 //1st value of o3, 2nd of so2, 3rd of no2 and 4th of pm10
-void Data::viewQuality(double c_lat, double c_long, double radius, tm time, double * res)
+double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
 {
     list<Measure*> goodMeasures;
 
@@ -540,7 +540,7 @@ void Data::viewQuality(double c_lat, double c_long, double radius, tm time, doub
             pm10_tot += i->getValue();
         }
     }
-    //static double res[4];
+    double * res = new double[4];
     if (count_o3>0){
         res[0]=o3_tot/count_o3;
         res[1]=so2_tot/count_so2;
@@ -556,7 +556,7 @@ void Data::viewQuality(double c_lat, double c_long, double radius, tm time, doub
     return;// res;
 }
 
-void Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end, double * res)
+double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end)
 {
     list<Measure*> goodMeasures;
     //cout <<"ok on rentre" << endl;
@@ -608,7 +608,7 @@ void Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm 
     }
     //cout<<o3_tot<<endl;
     //static double res[4];
-
+    double * res = new double[4];
     if (count_o3>0){
         res[0]=o3_tot/count_o3;
         res[1]=so2_tot/count_so2;
@@ -621,7 +621,7 @@ void Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm 
         res[3]=-1;
     }
     
-    //return res;
+    return res;
 }
 //Faire Getters de Cleaner!!!
 /*
@@ -670,23 +670,24 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
     tm startDate;
     //parses s2 into tm2 struct
     strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
+    struct tm endDate;
+    //parses s2 into tm2 struct
+    strptime(cleaners[cleanId]->getEnd().c_str(), "%Y-%m-%d %H:%M:%S", &endDate);
 
     struct tm beforeDate =startDate; //pour ajouter des jours, faut utiliser comme ca
-    DatePlusDays(&beforeDate, -30);
+    DatePlusDays(&beforeDate, -nbDays);
 
     cout<<asctime(&beforeDate)<<endl;
     cout<<asctime(&startDate)<<endl;
 
-    struct tm afterDate =startDate;
-    DatePlusDays(&afterDate, 30);
+    struct tm afterDate =endDate;
+    DatePlusDays(&afterDate, nbDays);
     cout<<asctime(&afterDate)<<endl;
 
     //Quality before
-    double * before = new double[4];
-    viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, startDate, before);
+    double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, startDate);
     //Quality After
-    double * after = new double[4];
-    viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, afterDate, after);
+    double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, afterDate);
     //Impact
     cout<<"Test before"<<endl;
     for (int i = 0; i<4;i++)
