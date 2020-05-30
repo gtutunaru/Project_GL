@@ -54,37 +54,36 @@ int main(){
     strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm);
     //cout << asctime( &tm ) << endl;
 
-    /*cout<<"Air quality on  "<<asctime(&tm)<<endl;
-    double* res = d.viewQuality(44.1,0,200,tm);
-    cout<<"O3 = "<<res[0]<<endl;
-    cout<<"SO2 = "<<res[1]<<endl;
-    cout<<"NO2= "<<res[2]<<endl;
-    cout<<"PM10 = "<<res[3]<<endl;*/
+    cout<<"Air quality on  "<<asctime(&tm)<<"In area with coordinates:"<<endl;
+    cout<<"Latitude = "<< "lat" <<", longitude = "<<"long"<<", radius = "<<"r"<<endl;
+    double* res = d.viewQuality(44,-1,1,tm); //radius 1 and coordinates od Sensor0
+    if (res[0] >= 0){
+        cout<<"O3 = "<<res[0]<<endl;
+        cout<<"SO2 = "<<res[1]<<endl;
+        cout<<"NO2= "<<res[2]<<endl;
+        cout<<"PM10 = "<<res[3]<<endl;
+    } else {
+        cout<<"No sensors in this area"<<endl;
+    }
+
+    cout<<endl;
 
     struct tm tm2;
     s = "2019-02-01 12:00:00";
     strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &tm2);
-    cout << asctime( &tm2 ) << endl;
+    //cout << asctime( &tm2 ) << endl;
 
-    /*res = d.viewQuality(44.1,0,200,tm, tm2);
-    cout<<"Air quality on period "<<asctime(&tm)<< " - " <<asctime(&tm2)<<endl;
-    cout<<"O3 = "<<res[0]<<endl;
-    cout<<"SO2 = "<<res[1]<<endl;
-    cout<<"NO2= "<<res[2]<<endl;
-    cout<<"PM10 = "<<res[3]<<endl;*/
-    cout<<endl;
-    //Cleaner clean = Cleaner()
-
-    double* res = d.viewQuality(45.333333,1.333333,100,tm,tm2);
-
-    cout<<"Air quality on period "<<asctime(&tm)<< " - " <<asctime(&tm2)<<endl;
-    cout<<"O3 = "<<res[0]<<endl;
-    cout<<"SO2 = "<<res[1]<<endl;
-    cout<<"NO2= "<<res[2]<<endl;
-    cout<<"PM10 = "<<res[3]<<endl<<endl;
-    cout<<"So far so good"<<endl;
-    d.checkImpactValue(0,tm2,100);
-    //d.checkImpactRadius(0,tm2);
+    res = d.viewQuality(44.1,-1,100,tm, tm); //average of a month on Sensor0
+    cout<<"Air quality on period\nStart: "<<asctime(&tm)<< "End: " <<asctime(&tm2)<<"In area with coordinates:"<<endl;
+    cout<<"Latitude = "<< "lat" <<", longitude = "<<"long"<<", radius = "<<"r"<<endl;
+    if (res[0] >= 0){
+        cout<<"O3 = "<<res[0]<<endl;
+        cout<<"SO2 = "<<res[1]<<endl;
+        cout<<"NO2= "<<res[2]<<endl;
+        cout<<"PM10 = "<<res[3]<<endl;
+    } else {
+        cout<<"No sensors in this area"<<endl;
+    }
 
     //struct tm tm2;
     //string s2 = "2019-11-20 12:00:00";
