@@ -178,7 +178,8 @@ void Data::filterData() {
             it--;
             //cout << endl;
 
-            double *air_quality= viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,date);
+            double air_quality[4];
+            viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,date, air_quality);
             /*cout << "03 officiel : " << air_quality[0] << endl;
             cout << "N02 officiel : " << air_quality[2] << endl;
             cout << "S02 officiel : " << air_quality[1] << endl;
@@ -195,24 +196,20 @@ void Data::filterData() {
               abs(air_quality[3]-pm10_part)>tau
             )
             {
-                /*cout << asctime(&date) << endl;
-                cout << "03 officiel : " << air_quality[0] << endl;
-                cout << "N02 officiel : " << air_quality[2] << endl;
-                cout << "S02 officiel : " << air_quality[1] << endl;
-                cout << "PM10 officiel : " << air_quality[3] << endl;
-                cout << endl;
-                cout << "03 particulier : " << o3_part << endl;
-                cout << "N02 particulier : " << no2_part << endl;
-                cout << "S02 particulier : " << so2_part << endl;
-                cout << "PM10 particulier : " << pm10_part << endl;*/
                 measures_key_id.erase(result.first,result.second);
-                //tm init = result.first->second->getTimestamp();
                 //cout << "J'enlève le senseur "<< sensor->getSensorId() << endl;
-                for(const auto& mes : measures) {
-                    if(mes.second->getSensorId()==sensor->getSensorId()) {
-                        measures.erase(mes.first);
+                multimap<string, Measure*>::iterator it_start = measures.begin();
+                multimap<string, Measure*>::iterator it_end = measures.end();
+                while(it_start!=it_end) {
+                    Measure * mes = it->second;
+                    if(mes->getSensorId()==sensor->getSensorId()) {
+
+                        measures.erase(it_start);
                     }
+                    it_start++;
                 }
+                 break;
+            }
                 /*bool ok = true;
                 for(const auto& mes : measures) {
                     if(mes.second->getSensorId()==sensor->getSensorId()) {
@@ -228,11 +225,18 @@ void Data::filterData() {
                     cout << "On est ok" << endl;
                 } else {
                     cout << "Erreur" << endl;
-                }*/
-                break;
+                }
+               
             }
-            /*if(date.tm_mday==31 && date.tm_mon==11) {
+            if(date.tm_mday==31 && date.tm_mon==11) {
                 cout << "je suis arrivé à la fin" << endl;
+            }
+            Measures::iterator it_start = measures.begin();
+            Measures::iterator it_end = measures.end();
+            while(it_start != it_end)
+            {
+                cout<<it_start->first<<" ET "<<(it_start->second)->toString()<<endl;
+                it_start++;
             }*/
         }
     }
@@ -553,7 +557,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
         res[3]=-1;
     }
     
-    return res;
+    return;// res;
 }
 
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end)
