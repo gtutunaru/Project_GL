@@ -173,10 +173,9 @@ void Data::filterData() {
                 cmpt_day++;
             }
             it--;
-            //cout << endl;
 
-            double air_quality[4];
-            viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,date, air_quality);
+            //double air_quality[4];
+            double* air_quality = viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,date);
             /*cout << "03 officiel : " << air_quality[0] << endl;
             cout << "N02 officiel : " << air_quality[2] << endl;
             cout << "S02 officiel : " << air_quality[1] << endl;
@@ -187,7 +186,7 @@ void Data::filterData() {
             cout << "S02 particulier : " << so2_part << endl;
             cout << "PM10 particulier : " << pm10_part << endl;*/
 
-           if(abs(air_quality[0]-o3_part)>tau || 
+           if(abs(air_quality[0]-o3_part )>tau || 
               abs(air_quality[1]-so2_part)>tau ||
               abs(air_quality[2]-no2_part)>tau ||
               abs(air_quality[3]-pm10_part)>tau
@@ -198,10 +197,10 @@ void Data::filterData() {
                 multimap<string, Measure*>::iterator it_start = measures.begin();
                 multimap<string, Measure*>::iterator it_end = measures.end();
                 while(it_start!=it_end) {
-                    Measure * mes = it->second;
-                    if(mes->getSensorId()==sensor->getSensorId()) {
-
-                        measures.erase(it_start);
+                    if(it_start->second->getSensorId()==sensor->getSensorId()) {
+                        /*measures.erase(it_start);
+                        it_start--;*/
+                        it_start->second->setFalseData(true);
                     }
                     it_start++;
                 }
@@ -227,16 +226,27 @@ void Data::filterData() {
             }
             if(date.tm_mday==31 && date.tm_mon==11) {
                 cout << "je suis arrivé à la fin" << endl;
-            }
-            Measures::iterator it_start = measures.begin();
-            Measures::iterator it_end = measures.end();
-            while(it_start != it_end)
-            {
-                cout<<it_start->first<<" ET "<<(it_start->second)->toString()<<endl;
-                it_start++;
             }*/
+            
         }
     }
+    /*Measures::iterator it_start = measures.begin();
+    Measures::iterator it_end = measures.end();
+    int nbrEnreg=0;
+    int bug = 0;
+    while(it_start != it_end)
+    {
+        if(it_start->second->getSensorId()==36 && !it_start->second->isFalseData()) {
+            //cout<<it_start->first<<" ET "<<(it_start->second)->toString()<<endl;
+            //cout << " id :" << (it_start->second)->getSensorId() <<"ok"<< endl;
+            bug++;
+        }
+        if(!it_start->second->isFalseData())
+        nbrEnreg++;
+        it_start++;
+    }
+    cout << "Il y a en tout "<< nbrEnreg << " enregistrements dans la map" << endl;
+    cout << "Il y a en tout "<< bug << " bugs dans la map" << endl;*/
     return;
 }
 
@@ -553,7 +563,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
         res[3]=-1;
     }
     
-    return;// res;
+    return res;
 }
 
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end)
