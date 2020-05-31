@@ -107,19 +107,23 @@ int main(){
     d.readMeasures("./dataset/measurements.csv");
 
     //d.checkImpactValue(0,30,1000.0);
-    struct tm startDate; //start day of cleaner working
-    strptime("2019-02-01 12:00:00", "%Y-%m-%d %H:%M:%S", &startDate);
-    struct tm endDate; //last day of cleaner working
-    strptime("2019-03-01 00:00:00", "%Y-%m-%d %H:%M:%S", &endDate);
 
-    struct tm beforeDate ; //pour ajouter des jours, faut utiliser comme ca
-    strptime("2019-01-02 12:00:00", "%Y-%m-%d %H:%M:%S", &beforeDate);
+    //struct tm startDate; //start day of cleaner working
+    //strptime("2019-02-01 12:00:00", "%Y-%m-%d %H:%M:%S", &startDate);
+    //struct tm endDate; //last day of cleaner working
+    //strptime("2019-03-01 00:00:00", "%Y-%m-%d %H:%M:%S", &endDate);
+    //cout<<endl;
+    //d.checkImpactRadius(0,30);
+    //d.checkImpactRadius(1,30);
+
+    //struct tm beforeDate ; //pour ajouter des jours, faut utiliser comme ca
+    //strptime("2019-01-02 12:00:00", "%Y-%m-%d %H:%M:%S", &beforeDate);
 
     //cout<<asctime(&beforeDate)<<endl;
     //cout<<asctime(&startDate)<<endl;
 
-    struct tm afterDate ;
-    strptime("2019-03-31 00:00:00", "%Y-%m-%d %H:%M:%S", &afterDate);
+    //struct tm afterDate ;
+    //strptime("2019-03-31 00:00:00", "%Y-%m-%d %H:%M:%S", &afterDate);
 
     //double * res = d.viewQuality(46.666667, 3.666667, 80, beforeDate, startDate);
     //double * res2 = d.viewQuality(46.666667, 3.666667, 80, endDate, afterDate);
