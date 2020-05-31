@@ -125,7 +125,7 @@ int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
         double dist = distance(lat,longt,c_lat,c_long);
         if(dist<radius) nbSensors++;
         it++;
-    }    
+    }
     return nbSensors;
 }
 
@@ -141,7 +141,7 @@ void Data::filterData(int id) {
             double radius = 10;
             sensor = new Sensor(*part->getSensor());
             int nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
-            
+
             //Calcul du rayon dans lequel on trouve plus de 5 senseurs
             while(nbSensor<5) {
                 radius +=10;
@@ -187,7 +187,7 @@ void Data::filterData(int id) {
                 cout << "S02 particulier : " << so2_part << endl;
                 cout << "PM10 particulier : " << pm10_part << endl;*/
 
-               if(abs(air_quality[0]-o3_part  )>tau || 
+               if(abs(air_quality[0]-o3_part  )>tau ||
                   abs(air_quality[1]-so2_part )>tau ||
                   abs(air_quality[2]-no2_part )>tau ||
                   abs(air_quality[3]-pm10_part)>tau
@@ -239,7 +239,7 @@ void Data::filterData(int id) {
     else {
         if(!data_false) cout << "User's data are correct : the corresponding user (sensor " << sensor->getSensorId() << ") was providing real data."<<endl;
     }
-   
+
     /*Measures::iterator it_start = measures.begin();
     Measures::iterator it_end = measures.end();
     int nbrEnreg=0;
@@ -520,7 +520,7 @@ string Data::AttributesToString() const
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
 {
     list<Measure*> goodMeasures;
-    
+
 
 	// It returns a pair representing the range of elements with key equal to time
     pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&time));
@@ -573,7 +573,134 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
         res[2]=-1;
         res[3]=-1;
     }
-    
+
+    double atmos = 0.0;
+    double indexO3 = 0.0;
+    double indexNO2 = 0.0;
+    double indexPM10 = 0.0;
+    double indexSO2 = 0.0;
+
+    //IndexO3
+    if (res[0]>=240)
+    {
+        indexO3 = 10;
+    } else if(res[0]>=210) {
+        indexO3 = 9;
+    } else if(res[0]>=180) {
+        indexO3 = 8;
+    } else if(res[0]>=150) {
+        indexO3 = 7;
+    } else if(res[0]>=130) {
+        indexO3 = 6;
+    } else if(res[0]>=105) {
+        indexO3 = 5;
+    } else if(res[0]>=80) {
+        indexO3 = 4;
+    } else if(res[0]>=55) {
+        indexO3 = 3;
+    } else if(res[0]>=30) {
+        indexO3 = 2;
+    } else if(res[0]>=0) {
+        indexO3 = 1;
+    } else {
+        indexO3 = -1;
+    }
+
+    //IndexSO2
+    if (res[1]>=500)
+    {
+        indexSO2 = 10;
+    } else if(res[1]>=400) {
+        indexSO2 = 9;
+    } else if(res[1]>=300) {
+        indexSO2 = 8;
+    } else if(res[1]>=250) {
+        indexSO2 = 7;
+    } else if(res[1]>=200) {
+        indexSO2 = 6;
+    } else if(res[1]>=160) {
+        indexSO2 = 5;
+    } else if(res[1]>=120) {
+        indexSO2 = 4;
+    } else if(res[1]>=80) {
+        indexSO2 = 3;
+    } else if(res[1]>=40) {
+        indexSO2 = 2;
+    } else if(res[1]>=0) {
+        indexSO2 = 1;
+    } else {
+        indexSO2 = -1;
+    }
+
+    //IndexNO2
+    if (res[2]>=400)
+    {
+        indexNO2 = 10;
+    } else if(res[2]>=275) {
+        indexNO2 = 9;
+    } else if(res[2]>=200) {
+        indexNO2 = 8;
+    } else if(res[2]>=165) {
+        indexNO2 = 7;
+    } else if(res[2]>=135) {
+        indexNO2 = 6;
+    } else if(res[2]>=110) {
+        indexNO2 = 5;
+    } else if(res[2]>=85) {
+        indexNO2 = 4;
+    } else if(res[2]>=55) {
+        indexNO2 = 3;
+    } else if(res[2]>=30) {
+        indexNO2 = 2;
+    } else if(res[2]>=0) {
+        indexNO2 = 1;
+    }
+
+    //IndexPM10
+    if (res[3]>=80)
+    {
+        indexPM10 = 10;
+    } else if(res[3]>=65) {
+        indexPM10 = 9;
+    } else if(res[3]>=50) {
+        indexPM10 = 8;
+    } else if(res[3]>=42) {
+        indexPM10 = 7;
+    } else if(res[3]>=35) {
+        indexPM10 = 6;
+    } else if(res[3]>=28) {
+        indexPM10 = 5;
+    } else if(res[3]>=21) {
+        indexPM10 = 4;
+    } else if(res[3]>=14) {
+        indexPM10 = 3;
+    } else if(res[3]>=7) {
+        indexPM10 = 2;
+    } else if(res[3]>=0) {
+        indexPM10 = 1;
+    }  else {
+        indexPM10 = -1;
+    }
+
+    //Atmos
+    double tmp;
+    if(indexO3>=indexNO2) {
+        tmp = indexO3;
+    } else {
+        tmp = indexNO2;
+    }
+
+    if(indexPM10>=indexSO2) {
+        atmos = indexPM10;
+    } else {
+        atmos = indexSO2;
+    }
+
+    if(tmp>atmos) atmos = tmp;
+
+
+    res[4] = atmos;
+
     return res;
 }
 
@@ -641,38 +768,183 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
         res[2]=-1;
         res[3]=-1;
     }
-    
+
+    double atmos = 0.0;
+    double indexO3 = 0.0;
+    double indexNO2 = 0.0;
+    double indexPM10 = 0.0;
+    double indexSO2 = 0.0;
+
+    //IndexO3
+    if (res[0]>=240)
+    {
+        indexO3 = 10;
+    } else if(res[0]>=210) {
+        indexO3 = 9;
+    } else if(res[0]>=180) {
+        indexO3 = 8;
+    } else if(res[0]>=150) {
+        indexO3 = 7;
+    } else if(res[0]>=130) {
+        indexO3 = 6;
+    } else if(res[0]>=105) {
+        indexO3 = 5;
+    } else if(res[0]>=80) {
+        indexO3 = 4;
+    } else if(res[0]>=55) {
+        indexO3 = 3;
+    } else if(res[0]>=30) {
+        indexO3 = 2;
+    } else if(res[0]>=0) {
+        indexO3 = 1;
+    } else {
+        indexO3 = -1;
+    }
+
+    //IndexSO2
+    if (res[1]>=500)
+    {
+        indexSO2 = 10;
+    } else if(res[1]>=400) {
+        indexSO2 = 9;
+    } else if(res[1]>=300) {
+        indexSO2 = 8;
+    } else if(res[1]>=250) {
+        indexSO2 = 7;
+    } else if(res[1]>=200) {
+        indexSO2 = 6;
+    } else if(res[1]>=160) {
+        indexSO2 = 5;
+    } else if(res[1]>=120) {
+        indexSO2 = 4;
+    } else if(res[1]>=80) {
+        indexSO2 = 3;
+    } else if(res[1]>=40) {
+        indexSO2 = 2;
+    } else if(res[1]>=0) {
+        indexSO2 = 1;
+    } else {
+        indexSO2 = -1;
+    }
+
+    //IndexNO2
+    if (res[2]>=400)
+    {
+        indexNO2 = 10;
+    } else if(res[2]>=275) {
+        indexNO2 = 9;
+    } else if(res[2]>=200) {
+        indexNO2 = 8;
+    } else if(res[2]>=165) {
+        indexNO2 = 7;
+    } else if(res[2]>=135) {
+        indexNO2 = 6;
+    } else if(res[2]>=110) {
+        indexNO2 = 5;
+    } else if(res[2]>=85) {
+        indexNO2 = 4;
+    } else if(res[2]>=55) {
+        indexNO2 = 3;
+    } else if(res[2]>=30) {
+        indexNO2 = 2;
+    } else if(res[2]>=0) {
+        indexNO2 = 1;
+    } else {
+        indexNO2 = -1;
+    }
+
+    //IndexPM10
+    if (res[3]>=80)
+    {
+        indexPM10 = 10;
+    } else if(res[3]>=65) {
+        indexPM10 = 9;
+    } else if(res[3]>=50) {
+        indexPM10 = 8;
+    } else if(res[3]>=42) {
+        indexPM10 = 7;
+    } else if(res[3]>=35) {
+        indexPM10 = 6;
+    } else if(res[3]>=28) {
+        indexPM10 = 5;
+    } else if(res[3]>=21) {
+        indexPM10 = 4;
+    } else if(res[3]>=14) {
+        indexPM10 = 3;
+    } else if(res[3]>=7) {
+        indexPM10 = 2;
+    } else if(res[3]>=0) {
+        indexPM10 = 1;
+    } else {
+        indexPM10 = -1;
+    }
+
+    //Atmos
+    double tmp;
+    if(indexO3>=indexNO2) {
+        tmp = indexO3;
+    } else {
+        tmp = indexNO2;
+    }
+
+    if(indexPM10>=indexSO2) {
+        atmos = indexPM10;
+    } else {
+        atmos = indexSO2;
+    }
+
+    if(tmp>atmos) atmos = tmp;
+
+    res[4] = atmos;
+
     return res;
 }
-//Faire Getters de Cleaner!!!
-/*
+
+
 void Data::checkImpactRadius (  int cleanId, int nbDays  )
 {
     double impact[4];
-    int r=10; //radius
-    bool isImpact = false;
+    int r=1; //radius
+    bool isImpact = true;
 
-    tm startDate;
-    //parses s2 into tm2 struct
+    struct tm startDate; //start day of cleaner working
     strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
+    struct tm endDate; //last day of cleaner working
+    strptime(cleaners[cleanId]->getEnd().c_str(), "%Y-%m-%d %H:%M:%S", &endDate);
 
-    while(!isImpact)
+    struct tm beforeDate =startDate; //pour ajouter des jours, faut utiliser comme ca
+    DatePlusDays(&beforeDate, -nbDays);
+
+    //cout<<asctime(&beforeDate)<<endl;
+    //cout<<asctime(&startDate)<<endl;
+
+    struct tm afterDate =endDate;
+    DatePlusDays(&afterDate, nbDays);
+    //cout<<asctime(&afterDate)<<endl;
+
+    while(isImpact)
     {
-        //Quality Before
-        double * before = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, *DatePlusDays( &startDate, -30), startDate);
+
+        //Quality before
+        double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, startDate);
         //Quality After
-        double * after = this->viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, *DatePlusDays( &startDate, nbDays));
+        double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, endDate, afterDate);
+
+        cout<<r<<" "<<before[4]<<" "<<after[4]<<endl;
         //Impact
         for (int i = 0; i<4;i++)
         {
-            impact[i]= after[i]-before[i];
-            if (abs(impact[i])>before[i]/10.0)
+            if (before[i]>=0 && after[i]>=0)
             {
-                isImpact = true;
+                impact[i]= after[i]-before[i];
             }
-            //SO2,NO2, PM10
         }
-        if(isImpact)
+
+        if (before[4]>=0 && after[4]>=0) {
+            isImpact = after[4]!=before[4];
+        }
+
+        if(!isImpact)
         {
             cout<<"Impact Radius : "<<r<<" km"<<endl<<endl;
             cout<<"Difference O3 : "<<impact[0]<<endl;
@@ -680,12 +952,27 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
             cout<<"Difference NO2 : "<<impact[2]<<endl;
             cout<<"Difference PM10 : "<<impact[3]<<endl;
         }
-        r+=10;
+        if (r<100) {
+            r+=2;
+        }
+        else if (r<500) {
+            r+=10;
+        } else if (r<10000) {
+            r+= 100;
+        } else {
+            r+= 1000;
+        }
+
+        if (r>100000) {
+            cout<<"He cleaned everything"<<endl;
+            break;
+        }
     }
-}*/
+}
 
 void Data::checkImpactValue ( int cleanId, int nbDays, double r)
 {
+    bool isImpact = false;
     double impact[4];
     cout<<"So far so good 3"<<endl;
     struct tm startDate; //start day of cleaner working
@@ -696,17 +983,30 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
     struct tm beforeDate =startDate; //pour ajouter des jours, faut utiliser comme ca
     DatePlusDays(&beforeDate, -nbDays);
 
-    cout<<asctime(&beforeDate)<<endl;
-    cout<<asctime(&startDate)<<endl;
+    //cout<<asctime(&beforeDate)<<endl;
+    //cout<<asctime(&startDate)<<endl;
 
     struct tm afterDate =endDate;
     DatePlusDays(&afterDate, nbDays);
-    cout<<asctime(&afterDate)<<endl;
+    //cout<<asctime(&afterDate)<<endl;
 
     //Quality before
     double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, startDate);
     //Quality After
     double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, endDate, afterDate);
+
+    /*cout<<"Before : "<<r<<" km"<<endl<<endl;
+    cout<<"Difference O3 : "<<before[0]<<endl;
+    cout<<"Difference SO2 : "<<before[1]<<endl;
+    cout<<"Difference NO2 : "<<before[2]<<endl;
+    cout<<"Difference PM10 : "<<before[3]<<endl<<endl;
+
+    cout<<"After : "<<r<<" km"<<endl<<endl;
+    cout<<"Difference O3 : "<<after[0]<<endl;
+    cout<<"Difference SO2 : "<<after[1]<<endl;
+    cout<<"Difference NO2 : "<<after[2]<<endl;
+    cout<<"Difference PM10 : "<<after[3]<<endl<<endl;*/
+
     //Impact
     cout<<"Test before"<<endl;
     for (int i = 0; i<4;i++)
@@ -717,15 +1017,19 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
             impact[i]= after[i]-before[i];
             //cout<<before[i]<<" "<<after[i]<<endl;
         }
-        //impact[i]= after[i]-before[i];
-        //cout<<before[i]<<endl;
     }
+
+    if (before[4]>=0 && after[4]>=0) {
+        isImpact = after[4]!=before[4];
+    }
+
+    cout<<"isImpact : "<<isImpact<<endl;
     cout<<"On a radius of "<<r<<" km the impact is :"<<endl<<endl;
     cout<<"Difference O3 : "<<impact[0]<<endl;
     cout<<"Difference SO2 : "<<impact[1]<<endl;
     cout<<"Difference NO2 : "<<impact[2]<<endl;
     cout<<"Difference PM10 : "<<impact[3]<<endl;
-    
+
     cout<<"finished value"<<endl;
 }
 

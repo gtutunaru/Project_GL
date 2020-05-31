@@ -24,9 +24,12 @@ int main(){
     d.readParticulars("dataset/users.csv");
     d.readMeasures("./dataset/measurements.csv");
 
-    //d.checkImpactValue(0,30,80.0);
+    //d.checkImpactValue(0,30,1000.0);
+    cout<<endl;
+    d.checkImpactRadius(0,30);
 
-    d.filterData(2);
+
+    //d.filterData(2);
 
     /*while(1)
     {
