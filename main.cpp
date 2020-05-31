@@ -26,7 +26,8 @@ int main(){
 
     //d.checkImpactValue(0,30,1000.0);
     cout<<endl;
-    d.checkImpactRadius(0,30);
+    //d.checkImpactRadius(0,30);
+    d.checkImpactRadius(1,30);
 
 
     //d.filterData(2);

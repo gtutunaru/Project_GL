@@ -932,7 +932,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
 
         cout<<r<<" "<<before[4]<<" "<<after[4]<<endl;
         //Impact
-        for (int i = 0; i<4;i++)
+        for (int i = 0; i<5;i++)
         {
             if (before[i]>=0 && after[i]>=0)
             {
@@ -951,6 +951,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
             cout<<"Difference SO2 : "<<impact[1]<<endl;
             cout<<"Difference NO2 : "<<impact[2]<<endl;
             cout<<"Difference PM10 : "<<impact[3]<<endl;
+            cout<<"Difference Atmos : "<<impact[4]<<endl;
         }
         if (r<100) {
             r+=2;
@@ -965,6 +966,12 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
 
         if (r>100000) {
             cout<<"He cleaned everything"<<endl;
+            cout<<"Impact Radius : "<<r<<" km"<<endl<<endl;
+            cout<<"Difference O3 : "<<impact[0]<<endl;
+            cout<<"Difference SO2 : "<<impact[1]<<endl;
+            cout<<"Difference NO2 : "<<impact[2]<<endl;
+            cout<<"Difference PM10 : "<<impact[3]<<endl;
+            cout<<"Difference Atmos : "<<impact[4]<<endl;
             break;
         }
     }
@@ -1009,7 +1016,7 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
 
     //Impact
     cout<<"Test before"<<endl;
-    for (int i = 0; i<4;i++)
+    for (int i = 0; i<5;i++)
     {
         //cout<<before[i]<<endl;
         //cout<<after[i]<<endl;
@@ -1029,6 +1036,7 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
     cout<<"Difference SO2 : "<<impact[1]<<endl;
     cout<<"Difference NO2 : "<<impact[2]<<endl;
     cout<<"Difference PM10 : "<<impact[3]<<endl;
+    cout<<"Difference Atmos : "<<impact[4]<<endl;
 
     cout<<"finished value"<<endl;
 }
