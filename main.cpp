@@ -24,7 +24,9 @@ int main(){
     d.readParticulars("dataset/users.csv");
     d.readMeasures("./dataset/measurements.csv");
 
-    d.checkImpactValue(0,30,80.0);
+    //d.checkImpactValue(0,30,80.0);
+
+    d.filterData(2);
 
     /*while(1)
     {

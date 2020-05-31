@@ -71,6 +71,9 @@ Sensor::Sensor ( const Sensor & unSensor )
 // Algorithme :
 //
 {
+  sensorId = unSensor.sensorId;
+  latitude = unSensor.latitude;
+  longitude = unSensor.longitude;
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Sensor>" << endl;
 #endif

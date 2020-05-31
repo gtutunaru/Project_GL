@@ -103,9 +103,9 @@ public:
     double * viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
     //bool operator < (tm a, tm b);
 
-    list<int> nbSensorInArea(double, double, double);
+    int nbSensorInArea(double, double, double);
 
-    void filterData();
+    void filterData(int);
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );

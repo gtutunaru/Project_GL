@@ -116,123 +116,130 @@ bool operator <= (const tm & date1, const tm & date2){
     return (diffSecs<=0);
 }
 
-list<int> Data::nbSensorInArea(double c_lat, double c_long, double radius) {
+int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
     auto it = sensors.begin();
     int nbSensors=0;
-    list<int> sensorsInArea;
     while(it!=sensors.end()){
         double lat = (it)->second->getLatitude();
         double longt = (it)->second->getLongitude();
         double dist = distance(lat,longt,c_lat,c_long);
-        if(dist<radius){
-            nbSensors++;
-            sensorsInArea.push_back(it->first);
-        } 
+        if(dist<radius) nbSensors++;
         it++;
-    }
-    sensorsInArea.push_back(nbSensors);
-    return sensorsInArea;
+    }    
+    return nbSensors;
 }
 
-void Data::filterData() {
+void Data::filterData(int id) {
     int tau = 20;
-    
+    bool found = false;
+    bool data_false = false;
+    Sensor* sensor;
     for(const auto& part : particulars) {
-        double radius = 10;
-        int nbSensor = 0;
-        Sensor* sensor = part->getSensor();
-        //Calcul du rayon dans lequel on trouve plus de 5 senseurs
-        while(nbSensor<5) {
-            list<int> sensors_in_area = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
-            if(sensors_in_area.size()>0){
-                nbSensor=sensors_in_area.back();
-            }
-            radius +=10;
-        }
-        //cout << "Rayon : "<< radius << ", sensor id "<< sensor->getSensorId() << ", nbSensor " << nbSensor <<  endl;
-        //cout << endl;
-        double o3_part = 0;
-        double no2_part = 0;
-	    double so2_part = 0;
-        double pm10_part = 0;
-        //On obtient toutes les mesures réalisées avec le senseur du particulier
-        pair<measures_iterator, measures_iterator> result = measures_key_id.equal_range(sensor->getSensorId());
-        for(measures_iterator it = result.first;it != result.second;it++) {
-            tm date = it->second->getTimestamp();
-            //cout <<"date : "<< asctime(&date) << endl;
-            int cmpt_day = 0;
-            while(cmpt_day<4) {
-                //cout << "Attribut actuel : " << it->second->getAttributeId() << ", valeur : "<< it->second->getValue() << endl;
-                if (it->second->getAttributeId()=="O3"){
-                    o3_part = it->second->getValue();
-                } else if (it->second->getAttributeId()=="SO2"){
-                    so2_part = it->second->getValue();
-                } else if (it->second->getAttributeId()=="NO2"){
-                    no2_part = it->second->getValue();
-                } else if(it->second->getAttributeId()=="PM10"){
-                    pm10_part = it->second->getValue();
-                }
-                it++;
-                cmpt_day++;
-            }
-            it--;
-
-            //double air_quality[4];
-            double* air_quality = viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,date);
-            /*cout << "03 officiel : " << air_quality[0] << endl;
-            cout << "N02 officiel : " << air_quality[2] << endl;
-            cout << "S02 officiel : " << air_quality[1] << endl;
-            cout << "PM10 officiel : " << air_quality[3] << endl;
-            cout << endl;
-            cout << "03 particulier : " << o3_part << endl;
-            cout << "N02 particulier : " << no2_part << endl;
-            cout << "S02 particulier : " << so2_part << endl;
-            cout << "PM10 particulier : " << pm10_part << endl;*/
-
-           if(abs(air_quality[0]-o3_part )>tau || 
-              abs(air_quality[1]-so2_part)>tau ||
-              abs(air_quality[2]-no2_part)>tau ||
-              abs(air_quality[3]-pm10_part)>tau
-            )
-            {
-                measures_key_id.erase(result.first,result.second);
-                //cout << "J'enlève le senseur "<< sensor->getSensorId() << endl;
-                multimap<string, Measure*>::iterator it_start = measures.begin();
-                multimap<string, Measure*>::iterator it_end = measures.end();
-                while(it_start!=it_end) {
-                    if(it_start->second->getSensorId()==sensor->getSensorId()) {
-                        /*measures.erase(it_start);
-                        it_start--;*/
-                        it_start->second->setFalseData(true);
-                    }
-                    it_start++;
-                }
-                 break;
-            }
-                /*bool ok = true;
-                for(const auto& mes : measures) {
-                    if(mes.second->getSensorId()==sensor->getSensorId()) {
-                        cout <<"On a un problème" << endl;
-                        ok = false;
-                        break;
-                    }
-                }
-                if(ok) {
-                    cout << "Tout va bien" << endl;
-                }
-                if(measures_key_id.find(sensor->getSensorId())==measures_key_id.end()) {
-                    cout << "On est ok" << endl;
-                } else {
-                    cout << "Erreur" << endl;
-                }
-               
-            }
-            if(date.tm_mday==31 && date.tm_mon==11) {
-                cout << "je suis arrivé à la fin" << endl;
-            }*/
+        string username = "User"+to_string(id);
+        if (username == part->getUsername()) {
+            found = true;
+            double radius = 10;
+            sensor = new Sensor(*part->getSensor());
+            int nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
             
+            //Calcul du rayon dans lequel on trouve plus de 5 senseurs
+            while(nbSensor<5) {
+                radius +=10;
+                nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
+            }
+            //cout << "Rayon : "<< radius << ", sensor id "<< sensor->getSensorId() << ", nbSensor " << nbSensor <<  endl;
+            //cout << endl;
+            double o3_part = 0;
+            double no2_part = 0;
+	        double so2_part = 0;
+            double pm10_part = 0;
+            //On obtient toutes les mesures réalisées avec le senseur du particulier
+            pair<measures_iterator, measures_iterator> result = measures_key_id.equal_range(sensor->getSensorId());
+            for(measures_iterator it = result.first;it != result.second;it++) {
+                tm date = it->second->getTimestamp();
+                //cout <<"date : "<< asctime(&date) << endl;
+                int cmpt_day = 0;
+                while(cmpt_day<4) {
+                    //cout << "Attribut actuel : " << it->second->getAttributeId() << ", valeur : "<< it->second->getValue() << endl;
+                    if (it->second->getAttributeId()=="O3"){
+                        o3_part = it->second->getValue();
+                    } else if (it->second->getAttributeId()=="SO2"){
+                        so2_part = it->second->getValue();
+                    } else if (it->second->getAttributeId()=="NO2"){
+                        no2_part = it->second->getValue();
+                    } else if(it->second->getAttributeId()=="PM10"){
+                        pm10_part = it->second->getValue();
+                    }
+                    it++;
+                    cmpt_day++;
+                }
+                it--;
+
+                //double air_quality[4];
+                double* air_quality = viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,date);
+                /*cout << "03 officiel : " << air_quality[0] << endl;
+                cout << "N02 officiel : " << air_quality[2] << endl;
+                cout << "S02 officiel : " << air_quality[1] << endl;
+                cout << "PM10 officiel : " << air_quality[3] << endl;
+                cout << endl;
+                cout << "03 particulier : " << o3_part << endl;
+                cout << "N02 particulier : " << no2_part << endl;
+                cout << "S02 particulier : " << so2_part << endl;
+                cout << "PM10 particulier : " << pm10_part << endl;*/
+
+               if(abs(air_quality[0]-o3_part  )>tau || 
+                  abs(air_quality[1]-so2_part )>tau ||
+                  abs(air_quality[2]-no2_part )>tau ||
+                  abs(air_quality[3]-pm10_part)>tau
+                )
+                {
+                    measures_key_id.erase(result.first,result.second);
+                    //cout << "J'enlève le senseur "<< sensor->getSensorId() << endl;
+                    multimap<string, Measure*>::iterator it_start = measures.begin();
+                    multimap<string, Measure*>::iterator it_end = measures.end();
+                    while(it_start!=it_end) {
+                        if(it_start->second->getSensorId()==sensor->getSensorId()) {
+                            /*measures.erase(it_start);
+                            it_start--;*/
+                            it_start->second->setFalseData(true);
+                        }
+                        it_start++;
+                    }
+                    data_false = true;
+                    cout << "User " << id << " (sensor " << sensor->getSensorId() << ") was providing false data" << endl;
+                    break;
+                }
+                    /*bool ok = true;
+                    for(const auto& mes : measures) {
+                        if(mes.second->getSensorId()==sensor->getSensorId()) {
+                            cout <<"On a un problème" << endl;
+                            ok = false;
+                            break;
+                        }
+                    }
+                    if(ok) {
+                        cout << "Tout va bien" << endl;
+                    }
+                    if(measures_key_id.find(sensor->getSensorId())==measures_key_id.end()) {
+                        cout << "On est ok" << endl;
+                    } else {
+                        cout << "Erreur" << endl;
+                    }
+
+                }
+                if(date.tm_mday==31 && date.tm_mon==11) {
+                    cout << "je suis arrivé à la fin" << endl;
+                }*/
+
+            }
+            break;
         }
     }
+    if(!found) cout << "User not found (the id entered doesn't correspond to any particulars registered)" << endl;
+    else {
+        if(!data_false) cout << "User's data are correct : the corresponding user (sensor " << sensor->getSensorId() << ") was providing real data."<<endl;
+    }
+   
     /*Measures::iterator it_start = measures.begin();
     Measures::iterator it_end = measures.end();
     int nbrEnreg=0;
@@ -399,7 +406,7 @@ void Data::readParticulars ( string filename ){
         cerr<< "Problem with file " << filename << ". Unable to open." << endl;
     } else {
         while (!file.eof()) {
-            std::getline(file,s);
+            getline(file,s);
             //cout<<"line "<<s<<endl;
             if (s!=""){
                 int pos = s.find(";");
