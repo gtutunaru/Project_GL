@@ -59,16 +59,19 @@ void DatePlusDays( struct tm* date, int days )
     // Update caller's date
     // Use localtime because mktime converts to UTC so may change date
     *date = *localtime( &date_seconds ) ;
+    (*date).tm_hour=12;
 }
 
 void AddDay( struct tm* date )
 {
+    const time_t ONE_DAY = 24 * 60 * 60 ;
     // Seconds since start of epoch
     time_t date_seconds = mktime( date ) + (ONE_DAY) ;
 
     // Update caller's date
     // Use localtime because mktime converts to UTC so may change date
     *date = *localtime( &date_seconds ) ;
+    (*date).tm_hour=12;
     return;
 }
 
@@ -281,12 +284,12 @@ void Data::readMeasures ( string filename)
             getline(file,value_buffer,'\n');
 
             Measure* mes = new Measure(timestamp_buffer,stoi(sensorId_buffer),attributeId_buffer,stod(value_buffer),false);
-            tm time=mes->getTimestamp();
-            string s= asctime(&time);
-            measures.insert(std::make_pair( s,mes));
+            tm time = mes->getTimestamp();
+            string s = asctime(&time);
+            measures.insert(std::make_pair(s, mes));
             measures_key_id.insert(std::make_pair(stoi(sensorId_buffer),mes));
         }
-         filterData();
+        //filterData();
     }
     /*Measures::iterator it_start = measures.begin();
     Measures::iterator it_end = measures.end();
@@ -510,6 +513,7 @@ string Data::AttributesToString() const
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
 {
     list<Measure*> goodMeasures;
+    
 
 	// It returns a pair representing the range of elements with key equal to time
     pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&time));
@@ -569,7 +573,6 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end)
 {
     list<Measure*> goodMeasures;
-    //cout <<"ok on rentre" << endl;
 
     while (start<=end){
 
@@ -584,6 +587,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
             double s_lat = s->getLatitude();
             double s_long = s->getLongitude();
             if (distance(c_lat, c_long, s_lat, s_long) < radius){
+                //cout<<it->second->toString()<<endl;
                 goodMeasures.push_back(it->second);
             }
         }
@@ -677,11 +681,9 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
 {
     double impact[4];
     cout<<"So far so good 3"<<endl;
-    tm startDate;
-    //parses s2 into tm2 struct
+    struct tm startDate; //start day of cleaner working
     strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
-    struct tm endDate;
-    //parses s2 into tm2 struct
+    struct tm endDate; //last day of cleaner working
     strptime(cleaners[cleanId]->getEnd().c_str(), "%Y-%m-%d %H:%M:%S", &endDate);
 
     struct tm beforeDate =startDate; //pour ajouter des jours, faut utiliser comme ca
@@ -697,17 +699,18 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
     //Quality before
     double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, startDate);
     //Quality After
-    double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, afterDate);
+    double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, endDate, afterDate);
     //Impact
     cout<<"Test before"<<endl;
     for (int i = 0; i<4;i++)
     {
+        //cout<<before[i]<<endl;
+        //cout<<after[i]<<endl;
         if (before[i]>=0 && after[i]>=0){
             impact[i]= after[i]-before[i];
-            cout<<before[i]<<endl;
-            cout<<after[i]<<endl;
+            //cout<<before[i]<<" "<<after[i]<<endl;
         }
-            impact[i]= after[i]-before[i];
+        //impact[i]= after[i]-before[i];
         //cout<<before[i]<<endl;
     }
     cout<<"On a radius of "<<r<<" km the impact is :"<<endl<<endl;
