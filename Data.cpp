@@ -139,7 +139,8 @@ void Data::filterData(int id) {
         if (username == part->getUsername()) {
             found = true;
             double radius = 10;
-            sensor = new Sensor(*part->getSensor());
+            //sensor = new Sensor(*part->getSensor());
+            sensor = part->getSensor();
             int nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
 
             //Calcul du rayon dans lequel on trouve plus de 5 senseurs
@@ -199,16 +200,16 @@ void Data::filterData(int id) {
                     multimap<string, Measure*>::iterator it_end = measures.end();
                     while(it_start!=it_end) {
                         if(it_start->second->getSensorId()==sensor->getSensorId()) {
-                            /*measures.erase(it_start);
-                            it_start--;*/
                             it_start->second->setFalseData(true);
                         }
                         it_start++;
                     }
                     data_false = true;
                     cout << "User " << id << " (sensor " << sensor->getSensorId() << ") was providing false data" << endl;
+                    delete[] air_quality;
                     break;
                 }
+                delete[] air_quality;
                     /*bool ok = true;
                     for(const auto& mes : measures) {
                         if(mes.second->getSensorId()==sensor->getSensorId()) {
@@ -257,7 +258,7 @@ void Data::filterData(int id) {
     }
     cout << "Il y a en tout "<< nbrEnreg << " enregistrements dans la map" << endl;
     cout << "Il y a en tout "<< bug << " bugs dans la map" << endl;*/
-    return;
+    //return;
 }
 
 void Data::readMeasures ( string filename)
@@ -533,7 +534,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
         Sensor * s = sensors.find(id_sensor)->second;
         double s_lat = s->getLatitude();
         double s_long = s->getLongitude();
-        if (distance(c_lat, c_long, s_lat, s_long) < radius){
+        if (distance(c_lat, c_long, s_lat, s_long) < radius && !it->second->isFalseData()){
             goodMeasures.push_back(it->second);
         }
     }
@@ -561,7 +562,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
             pm10_tot += i->getValue();
         }
     }
-    double * res = new double[4];
+    double * res = new double[5];
     if (count_o3>0){
         res[0]=o3_tot/count_o3;
         res[1]=so2_tot/count_so2;
@@ -720,7 +721,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
             Sensor * s = sensors.find(id_sensor)->second;
             double s_lat = s->getLatitude();
             double s_long = s->getLongitude();
-            if (distance(c_lat, c_long, s_lat, s_long) < radius){
+            if (distance(c_lat, c_long, s_lat, s_long) < radius && !it->second->isFalseData()){
                 //cout<<it->second->toString()<<endl;
                 goodMeasures.push_back(it->second);
             }
@@ -756,7 +757,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
     }
     //cout<<o3_tot<<endl;
     //static double res[4];
-    double * res = new double[4];
+    double * res = new double[5];
     if (count_o3>0){
         res[0]=o3_tot/count_o3;
         res[1]=so2_tot/count_so2;
@@ -903,8 +904,8 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
 
 void Data::checkImpactRadius (  int cleanId, int nbDays  )
 {
-    double impact[4];
-    int r=1; //radius
+    //double impact[4];
+    int r=20; //radius
     bool isImpact = true;
 
     struct tm startDate; //start day of cleaner working
@@ -932,38 +933,41 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
 
         cout<<r<<" "<<before[4]<<" "<<after[4]<<endl;
         //Impact
-        for (int i = 0; i<4;i++)
+        /*for (int i = 0; i<4;i++)
         {
             if (before[i]>=0 && after[i]>=0)
             {
                 impact[i]= after[i]-before[i];
             }
-        }
+        }*/
 
         if (before[4]>=0 && after[4]>=0) {
-            isImpact = after[4]!=before[4];
+            isImpact = (after[4]<before[4]);
         }
 
-        if(!isImpact)
+        /*if(!isImpact)
         {
             cout<<"Impact Radius : "<<r<<" km"<<endl<<endl;
             cout<<"Difference O3 : "<<impact[0]<<endl;
             cout<<"Difference SO2 : "<<impact[1]<<endl;
             cout<<"Difference NO2 : "<<impact[2]<<endl;
             cout<<"Difference PM10 : "<<impact[3]<<endl;
-        }
+        }*/
         if (r<100) {
             r+=2;
         }
         else if (r<500) {
             r+=10;
-        } else if (r<10000) {
+        } else if (r<1000) {
             r+= 100;
         } else {
             r+= 1000;
         }
 
-        if (r>100000) {
+        delete[]before;
+        delete[]after;
+
+        if (r>5000) {
             cout<<"He cleaned everything"<<endl;
             break;
         }
@@ -1031,6 +1035,8 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
     cout<<"Difference PM10 : "<<impact[3]<<endl;
 
     cout<<"finished value"<<endl;
+    delete[]before;
+    delete[]after;
 }
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -1061,4 +1067,37 @@ Data::~Data ( )
 #ifdef MAP
     cout << "Appel au destructeur de <Data>" << endl;
 #endif
+    Measures::iterator it_start = measures.begin();
+    Measures::iterator it_end = measures.end();
+    while(it_start != it_end)
+    {
+        delete(it_start->second);
+        it_start++;
+    }
+
+    Cleaners::iterator it_start_cleaners = cleaners.begin();
+    Cleaners::iterator it_end_cleaners = cleaners.end();
+    while(it_start_cleaners != it_end_cleaners)
+    {
+        delete(it_start_cleaners->second);
+        it_start_cleaners++;
+    }
+    
+    for(auto &it:attributes) delete it; 
+    attributes.clear();
+
+    Sensors::iterator it_start_sensors = sensors.begin();
+    Sensors::iterator it_end_sensors = sensors.end();
+    while(it_start_sensors != it_end_sensors)
+    {
+        delete(it_start_sensors->second);
+        it_start_sensors++;
+    } 
+
+    for(auto &it:providers) delete it; 
+    providers.clear();
+
+    for(auto &it:particulars) delete it; 
+    particulars.clear();
+
 } //----- Fin de ~Data
