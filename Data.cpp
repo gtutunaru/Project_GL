@@ -930,7 +930,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
         //Quality After
         double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, endDate, afterDate);
 
-        cout<<r<<" "<<before[4]<<" "<<after[4]<<endl;
+        //cout<<r<<" "<<before[4]<<" "<<after[4]<<endl;
         //Impact
         for (int i = 0; i<5;i++)
         {
@@ -971,7 +971,21 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
             cout<<"Difference SO2 : "<<impact[1]<<endl;
             cout<<"Difference NO2 : "<<impact[2]<<endl;
             cout<<"Difference PM10 : "<<impact[3]<<endl;
-            cout<<"Difference Atmos : "<<impact[4]<<endl;
+            cout<<"Difference Atmos : "<<impact[4]<<endl<<endl;
+
+            /*cout<<"Before : "<<r<<" km"<<endl<<endl;
+            cout<<"O3 : "<<before[0]<<endl;
+            cout<<"SO2 : "<<before[1]<<endl;
+            cout<<"NO2 : "<<before[2]<<endl;
+            cout<<"PM10 : "<<before[3]<<endl<<endl;
+            cout<<"Atmos : "<<before[4]<<endl<<endl;
+
+            cout<<"After : "<<r<<" km"<<endl<<endl;
+            cout<<"O3 : "<<after[0]<<endl;
+            cout<<"SO2 : "<<after[1]<<endl;
+            cout<<"NO2 : "<<after[2]<<endl;
+            cout<<"PM10 : "<<after[3]<<endl<<endl;
+            cout<<"Atmos : "<<after[4]<<endl<<endl;*/
             break;
         }
     }
