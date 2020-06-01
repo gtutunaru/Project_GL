@@ -105,7 +105,7 @@ public:
 
     int nbSensorInArea(double, double, double);
 
-    void filterData(int);
+    bool filterData(int);
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );

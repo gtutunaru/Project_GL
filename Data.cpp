@@ -129,7 +129,7 @@ int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
     return nbSensors;
 }
 
-void Data::filterData(int id) {
+bool Data::filterData(int id) {
     int tau = 20;
     bool found = false;
     bool data_false = false;
@@ -258,7 +258,7 @@ void Data::filterData(int id) {
     }
     cout << "Il y a en tout "<< nbrEnreg << " enregistrements dans la map" << endl;
     cout << "Il y a en tout "<< bug << " bugs dans la map" << endl;*/
-    //return;
+    return data_false;
 }
 
 void Data::readMeasures ( string filename)
