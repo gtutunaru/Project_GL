@@ -129,7 +129,7 @@ int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
     return nbSensors;
 }
 
-void Data::filterData(int id) {
+bool Data::filterData(int id) {
     int tau = 20;
     bool found = false;
     bool data_false = false;
@@ -258,7 +258,7 @@ void Data::filterData(int id) {
     }
     cout << "Il y a en tout "<< nbrEnreg << " enregistrements dans la map" << endl;
     cout << "Il y a en tout "<< bug << " bugs dans la map" << endl;*/
-    //return;
+    return data_false;
 }
 
 void Data::readMeasures ( string filename)
@@ -563,7 +563,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
         }
     }
     double * res = new double[5];
-    if (count_o3>0){
+    if (count_o3>0 && count_so2>0 && count_no2>0 && count_pm10>0){
         res[0]=o3_tot/count_o3;
         res[1]=so2_tot/count_so2;
         res[2]=no2_tot/count_no2;
@@ -758,7 +758,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
     //cout<<o3_tot<<endl;
     //static double res[4];
     double * res = new double[5];
-    if (count_o3>0){
+    if (count_o3>0 && count_so2>0 && count_no2>0 && count_pm10>0){
         res[0]=o3_tot/count_o3;
         res[1]=so2_tot/count_so2;
         res[2]=no2_tot/count_no2;
@@ -904,7 +904,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
 
 void Data::checkImpactRadius (  int cleanId, int nbDays )
 {
-    double impact[4];
+    double impact[5];
     int r=20; //radius
     bool isImpact = true;
     int counter = 0;
@@ -971,10 +971,14 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
             r+= 1000;
         }
 
-        delete[]before;
-        delete[]after;
-
         if (r>5000) {
+            for (int i = 0; i<5;i++)
+            {
+                if (before[i]>=0 && after[i]>=0)
+                {
+                    impact[i]= after[i]-before[i];
+                }
+            }
             cout<<"He cleaned everything"<<endl;
             cout<<"Impact Radius : "<<r<<" km"<<endl<<endl;
             cout<<"Difference O3 : "<<impact[0]<<endl;
@@ -984,6 +988,8 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
             cout<<"Difference ATMO : "<<impact[4]<<endl<<endl;
             break;
         }
+        delete[]before;
+        delete[]after;
     }
     if (counter==1){
         cout<<"There is no impact from this cleaner"<<endl;
@@ -993,7 +999,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
 void Data::checkImpactValue ( int cleanId, int nbDays, double r)
 {
     bool isImpact = false;
-    double impact[4];
+    double impact[5];
     cout<<"So far so good 3"<<endl;
     struct tm startDate; //start day of cleaner working
     strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
@@ -1099,8 +1105,8 @@ Data::~Data ( )
         delete(it_start_cleaners->second);
         it_start_cleaners++;
     }
-    
-    for(auto &it:attributes) delete it; 
+
+    for(auto &it:attributes) delete it;
     attributes.clear();
 
     Sensors::iterator it_start_sensors = sensors.begin();
@@ -1109,12 +1115,12 @@ Data::~Data ( )
     {
         delete(it_start_sensors->second);
         it_start_sensors++;
-    } 
+    }
 
-    for(auto &it:providers) delete it; 
+    for(auto &it:providers) delete it;
     providers.clear();
 
-    for(auto &it:particulars) delete it; 
+    for(auto &it:particulars) delete it;
     particulars.clear();
 
 } //----- Fin de ~Data
