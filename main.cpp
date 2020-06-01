@@ -38,10 +38,10 @@ void viewQualityDay (Data & d){
     endClock = clock();
     if (res[0]>=0){
         cout<<"Air Quality Index: "<<res[4]<<endl;
-        cout<<"O3: "<<res[0]<<endl;
-        cout<<"SO2: "<<res[1]<<endl;
-        cout<<"NO3: "<<res[2]<<endl;
-        cout<<"PM10: "<<res[3]<<endl;
+        cout<<"O3: "<<res[0]<<" µg/m3"<<endl;
+        cout<<"SO2: "<<res[1]<<" µg/m3"<<endl;
+        cout<<"NO3: "<<res[2]<<" µg/m3"<<endl;
+        cout<<"PM10: "<<res[3]<<" µg/m3"<<endl;
     } else{
         cout<<"No sensors in the area"<<endl;
     }
@@ -80,10 +80,10 @@ void viewQualityTimespan (Data & d){
     endClock = clock();
     if (res[0]>=0){
         cout<<"Air Quality Index: "<<res[4]<<endl;
-        cout<<"O3: "<<res[0]<<endl;
-        cout<<"SO2: "<<res[1]<<endl;
-        cout<<"NO3: "<<res[2]<<endl;
-        cout<<"PM10: "<<res[3]<<endl;
+        cout<<"O3: "<<res[0]<<" µg/m3"<<endl;
+        cout<<"SO2: "<<res[1]<<" µg/m3"<<endl;
+        cout<<"NO3: "<<res[2]<<" µg/m3"<<endl;
+        cout<<"PM10: "<<res[3]<<" µg/m3"<<endl;
     } else{
         cout<<"No sensors in the area"<<endl;
     }
@@ -94,7 +94,17 @@ void viewQualityTimespan (Data & d){
     delete[]res;
 }
 
-int main(int argc, char** argv){
+void checkImpact(Data & d){
+    cout<<"Insert id of cleaner to inspect"<<endl;
+    int id;
+    cin>>id;
+    cout<<"How many days before the start of the cleaner do you want to check?"<<endl;
+    int nbDays;
+    cin>>nbDays;
+    d.checkImpactRadius(id, nbDays);
+}
+
+int main(){
     cout<<"\n=============Starting application AirWatcher============="<<endl;
     cout<<"\nLoading data..."<<endl;
 
@@ -106,17 +116,15 @@ int main(int argc, char** argv){
     d.readParticulars("dataset/users.csv");
     d.readMeasures("./dataset/measurements.csv");
 
-    /*bool exit = false;
+    bool exit = false;
     bool exitGov =false;
     bool exitProv = false;
     bool exitPart = false;
     double time_taken;
+    
     while(!exit)
     {
         cout<<"\nMain menu:"<<endl;
-        /*printf("\t1: View Quality\n");
-        printf("\t2: Check Impact\n");
-        printf("\t3: Recherche de Parcours\n");
         cout<<"\t1: Log in as a member of the government agency"<<endl;
         cout<<"\t2: Log in as a provider"<<endl;
         cout<<"\t3: Log in as a particular"<<endl;
@@ -181,7 +189,7 @@ int main(int argc, char** argv){
                             viewQualityTimespan(d);
                             break;
                         case 3:
-                            //d.checkImpact();
+                            checkImpact(d);
                             break;
                         case 0:
                             exitProv = true;
