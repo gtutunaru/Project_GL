@@ -994,9 +994,6 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
             r+= 1000;
         }
 
-        delete[]before;
-        delete[]after;
-
         if (r>5000) {
             for (int i = 0; i<5;i++)
             {
@@ -1034,6 +1031,8 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
             cout<<"Atmos : "<<after[4]<<endl<<endl;*/
             break;
         }
+        delete[]before;
+        delete[]after;
     }
 }
 
