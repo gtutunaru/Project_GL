@@ -972,13 +972,6 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
         }
 
         if (r>5000) {
-            for (int i = 0; i<5;i++)
-            {
-                if (before[i]>=0 && after[i]>=0)
-                {
-                    impact[i]= after[i]-before[i];
-                }
-            }
             cout<<"He cleaned everything"<<endl;
             cout<<"Impact Radius : "<<r<<" km"<<endl<<endl;
             cout<<"Difference O3 : "<<impact[0]<<endl;
