@@ -1,7 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include <string>
-#include <bits/stdc++.h> 
+#include <bits/stdc++.h>
 #include "Measure.h"
 #include "Provider.h"
 #include "AttributeMeasure.h"
@@ -16,7 +16,7 @@ bool showTime = true;
 using namespace std;
 
 void viewQualityDay (Data & d){
-    clock_t startClock, endClock; 
+    clock_t startClock, endClock;
     cout<<"\nInsert date in format YYYY-MM-DD : ";
     string s;
     cin>>s;
@@ -33,9 +33,9 @@ void viewQualityDay (Data & d){
     double radius;
     cin>>radius;
     cout<<endl;
-    startClock = clock(); 
+    startClock = clock();
     double * res = d.viewQuality(lat, longitude, radius, date);
-    endClock = clock(); 
+    endClock = clock();
     if (res[0]>=0){
         cout<<"Air Quality Index: "<<res[4]<<endl;
         cout<<"O3: "<<res[0]<<endl;
@@ -45,15 +45,15 @@ void viewQualityDay (Data & d){
     } else{
         cout<<"No sensors in the area"<<endl;
     }
-    double time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC); 
-    cout << "Time taken by program is : " << fixed  
-         << time_taken << setprecision(5); 
-    cout << " sec " << endl; 
+    double time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC);
+    cout << "Time taken by program is : " << fixed
+         << time_taken << setprecision(5);
+    cout << " sec " << endl;
     delete[]res;
 }
 
 void viewQualityTimespan (Data & d){
-    clock_t startClock, endClock; 
+    clock_t startClock, endClock;
     cout<<"\nInsert first date in format YYYY-MM-DD : ";
     string s;
     cin>>s;
@@ -75,9 +75,9 @@ void viewQualityTimespan (Data & d){
     double radius;
     cin>>radius;
     cout<<endl;
-    startClock = clock(); 
+    startClock = clock();
     double * res = d.viewQuality(lat, longitude, radius, start, end);
-    endClock = clock(); 
+    endClock = clock();
     if (res[0]>=0){
         cout<<"Air Quality Index: "<<res[4]<<endl;
         cout<<"O3: "<<res[0]<<endl;
@@ -87,10 +87,10 @@ void viewQualityTimespan (Data & d){
     } else{
         cout<<"No sensors in the area"<<endl;
     }
-    double time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC); 
-    cout << "Time taken by program is : " << fixed  
-         << time_taken << setprecision(5); 
-    cout << " sec " << endl; 
+    double time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC);
+    cout << "Time taken by program is : " << fixed
+         << time_taken << setprecision(5);
+    cout << " sec " << endl;
     delete[]res;
 }
 
@@ -172,18 +172,18 @@ int main(){
                         case 2:
                             viewQualityTimespan(d);
                             break;
-                        case 3: 
+                        case 3:
                             cout<<"\nInsert id of private individual to analyze: ";
                             int id;
                             cin>>id;
                             cout<<endl;
-                            clock_t startClock, endClock; 
+                            clock_t startClock, endClock;
                             startClock = clock();
                             d.filterData(id);
                             endClock = clock();
-                            time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC); 
-                            cout << "Time taken by program is : " << fixed  
-                                << time_taken << setprecision(5); 
+                            time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC);
+                            cout << "Time taken by program is : " << fixed
+                                << time_taken << setprecision(5);
                             cout << " sec " << endl;
                             break;
                         case 0:

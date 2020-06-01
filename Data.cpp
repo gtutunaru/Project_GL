@@ -904,7 +904,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
 
 void Data::checkImpactRadius (  int cleanId, int nbDays  )
 {
-    double impact[4];
+    double impact[5];
     int r=20; //radius
     bool isImpact = true;
 
@@ -920,6 +920,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
     //cout<<asctime(&startDate)<<endl;
 
     struct tm afterDate =endDate;
+    //struct tm afterDate = startDate;
     DatePlusDays(&afterDate, nbDays);
     //cout<<asctime(&afterDate)<<endl;
 
@@ -930,16 +931,11 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
         double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, startDate);
         //Quality After
         double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, endDate, afterDate);
+        //double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, afterDate);
 
         //cout<<r<<" "<<before[4]<<" "<<after[4]<<endl;
         //Impact
-        for (int i = 0; i<5;i++)
-        {
-            if (before[i]>=0 && after[i]>=0)
-            {
-                impact[i]= after[i]-before[i];
-            }
-        }
+
 
         if (before[4]>=0 && after[4]>=0) {
             isImpact = (after[4]<before[4]);
@@ -947,6 +943,13 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
 
         if(!isImpact)
         {
+            for (int i = 0; i<5;i++)
+            {
+                if (before[i]>=0 && after[i]>=0)
+                {
+                    impact[i]= after[i]-before[i];
+                }
+            }
             cout<<"Impact Radius : "<<r<<" km"<<endl<<endl;
             cout<<"Difference O3 : "<<impact[0]<<endl;
             cout<<"Difference SO2 : "<<impact[1]<<endl;
@@ -969,6 +972,13 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
         delete[]after;
 
         if (r>5000) {
+            for (int i = 0; i<5;i++)
+            {
+                if (before[i]>=0 && after[i]>=0)
+                {
+                    impact[i]= after[i]-before[i];
+                }
+            }
             cout<<"He cleaned everything"<<endl;
             cout<<"Impact Radius : "<<r<<" km"<<endl<<endl;
             cout<<"Difference O3 : "<<impact[0]<<endl;
@@ -979,7 +989,13 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
 
             /*cout<<"Before : "<<r<<" km"<<endl<<endl;
             cout<<"O3 : "<<before[0]<<endl;
-            cout<<"SO2 : "<<before[1]<<endl;
+            cout<<"SO2 : "<<before[1]<<enfor (int i = 0; i<5;i++)
+        {
+            if (before[i]>=0 && after[i]>=0)
+            {
+                impact[i]= after[i]-before[i];
+            }
+        }dl;
             cout<<"NO2 : "<<before[2]<<endl;
             cout<<"PM10 : "<<before[3]<<endl<<endl;
             cout<<"Atmos : "<<before[4]<<endl<<endl;
@@ -998,7 +1014,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
 void Data::checkImpactValue ( int cleanId, int nbDays, double r)
 {
     bool isImpact = false;
-    double impact[4];
+    double impact[5];
     cout<<"So far so good 3"<<endl;
     struct tm startDate; //start day of cleaner working
     strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
@@ -1104,8 +1120,8 @@ Data::~Data ( )
         delete(it_start_cleaners->second);
         it_start_cleaners++;
     }
-    
-    for(auto &it:attributes) delete it; 
+
+    for(auto &it:attributes) delete it;
     attributes.clear();
 
     Sensors::iterator it_start_sensors = sensors.begin();
@@ -1114,12 +1130,12 @@ Data::~Data ( )
     {
         delete(it_start_sensors->second);
         it_start_sensors++;
-    } 
+    }
 
-    for(auto &it:providers) delete it; 
+    for(auto &it:providers) delete it;
     providers.clear();
 
-    for(auto &it:particulars) delete it; 
+    for(auto &it:particulars) delete it;
     particulars.clear();
 
 } //----- Fin de ~Data
