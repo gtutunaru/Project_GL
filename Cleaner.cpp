@@ -29,8 +29,8 @@ using namespace std;
 //} //----- Fin de Méthode
 
 string Cleaner::toString() const{
-    string s= "Cleaner" + to_string(cleanerId) + '\n' + to_string(latitude) + '\n' + to_string(longitude);
-    s += '\n' + description + "\n" + start + '\n' + end + '\n';
+    string s= "Cleaner" + to_string(cleanerId) + "\nLatitude: " +  to_string(latitude)  + "\nLongitude: " +  to_string(longitude);
+    s += "\nDescription: " + description  + "\nStart day: " + start  + "\nLast day: " + end + '\n';
     //s=to_string(cleanerId);
     return s;
 }

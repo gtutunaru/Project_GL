@@ -902,57 +902,63 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
 }
 
 
-void Data::checkImpactRadius (  int cleanId, int nbDays  )
+void Data::checkImpactRadius (  int cleanId, int nbDays )
 {
     double impact[4];
     int r=20; //radius
     bool isImpact = true;
+    int counter = 0;
 
     struct tm startDate; //start day of cleaner working
     strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
+
     struct tm endDate; //last day of cleaner working
     strptime(cleaners[cleanId]->getEnd().c_str(), "%Y-%m-%d %H:%M:%S", &endDate);
+    DatePlusDays(&endDate, -1); //to have last day of cleaner working, since it stops at 00:00 the next day
 
-    struct tm beforeDate =startDate; //pour ajouter des jours, faut utiliser comme ca
+    struct tm beforeDate =startDate; //first day of period before cleaner
     DatePlusDays(&beforeDate, -nbDays);
 
-    //cout<<asctime(&beforeDate)<<endl;
-    //cout<<asctime(&startDate)<<endl;
+    struct tm beforeStart =startDate; //the day right before start of cleaner
+    DatePlusDays(&beforeStart, -1);
 
-    struct tm afterDate =endDate;
-    DatePlusDays(&afterDate, nbDays);
+    
     //cout<<asctime(&afterDate)<<endl;
+    cout<<"Information about the cleaner"<<endl<<endl;
+    cout<<cleaners[cleanId]->toString()<<endl;
 
     while(isImpact)
     {
 
         //Quality before
-        double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, startDate);
+        double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, beforeStart);
+        
         //Quality After
-        double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, endDate, afterDate);
+        double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, endDate);
 
-        //cout<<r<<" "<<before[4]<<" "<<after[4]<<endl;
         //Impact
-        for (int i = 0; i<5;i++)
-        {
-            if (before[i]>=0 && after[i]>=0)
+        
+
+        if (before[4]>0 && after[4]>0) {
+            counter++;
+            isImpact = (after[4]+4<before[4]);
+            if (isImpact)
             {
-                impact[i]= after[i]-before[i];
+                for (int i = 0; i<5;i++)
+                {
+                    impact[i]= after[i]-before[i];
+                }
             }
         }
 
-        if (before[4]>=0 && after[4]>=0) {
-            isImpact = (after[4]<before[4]);
-        }
-
-        if(!isImpact)
+        if(!isImpact && counter>1)
         {
-            cout<<"Impact Radius : "<<r<<" km"<<endl<<endl;
-            cout<<"Difference O3 : "<<impact[0]<<endl;
-            cout<<"Difference SO2 : "<<impact[1]<<endl;
-            cout<<"Difference NO2 : "<<impact[2]<<endl;
-            cout<<"Difference PM10 : "<<impact[3]<<endl;
-            cout<<"Difference Atmos : "<<impact[4]<<endl;
+            cout<<"Impact on Radius : "<<r<<" km"<<endl<<endl;
+            cout<<"Difference O3 : "<<impact[0]<<" µg/m3"<<endl;
+            cout<<"Difference SO2 : "<<impact[1]<<" µg/m3"<<endl;
+            cout<<"Difference NO2 : "<<impact[2]<<" µg/m3"<<endl;
+            cout<<"Difference PM10 : "<<impact[3]<<" µg/m3"<<endl;
+            cout<<"Difference ATMO : "<<impact[4]<<endl;
         }
         if (r<100) {
             r+=2;
@@ -975,23 +981,12 @@ void Data::checkImpactRadius (  int cleanId, int nbDays  )
             cout<<"Difference SO2 : "<<impact[1]<<endl;
             cout<<"Difference NO2 : "<<impact[2]<<endl;
             cout<<"Difference PM10 : "<<impact[3]<<endl;
-            cout<<"Difference Atmos : "<<impact[4]<<endl<<endl;
-
-            /*cout<<"Before : "<<r<<" km"<<endl<<endl;
-            cout<<"O3 : "<<before[0]<<endl;
-            cout<<"SO2 : "<<before[1]<<endl;
-            cout<<"NO2 : "<<before[2]<<endl;
-            cout<<"PM10 : "<<before[3]<<endl<<endl;
-            cout<<"Atmos : "<<before[4]<<endl<<endl;
-
-            cout<<"After : "<<r<<" km"<<endl<<endl;
-            cout<<"O3 : "<<after[0]<<endl;
-            cout<<"SO2 : "<<after[1]<<endl;
-            cout<<"NO2 : "<<after[2]<<endl;
-            cout<<"PM10 : "<<after[3]<<endl<<endl;
-            cout<<"Atmos : "<<after[4]<<endl<<endl;*/
+            cout<<"Difference ATMO : "<<impact[4]<<endl<<endl;
             break;
         }
+    }
+    if (counter==1){
+        cout<<"There is no impact from this cleaner"<<endl;
     }
 }
 
@@ -1018,7 +1013,7 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
     //Quality before
     double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, startDate);
     //Quality After
-    double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, endDate, afterDate);
+    double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, endDate);
 
     /*cout<<"Before : "<<r<<" km"<<endl<<endl;
     cout<<"Difference O3 : "<<before[0]<<endl;

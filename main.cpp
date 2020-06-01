@@ -38,10 +38,10 @@ void viewQualityDay (Data & d){
     endClock = clock(); 
     if (res[0]>=0){
         cout<<"Air Quality Index: "<<res[4]<<endl;
-        cout<<"O3: "<<res[0]<<endl;
-        cout<<"SO2: "<<res[1]<<endl;
-        cout<<"NO3: "<<res[2]<<endl;
-        cout<<"PM10: "<<res[3]<<endl;
+        cout<<"O3: "<<res[0]<<" µg/m3"<<endl;
+        cout<<"SO2: "<<res[1]<<" µg/m3"<<endl;
+        cout<<"NO3: "<<res[2]<<" µg/m3"<<endl;
+        cout<<"PM10: "<<res[3]<<" µg/m3"<<endl;
     } else{
         cout<<"No sensors in the area"<<endl;
     }
@@ -80,10 +80,10 @@ void viewQualityTimespan (Data & d){
     endClock = clock(); 
     if (res[0]>=0){
         cout<<"Air Quality Index: "<<res[4]<<endl;
-        cout<<"O3: "<<res[0]<<endl;
-        cout<<"SO2: "<<res[1]<<endl;
-        cout<<"NO3: "<<res[2]<<endl;
-        cout<<"PM10: "<<res[3]<<endl;
+        cout<<"O3: "<<res[0]<<" µg/m3"<<endl;
+        cout<<"SO2: "<<res[1]<<" µg/m3"<<endl;
+        cout<<"NO3: "<<res[2]<<" µg/m3"<<endl;
+        cout<<"PM10: "<<res[3]<<" µg/m3"<<endl;
     } else{
         cout<<"No sensors in the area"<<endl;
     }
@@ -106,7 +106,7 @@ int main(){
     d.readParticulars("dataset/users.csv");
     d.readMeasures("./dataset/measurements.csv");
 
-    //d.checkImpactValue(0,30,1000.0);
+    d.checkImpactRadius(1,30);
 
     //struct tm startDate; //start day of cleaner working
     //strptime("2019-02-01 12:00:00", "%Y-%m-%d %H:%M:%S", &startDate);
