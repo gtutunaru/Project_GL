@@ -953,7 +953,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
 
         if(!isImpact && counter>1)
         {
-            cout<<"Impact on Radius : "<<r<<" km"<<endl<<endl;
+            cout<<"There is a significant impact on Radius : "<<r<<" km"<<endl<<endl;
             cout<<"Difference O3 : "<<impact[0]<<" µg/m3"<<endl;
             cout<<"Difference SO2 : "<<impact[1]<<" µg/m3"<<endl;
             cout<<"Difference NO2 : "<<impact[2]<<" µg/m3"<<endl;
