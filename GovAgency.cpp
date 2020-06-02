@@ -1,5 +1,5 @@
 /*************************************************************************
-                           GovAgency  -  description
+                                GovAgency
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
@@ -22,26 +22,14 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type GovAgency::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-/*GovAgency & GovAgency::operator = ( const GovAgency & unGovAgency )
-// Algorithme :
-//
-{
-} //----- Fin de operator =
 
-*/
 //-------------------------------------------- Constructeurs - destructeur
 GovAgency::GovAgency ( const GovAgency & unGovAgency )
 :User(unGovAgency)
-// Algorithme :
-//
+
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <GovAgency>" << endl;
@@ -51,8 +39,7 @@ GovAgency::GovAgency ( const GovAgency & unGovAgency )
 
 GovAgency::GovAgency (string _username, string _password )
 :User( _username,  _password)
-// Algorithme :
-//
+
 {
 #ifdef MAP
     cout << "Appel au constructeur de <GovAgency>" << endl;
@@ -61,8 +48,7 @@ GovAgency::GovAgency (string _username, string _password )
 
 
 GovAgency::~GovAgency ( )
-// Algorithme :
-//
+
 {
 #ifdef MAP
     cout << "Appel au destructeur de <GovAgency>" << endl;
@@ -70,6 +56,8 @@ GovAgency::~GovAgency ( )
     
 } //----- Fin de ~GovAgency
 
+//------------------------------------------------------------------------------
+/*
 bool GovAgency::similarSensor(Sensor* s1, Sensor* s2)
 {
     valueSensor s1_list;
@@ -145,9 +133,6 @@ bool GovAgency::similarSensor(Sensor* s1, Sensor* s2)
     
     return true;
         
-}
+}*/
 
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées
 

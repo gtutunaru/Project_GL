@@ -1,5 +1,5 @@
 /*************************************************************************
-                           Provider  -  description
+                                Provider
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
@@ -22,11 +22,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Provider::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
+
 list<Cleaner*> Provider::getCleaners()
 {
     return cleaners;
@@ -50,8 +46,7 @@ string Provider::toString() const{
 //-------------------------------------------- Constructeurs - destructeur
 Provider::Provider ( const Provider & unProvider )
 :User(unProvider)
-// Algorithme :
-//
+
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Provider>" << endl;
@@ -61,8 +56,7 @@ Provider::Provider ( const Provider & unProvider )
 
 Provider::Provider (string _username, string _password )
 :User(_username,  _password)
-// Algorithme :
-//
+
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Provider>" << endl;
@@ -70,9 +64,8 @@ Provider::Provider (string _username, string _password )
 } //----- Fin de Provider
 
 
-Provider::~Provider ( )
-// Algorithme :
-//
+Provider::~Provider ()
+
 {
 #ifdef MAP
     cout << "Appel au destructeur de <Provider>" << endl;

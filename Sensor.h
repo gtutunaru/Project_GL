@@ -1,5 +1,5 @@
 /*************************************************************************
-                           Sensor  -  description
+                                    Sensor
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
@@ -21,8 +21,8 @@ using namespace std;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Sensor>
-//
-//
+// Class that represents the object Sensor. It has an Id, a latitude and
+// longitude
 //------------------------------------------------------------------------
 
 class Sensor
@@ -31,49 +31,39 @@ class Sensor
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Getters
     int getSensorId();
     double getLatitude();
     double getLongitude();
 
+    // Setters
     void setLatitude(double _latitude);
     void setLongitude(double _longitude);
 
     string toString();
-
+    // Mode d'emploi :
+    // Returns the string representation of the Sensor
 
 //------------------------------------------------- Surcharge d'opérateurs
-    //Sensor & operator = ( const Sensor & unSensor );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
 
 //-------------------------------------------- Constructeurs - destructeur
     Sensor ( const Sensor & unSensor );
-    // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
+    // Mode d'emploi:
+    // Copy constructor of class Sensor
 
     Sensor();
+    // Mode d'emploi:
+    // Default constructor of class Provider
 
     Sensor (int _id, double _latitude, double _longitude);
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Constructor of class Provider who gets the id, latitude and longitude
+    // of the sensor as parameters 
 
     virtual ~Sensor ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Destructor of class Data
 
     
 //------------------------------------------------------------------ PRIVE

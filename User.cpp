@@ -1,5 +1,5 @@
 /*************************************************************************
-                           User  -  description
+                                    User  
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
@@ -22,11 +22,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type User::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
+
 
 string User::getPassword()
 {
@@ -52,17 +48,10 @@ void User::setUsername(string _username)
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-/*User & User::operator = ( const User & unUser )
-// Algorithme :
-//
-{
-} //----- Fin de operator =
-*/
 
 //-------------------------------------------- Constructeurs - destructeur
 User::User ( const User & unUser )
-// Algorithme :
-//
+
 {
     password = unUser.password;
     username = unUser.username;
@@ -73,8 +62,7 @@ User::User ( const User & unUser )
 
 
 User::User ( string _username, string _password )
-// Algorithme :
-//
+
 {
     username = _username;
     password = _password;
@@ -85,8 +73,7 @@ User::User ( string _username, string _password )
 
 
 User::~User ( )
-// Algorithme :
-//
+
 {
 #ifdef MAP
     cout << "Appel au destructeur de <User>" << endl;

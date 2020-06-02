@@ -1,5 +1,5 @@
 /*************************************************************************
-                           GovAgency  -  description
+                                GovAgency
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
@@ -21,21 +21,22 @@
 #include <fstream>
 #include <sstream>
 
-typedef struct tm tm;
+// typedef struct tm tm;
 
-typedef struct SAMPLE
-{
-    string attributeId;
-    double value;
-} result;
-typedef multimap<string, result*> valueSensor;
+// typedef struct SAMPLE
+// {
+//     string attributeId;
+//     double value;
+// } result;
+// typedef multimap<string, result*> valueSensor;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
 // Rôle de la classe <GovAgency>
-//
+// Class that represents the type of users of the government agency. It 
+// inherits from the User class.
 //
 //------------------------------------------------------------------------
 
@@ -45,45 +46,31 @@ class GovAgency : public User
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    bool similarSensor(Sensor* s1, Sensor* s2);
+    // bool similarSensor(Sensor* s1, Sensor* s2);
     // Mode d'emploi :
-    //
-    // Contrat :
     //
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-    //GovAgency & operator = ( const GovAgency & unGovAgency );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
 
 //-------------------------------------------- Constructeurs - destructeur
     GovAgency ( const GovAgency & unGovAgency );
     // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
+    // Copy constructor of class GovAgency
 
      GovAgency ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Default constructor of class GovAgency
 
     GovAgency (string _username, string  _password );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Constructor of class GovAgency who gets the username and password
+    // of the user as parameters 
 
     virtual ~GovAgency ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Destructor of class GovAgency
 
 //------------------------------------------------------------------ PRIVE
 

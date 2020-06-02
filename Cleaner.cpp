@@ -22,9 +22,10 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 
 string Cleaner::toString() const{
+
     string s= "Cleaner" + to_string(cleanerId) + "\nLatitude: " +  to_string(latitude)  + "\nLongitude: " +  to_string(longitude);
     s += "\nDescription: " + description  + "\nStart day: " + start  + "\nLast day: " + end + '\n';
-    //s=to_string(cleanerId);
+
     return s;
 }
 
@@ -60,6 +61,7 @@ string Cleaner::getEnd() const
 
 //-------------------------------------------- Constructeurs - destructeur
 Cleaner::Cleaner ( const Cleaner & unCleaner )
+
 {
     cleanerId = unCleaner.getCleanerId();
     latitude = unCleaner.getLatitude();

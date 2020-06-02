@@ -43,12 +43,14 @@ void viewQualityDay (Data & d){
         cout<<"NO3: "<<res[2]<<" µg/m3"<<endl;
         cout<<"PM10: "<<res[3]<<" µg/m3"<<endl;
     } else{
-        cout<<"No sensors in the area"<<endl;
+        cout<<"There are no measures in the area on this day or wrong input of date"<<endl;
     }
     double time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC);
-    cout << "Time taken by program is : " << fixed
-         << time_taken << setprecision(5);
-    cout << " sec " << endl;
+    if (showTime){
+        cout << "Time taken by program is : " << fixed
+            << time_taken << setprecision(5);
+        cout << " sec " << endl;
+    }
     delete[]res;
 }
 
@@ -85,27 +87,60 @@ void viewQualityTimespan (Data & d){
         cout<<"NO3: "<<res[2]<<" µg/m3"<<endl;
         cout<<"PM10: "<<res[3]<<" µg/m3"<<endl;
     } else{
-        cout<<"No sensors in the area"<<endl;
+        cout<<"There are no measures in the area on this timespan or wrong input of dates"<<endl;
     }
     double time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC);
-    cout << "Time taken by program is : " << fixed
-         << time_taken << setprecision(5);
-    cout << " sec " << endl;
+    if (showTime){
+        cout << "Time taken by program is : " << fixed
+            << time_taken << setprecision(5);
+        cout << " sec " << endl;
+    }
     delete[]res;
 }
 
 void checkImpact(Data & d){
+    clock_t startClock, endClock;
     cout<<"Insert id of cleaner to inspect"<<endl;
     int id;
     cin>>id;
     cout<<"How many days before the start of the cleaner do you want to check?"<<endl;
     int nbDays;
     cin>>nbDays;
+    startClock = clock();
     d.checkImpactRadius(id, nbDays);
+    endClock = clock();
+    double time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC);
+    if (showTime){
+        cout << "Time taken by program is : " << fixed
+            << time_taken << setprecision(5);
+        cout << " sec " << endl;
+    }
+}
+
+void checkImpactValue(Data & d){
+    clock_t startClock, endClock;
+    cout<<"Insert id of cleaner to inspect"<<endl;
+    int id;
+    cin>>id;
+    cout<<"How many days before the start of the cleaner do you want to check?"<<endl;
+    int nbDays;
+    cin>>nbDays;
+    cout<<"On which radius do you wish to check the impact?"<<endl;
+    double radius;
+    cin>>radius;
+    startClock = clock();
+    d.checkImpactValue(id, nbDays, radius);
+    endClock = clock();
+    double time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC);
+    if (showTime){
+        cout << "Time taken by program is : " << fixed
+            << time_taken << setprecision(5);
+        cout << " sec " << endl;
+    }
 }
 
 int main(){
-    cout<<"\n=============Starting application AirWatcher============="<<endl;
+    cout<<"\n============= Starting application AirWatcher ============="<<endl;
     cout<<"\nLoading data..."<<endl;
 
     Data d = Data();
@@ -116,12 +151,14 @@ int main(){
     d.readParticulars("dataset/users.csv");
     d.readMeasures("./dataset/measurements.csv");
 
+    cout<<d.AttributesToString()<<endl;
+
     bool exit = false;
     bool exitGov =false;
     bool exitProv = false;
     bool exitPart = false;
     double time_taken;
-    
+
     while(!exit)
     {
         cout<<"\nMain menu:"<<endl;
@@ -159,9 +196,11 @@ int main(){
                             d.filterData(id);
                             endClock = clock();
                             time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC);
-                            cout << "Time taken by program is : " << fixed
-                                << time_taken << setprecision(5);
-                            cout << " sec " << endl;
+                            if (showTime){
+                                cout << "Time taken by program is : " << fixed
+                                    << time_taken << setprecision(5);
+                                cout << " sec " << endl;
+                            }
                             break;
                         case 0:
                             exitGov = true;
@@ -177,7 +216,9 @@ int main(){
                     cout<<"\nHello, what do you want to do?:"<<endl;
                     cout<<"\t1: View quality of the air on a given date"<<endl;
                     cout<<"\t2: View quality of the air on a timespan"<<endl;
-                    cout<<"\t3: Check impact of a cleaner"<<endl;
+                    cout<<"\t3: Check maximum impact radius of a cleaner"<<endl;
+                    cout<<"\t4: Check impact value of a cleaner with a given radius"<<endl;
+
                     cout<<"\t0: Log out"<<endl;
                     int choix3;
                     cin>>choix3;
@@ -190,6 +231,9 @@ int main(){
                             break;
                         case 3:
                             checkImpact(d);
+                            break;
+                        case 4:
+                            checkImpactValue(d);
                             break;
                         case 0:
                             exitProv = true;
@@ -231,10 +275,9 @@ int main(){
                 cout<<"Invalid input"<<endl;
                 break;
         }
-    }*/
+    }
 
-    d.checkImpactRadius(1,0);
-
+    cout<<"\n======================== Good bye! ========================"<<endl;
 
     return 0;
 }
