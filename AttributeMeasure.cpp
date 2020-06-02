@@ -2,7 +2,7 @@
                            AttributeMeasure
             Class representing the possible attributes of a measure
                              -------------------
-    début                : $06/05/2019$
+    début                : $06/05/2020$
     copyright            : (C) $2019$ par $eversmee$
     e-mail               : $erwan.versmee@insa-lyon.fr$
 *************************************************************************/

@@ -1,3 +1,14 @@
+/*************************************************************************
+                           Main  -  description
+                             -------------------
+    début                : $06/05/2020$
+    copyright            : (C) $2020$ par $gtutunaru$
+    e-mail               : $gheorghe.tutunaru@insa-lyonfr$
+*************************************************************************/
+
+//---------- Réalisation de la classe <main> (fichier main.cpp) ------------
+
+//---------------------------------------------------------------- INCLUDE
 #include <iostream>
 #include <ctime>
 #include <string>
