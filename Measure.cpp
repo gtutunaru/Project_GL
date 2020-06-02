@@ -1,9 +1,9 @@
 /*************************************************************************
-                           User  -  description
+                           Measure  -  description
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : $06/05/2020$
+    copyright            : (C) $2020$ par $eversmee$
+    e-mail               : $erwan.versmee@insa-lyonfr$
 *************************************************************************/
 
 //---------- Réalisation de la classe <Measure> (fichier Measure.cpp) ------------
@@ -17,16 +17,8 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Measure.h"
 
-//------------------------------------------------------------- Constantes
+//----------------------------------------------- Méthodes publiques
 
-//----------------------------------------------------------------- 
-
-//------Measure::----------------------------------------------- Méthodes publiques
-// type Measure::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
 int Measure::getSensorId()
 {
     return this->sensorId;
@@ -88,14 +80,9 @@ string Measure::toString() {
     + " " + attributeId + " " + to_string(value) + " " + to_string(falseData) + '\n';
     return s;
 }
-//------------------------------------------------- Surcharge d'opérateurs
-//Particular & operator = ( const Particular & unParticular );
-
 
 //-------------------------------------------- Constructeurs - destructeur
 Measure::Measure ( const Measure & unMeasure )
-// Algorithme :
-//
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Measure>" << endl;
@@ -107,8 +94,6 @@ Measure::Measure ( const Measure & unMeasure )
 
 
 Measure::Measure ( )
-// Algorithme :
-//
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Measure>" << endl;
@@ -116,25 +101,10 @@ Measure::Measure ( )
 } //----- Fin de Measure
 
 Measure::Measure (string _timestamp, int _sensorId, string _attributeId, double _value, bool _falseData)
-// Algorithme :
-//
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Measure>" << endl;
 #endif
-    /*string s_annee= _timestamp.substr(0,4);
-    string s_mois = _timestamp.substr(5,7);
-    string s_jour = _timestamp.substr(8,10);
-    string s_heure = _timestamp.substr(11,13);
-    string s_min = _timestamp.substr(14,16);
-    string s_sec = _timestamp.substr(17,19);
-
-    timestamp.tm_year=stoi(s_annee);
-    timestamp.tm_mon=stoi(s_mois);
-    timestamp.tm_mday=stoi(s_jour);
-    timestamp.tm_hour=stoi(s_heure);
-    timestamp.tm_min=stoi(s_min);
-    timestamp.tm_sec=stoi(s_sec);*/
 
     strptime(_timestamp.c_str(), "%Y-%m-%d %H:%M:%S", &timestamp);
 
@@ -146,17 +116,9 @@ Measure::Measure (string _timestamp, int _sensorId, string _attributeId, double 
 
 
 Measure::~Measure ( )
-// Algorithme :
-//
 {
 #ifdef MAP
     cout << "Appel au destructeur de <Measure>" << endl;
 #endif
 } //----- Fin de ~Measure
-
-
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées
-
 

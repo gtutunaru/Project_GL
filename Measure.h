@@ -1,9 +1,9 @@
 /*************************************************************************
                            Measure  -  description
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : $06/05/2020$
+    copyright            : (C) $2020$ par $eversmee$
+    e-mail               : $erwan.versmee@insa-lyonfr$
 *************************************************************************/
 
 //---------- Interface de la classe <Measure> (fichier Measure.h) ----------------
@@ -15,13 +15,9 @@ using namespace std;
 #include <string>
 #include <ctime> 
 
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
-
 //------------------------------------------------------------------------
 // Rôle de la classe <Measure>
-//
+//It defines an object measures with its attributes
 //
 //------------------------------------------------------------------------
 
@@ -31,11 +27,7 @@ class Measure
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+
     int getSensorId();
     tm getTimestamp();
     string getAttributeId();
@@ -49,41 +41,20 @@ public:
     void setFalseData(bool);
 
     string toString();
-//------------------------------------------------- Surcharge d'opérateurs
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
 //-------------------------------------------- Constructeurs - destructeur
     Measure ( const Measure & unMeasure );
-    // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
 
     Measure ( );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
     
     Measure (string timestamp, int sensorId, string attributeId, double value, bool falseData );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
     virtual ~Measure ( );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+
 
 //------------------------------------------------------------------ PRIVE
 
 protected:
-//----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
     int sensorId;
@@ -92,8 +63,6 @@ protected:
     double value;
     bool falseData;
 };
-
-//-------------------------------- Autres définitions dépendantes de <Measure>
 
 #endif // MEASURE_H
 

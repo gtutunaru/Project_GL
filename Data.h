@@ -159,15 +159,26 @@ public:
 
     int nbSensorInArea(double, double, double);
     // Mode d'emploi :
-    //
+    //Method used to get the exact number of sensors in a given area. The user should
+    //enter a latitude, a longitude and a radius to define the area.
     // Contrat :
-    //
+    //To work correctly, valid parameters should be entered by the user.
 
     bool filterData(int);
     // Mode d'emploi :
-    //
+    //Method used to filter data provided by an individual whose id is specified
+    //in the parameters. If the id corresponds to a private individual, all of its
+    //measurements will be compared day by day to measurements provided by valid sensors :
+    //the algorithm will determine an area in circle whose center is the coordinates
+    //of the individual's sensor and the radius the smallest so that there are at
+    //least 5 sensors in the area. Then, it will call viewQuality to get the average
+    //quality of the air each day ; the value of each air attribute obtained with
+    //valid sensors will be compared with those obtained with the individual's sensor. In
+    //case the difference of two values is greater than a certain limit, all the measures 
+    //of the individual are marked as false in the data structure.
     // Contrat :
-    //
+    //To work correctly, a correct id corresponding to a private individual should be entered
+    //by the user
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );

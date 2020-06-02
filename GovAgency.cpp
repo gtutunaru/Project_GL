@@ -17,14 +17,7 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "GovAgency.h"
 
-//------------------------------------------------------------- Constantes
-
 //----------------------------------------------------------------- PUBLIC
-
-//----------------------------------------------------- Méthodes publiques
-
-
-//------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
 GovAgency::GovAgency ( const GovAgency & unGovAgency )

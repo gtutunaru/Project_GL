@@ -17,8 +17,8 @@ using namespace std;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Cleaner>
-//
-//
+//This class defines an object cleaner and his attributes
+//There is no particular method, only the getters, setters and toString
 //------------------------------------------------------------------------
 
 class Cleaner

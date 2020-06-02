@@ -21,6 +21,8 @@
 #include <fstream>
 #include <sstream>
 
+//------------------------------------------------------------------ Types
+
 // typedef struct tm tm;
 
 // typedef struct SAMPLE
@@ -29,9 +31,6 @@
 //     double value;
 // } result;
 // typedef multimap<string, result*> valueSensor;
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
 // Rôle de la classe <GovAgency>
@@ -49,10 +48,6 @@ public:
     // bool similarSensor(Sensor* s1, Sensor* s2);
     // Mode d'emploi :
     //
-
-
-//------------------------------------------------- Surcharge d'opérateurs
-
 
 //-------------------------------------------- Constructeurs - destructeur
     GovAgency ( const GovAgency & unGovAgency );
@@ -72,16 +67,7 @@ public:
     // Mode d'emploi :
     // Destructor of class GovAgency
 
-//------------------------------------------------------------------ PRIVE
-
-protected:
-//----------------------------------------------------- Méthodes protégées
-
-//----------------------------------------------------- Attributs protégés
-
 };
-
-//-------------------------------- Autres définitions dépendantes de <GovAgency>
 
 #endif // GovAgency_H
 

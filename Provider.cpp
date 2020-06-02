@@ -17,8 +17,6 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Provider.h"
 
-//------------------------------------------------------------- Constantes
-
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
@@ -40,8 +38,6 @@ string Provider::toString() const{
     return res;
 }
 
-//------------------------------------------------- Surcharge d'opérateurs
-
 
 //-------------------------------------------- Constructeurs - destructeur
 Provider::Provider ( const Provider & unProvider )
@@ -56,7 +52,6 @@ Provider::Provider ( const Provider & unProvider )
 
 Provider::Provider (string _username, string _password )
 :User(_username,  _password)
-
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Provider>" << endl;
@@ -72,7 +67,3 @@ Provider::~Provider ()
 #endif
 } //----- Fin de ~Provider
 
-
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées

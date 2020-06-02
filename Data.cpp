@@ -31,11 +31,10 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Data.h"
 
-//------------------------------------------------------------- Constantes
-
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
+
 // Source of toRadians and distance https://www.geeksforgeeks.org/program-distance-two-points-earth/
 // Utility function for converting degrees to radians
 double toRadians(const double degree)
@@ -111,7 +110,8 @@ bool operator <= (const tm & date1, const tm & date2){
     return (diffSecs<=0);
 }
 
-int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
+int Data::nbSensorInArea(double c_lat, double c_long, double radius) 
+{
     auto it = sensors.begin();
     int nbSensors=0;
     while(it!=sensors.end()){
@@ -122,13 +122,16 @@ int Data::nbSensorInArea(double c_lat, double c_long, double radius) {
         it++;
     }
     return nbSensors;
-}
+}//----- Fin de nbSensorInArea
 
 bool Data::filterData(int id) {
+    //limit value
     int tau = 20;
+
     bool found = false;
     bool data_false = false;
     Sensor* sensor;
+
     for(const auto& part : particulars) {
         string username = "User"+to_string(id);
         if (username == part->getUsername()) {
@@ -142,20 +145,18 @@ bool Data::filterData(int id) {
                 radius +=10;
                 nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
             }
-            //cout << "Rayon : "<< radius << ", sensor id "<< sensor->getSensorId() << ", nbSensor " << nbSensor <<  endl;
-            //cout << endl;
+
             double o3_part = 0;
             double no2_part = 0;
 	        double so2_part = 0;
             double pm10_part = 0;
+
             //We obtain a pair of iterator with all of the individual's sensor measures inside
             pair<measures_iterator, measures_iterator> result = measures_key_id.equal_range(sensor->getSensorId());
             for(measures_iterator it = result.first;it != result.second;it++) {
                 tm date = it->second->getTimestamp();
-                //cout <<"date : "<< asctime(&date) << endl;
                 int cmpt_day = 0;
                 while(cmpt_day<4) {
-                    //cout << "Attribut actuel : " << it->second->getAttributeId() << ", valeur : "<< it->second->getValue() << endl;
                     if (it->second->getAttributeId()=="O3"){
                         o3_part = it->second->getValue();
                     } else if (it->second->getAttributeId()=="SO2"){
@@ -170,17 +171,7 @@ bool Data::filterData(int id) {
                 }
                 it--;
 
-                //double air_quality[4];
                 double* air_quality = viewQuality(sensor->getLatitude(),sensor->getLongitude(),radius,date);
-                /*cout << "03 officiel : " << air_quality[0] << endl;
-                cout << "N02 officiel : " << air_quality[2] << endl;
-                cout << "S02 officiel : " << air_quality[1] << endl;
-                cout << "PM10 officiel : " << air_quality[3] << endl;
-                cout << endl;
-                cout << "03 particulier : " << o3_part << endl;
-                cout << "N02 particulier : " << no2_part << endl;
-                cout << "S02 particulier : " << so2_part << endl;
-                cout << "PM10 particulier : " << pm10_part << endl;*/
 
                if(abs(air_quality[0]-o3_part  )>tau ||
                   abs(air_quality[1]-so2_part )>tau ||
@@ -189,7 +180,7 @@ bool Data::filterData(int id) {
                 )
                 {
                     measures_key_id.erase(result.first,result.second);
-                    //cout << "J'enlève le senseur "<< sensor->getSensorId() << endl;
+
                     multimap<string, Measure*>::iterator it_start = measures.begin();
                     multimap<string, Measure*>::iterator it_end = measures.end();
                     while(it_start!=it_end) {
@@ -204,28 +195,6 @@ bool Data::filterData(int id) {
                     break;
                 }
                 delete[] air_quality;
-                    /*bool ok = true;
-                    for(const auto& mes : measures) {
-                        if(mes.second->getSensorId()==sensor->getSensorId()) {
-                            cout <<"On a un problème" << endl;
-                            ok = false;
-                            break;
-                        }
-                    }
-                    if(ok) {
-                        cout << "Tout va bien" << endl;
-                    }
-                    if(measures_key_id.find(sensor->getSensorId())==measures_key_id.end()) {
-                        cout << "On est ok" << endl;
-                    } else {
-                        cout << "Erreur" << endl;
-                    }
-
-                }
-                if(date.tm_mday==31 && date.tm_mon==11) {
-                    cout << "je suis arrivé à la fin" << endl;
-                }*/
-
             }
             break;
         }
@@ -235,29 +204,10 @@ bool Data::filterData(int id) {
         if(!data_false) cout << "User's data are correct : the corresponding user (sensor " << sensor->getSensorId() << ") was providing real data."<<endl;
     }
 
-    /*Measures::iterator it_start = measures.begin();
-    Measures::iterator it_end = measures.end();
-    int nbrEnreg=0;
-    int bug = 0;
-    while(it_start != it_end)
-    {
-        if(it_start->second->getSensorId()==36 && !it_start->second->isFalseData()) {
-            //cout<<it_start->first<<" ET "<<(it_start->second)->toString()<<endl;
-            //cout << " id :" << (it_start->second)->getSensorId() <<"ok"<< endl;
-            bug++;
-        }
-        if(!it_start->second->isFalseData())
-        nbrEnreg++;
-        it_start++;
-    }
-    cout << "Il y a en tout "<< nbrEnreg << " enregistrements dans la map" << endl;
-    cout << "Il y a en tout "<< bug << " bugs dans la map" << endl;*/
     return data_false;
-}
+}//----- Fin de filterData
 
 void Data::readMeasures ( string filename)
-// Algorithme :
-//
 {
     ifstream file;
     file.open(filename);
@@ -293,13 +243,6 @@ void Data::readMeasures ( string filename)
         }
 
     }
-    /*Measures::iterator it_start = measures.begin();
-    Measures::iterator it_end = measures.end();
-    while(it_start != it_end)
-    {
-        cout<<it_start->first<<" ET "<<(it_start->second)->toString()<<endl;
-        it_start++;
-    }*/
 } //----- Fin de readMeasurements
 
 

@@ -13,14 +13,11 @@
 //--------------------------------------------------- Interfaces utilisées
 #include "User.h"
 #include "Sensor.h"
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Particular>
-//
-//
+//This class defines an object Particular (representing a private individual)
+//with its attributes
 //------------------------------------------------------------------------
 
 class Particular : public User
@@ -29,11 +26,6 @@ class Particular : public User
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
     void setSensor(Sensor * _sensor);
 
@@ -45,44 +37,18 @@ public:
 
     string toString();
 
-
-//------------------------------------------------- Surcharge d'opérateurs
-    //Particular & operator = ( const Particular & unParticular );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-
 //-------------------------------------------- Constructeurs - destructeur
     Particular ( const Particular & unParticular );
-    // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
 
      Particular ( );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
     Particular (string _username, string _password, Sensor * _sensor );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
     virtual ~Particular ( );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
 //------------------------------------------------------------------ PRIVE
 
 protected:
-//----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
     int nbPoints;
@@ -90,7 +56,6 @@ protected:
 
 };
 
-//-------------------------------- Autres définitions dépendantes de <Particular>
 
-#endif // Particular_H
+#endif // PARTICULAR_H
 

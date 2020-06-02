@@ -14,9 +14,6 @@
 #include "User.h"
 #include "Cleaner.h"
 #include <list>
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Provider>
@@ -47,9 +44,6 @@ public:
     // Returns the string representation of the Provider
 
 
-//------------------------------------------------- Surcharge d'opérateurs
-
-
 //-------------------------------------------- Constructeurs - destructeur
     Provider ( const Provider & unProvider );
     // Mode d'emploi (constructeur de copie) :
@@ -73,13 +67,10 @@ public:
 //------------------------------------------------------------------ PRIVE
 
 protected:
-//----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
     list<Cleaner*> cleaners;
 
 };
-
-//-------------------------------- Autres définitions dépendantes de <Provider>
 
 #endif // Provider_H

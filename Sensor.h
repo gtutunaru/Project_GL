@@ -15,10 +15,6 @@ using namespace std;
 #include <iostream>
 #include <string>
 
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
-
 //------------------------------------------------------------------------
 // Rôle de la classe <Sensor>
 // Class that represents the object Sensor. It has an Id, a latitude and
@@ -69,7 +65,6 @@ public:
 //------------------------------------------------------------------ PRIVE
 
 protected:
-//----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
     int sensorId;
@@ -77,7 +72,5 @@ protected:
     double longitude;
 
 };
-
-//-------------------------------- Autres définitions dépendantes de <Sensor>
 
 #endif // Sensor_H

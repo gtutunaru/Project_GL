@@ -2,9 +2,9 @@
                            AttributeMeasure
             Class representing the possible attributes of a measure
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : $06/05/2019$
+    copyright            : (C) $2019$ par $eversmee$
+    e-mail               : $erwan.versmee@insa-lyon.fr$
 *************************************************************************/
 
 //---------- Réalisation de la classe <AttributeMeasure> (fichier AttributeMeasure.cpp) ------------
@@ -17,8 +17,6 @@
 //------------------------------------------------------ Include personnel
 #include "AttributeMeasure.h"
 using namespace std;
-
-//------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
@@ -33,14 +31,8 @@ string AttributeMeasure::toString() const
   return mes;
 }
 
-
-//------------------------------------------------- Surcharge d'opérateurs
-
-
 //-------------------------------------------- Constructeurs - destructeur
 AttributeMeasure::AttributeMeasure ( const AttributeMeasure & unAttributeMeasure )
-// Algorithme :
-//
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <AttributeMeasure>" << endl;
@@ -51,9 +43,7 @@ AttributeMeasure::AttributeMeasure ( const AttributeMeasure & unAttributeMeasure
 } //----- Fin de AttributeMeasure (constructeur de copie)
 
 
-AttributeMeasure::AttributeMeasure ( )
-// Algorithme :
-//
+AttributeMeasure::AttributeMeasure ()
 {
 #ifdef MAP
     cout << "Appel au constructeur de <AttributeMeasure>" << endl;
@@ -61,8 +51,6 @@ AttributeMeasure::AttributeMeasure ( )
 } //----- Fin de AttributeMeasure
 
 AttributeMeasure::AttributeMeasure (string unAttributeID,string unUnit,string unDescription  )
-// Algorithme :
-//
 {
 #ifdef MAP
     cout << "Appel au constructeur de <AttributeMeasure>" << endl;
@@ -74,15 +62,9 @@ AttributeMeasure::AttributeMeasure (string unAttributeID,string unUnit,string un
 
 
 AttributeMeasure::~AttributeMeasure ( )
-// Algorithme :
-//
 {
 #ifdef MAP
     cout << "Appel au destructeur de <AttributeMeasure>" << endl;
 #endif
 } //----- Fin de ~AttributeMeasure
 
-
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées
