@@ -37,24 +37,18 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 // Source of toRadians and distance https://www.geeksforgeeks.org/program-distance-two-points-earth/
-// Utility function for
-// converting degrees to radians
+// Utility function for converting degrees to radians
 double toRadians(const double degree)
 {
-    // cmath library in C++
-    // defines the constant
-    // M_PI as the value of
-    // pi accurate to 1e-30
+    // cmath library in C++ defines the constant
+    // M_PI as the value of pi accurate to 1e-30
     double one_deg = (M_PI) / 180;
     return (one_deg * degree);
 }
 
-double distance(double lat1, double long1,
-                     double lat2, double long2)
+double distance(double lat1, double long1, double lat2, double long2)
 {
-    // Convert the latitudes
-    // and longitudes
-    // from degree to radians.
+    // Convert the latitudes and longitudes from degree to radians.
     lat1 = toRadians(lat1);
     long1 = toRadians(long1);
     lat2 = toRadians(lat2);
@@ -64,15 +58,11 @@ double distance(double lat1, double long1,
     double dlong = long2 - long1;
     double dlat = lat2 - lat1;
 
-    double ans = pow(sin(dlat / 2), 2) +
-                          cos(lat1) * cos(lat2) *
-                          pow(sin(dlong / 2), 2);
+    double ans = pow(sin(dlat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlong / 2), 2);
 
     ans = 2 * asin(sqrt(ans));
 
-    // Radius of Earth in
-    // Kilometers, R = 6371
-    // Use R = 3956 for miles
+    // Radius of Earth in Kilometers, R = 6371
     double R = 6371;
 
     // Calculate the result
@@ -91,7 +81,9 @@ void DatePlusDays( struct tm* date, int days )
     // Update caller's date
     // Use localtime because mktime converts to UTC so may change date
     *date = *localtime( &date_seconds ) ;
-    (*date).tm_hour=12;
+
+    //To always have the value of the hour equal to 12 to read correctly the measures
+    (*date).tm_hour=12; 
 }
 
 void AddDay( struct tm* date )
@@ -103,11 +95,14 @@ void AddDay( struct tm* date )
     // Update caller's date
     // Use localtime because mktime converts to UTC so may change date
     *date = *localtime( &date_seconds ) ;
+
+    //To always have the value of the hour equal to 12 to read correctly the measures
     (*date).tm_hour=12;
-    return;
 }
 
 bool operator <= (const tm & date1, const tm & date2){
+    // Operator used to check if date1 is smaller or equal to date2
+    // by calculating the difference in seconds between the dates
     tm d1 = date1;
     tm d2 = date2;
     time_t t1 = mktime(&d1);
@@ -318,6 +313,7 @@ void Data::readCleaners ( string filename ){
         while (!file.eof()) {
             std::getline(file,s);
             if (s!=""){
+                // Structure of cleaners.csv is Id;latitude;longitude;description;start date; end date;
                 int pos = s.find(";");
                 int id = stoi(s.substr(7, pos-7));
                 s=s.substr(pos+1, s.length()-pos);
@@ -367,6 +363,7 @@ void Data::readSensors ( string filename ){
             std::getline(file,s);
 
             if (s!=""){
+                // Structure of sensors.csv is Id;latitude;longitude;
                 int pos = s.find(";");
                 int id = stoi(s.substr(6, pos-6));
                 s=s.substr(pos+1, s.length()-pos);
@@ -403,6 +400,7 @@ void Data::readParticulars ( string filename ){
             getline(file,s);
 
             if (s!=""){
+                // Structure of users.csv is username;Id_sensor;
                 int pos = s.find(";");
                 string username = s.substr(0, pos);
                 s=s.substr(pos+1, s.length()-pos);
@@ -430,6 +428,7 @@ void Data::readProviders ( string filename ){
         while (!file.eof()) {
             std::getline(file,s);
             if (s!=""){
+                // Structure of providers.csv is username;Id_Cleaner
                 int pos = s.find(";");
                 string username = s.substr(0, pos);
                 s=s.substr(pos+1, s.length()-pos);
@@ -467,6 +466,7 @@ void Data::readAttributes ( string filename)
         while (!file.eof()) {
             std::getline(file,s);
             if (s!=""){
+                // Structure of attributes.csv is AttributeID;Unit;Description;
                 int pos = s.find(";");
                 string attributeID = s.substr(0, pos);
                 s=s.substr(pos+1, s.length()-pos);
