@@ -41,8 +41,8 @@ typedef list<Particular*> Particulars;
 typedef multimap<int, Measure*>::iterator measures_iterator;
 //------------------------------------------------------------------------
 // Rôle de la classe <Data>
-// This class contains all the data in our system stored in maps and lists. 
-// It also contains all the methods and functions used for the 
+// This class contains all the data in our system stored in maps and lists.
+// It also contains all the methods and functions used for the
 // functionalities of this app
 //
 //------------------------------------------------------------------------
@@ -58,18 +58,18 @@ public:
     // Mode d'emploi :
     // Method used to read the measures from a csv file, whose path is
     // indicated in the parameter "filename". The measures are stored in
-    // two multi-maps, one with the key being the date of the measure 
-    // (attribute "measures") and the second with the key being the id of 
-    // the sensor doing the measure ("measures_key_id"). Since we create the 
-    // measures dynamically, we store  in both multi-maps only the pointers 
-    // to the Measure objects, thus having two maps instead of one is not 
+    // two multi-maps, one with the key being the date of the measure
+    // (attribute "measures") and the second with the key being the id of
+    // the sensor doing the measure ("measures_key_id"). Since we create the
+    // measures dynamically, we store  in both multi-maps only the pointers
+    // to the Measure objects, thus having two maps instead of one is not
     // very expensive in terms of memory
     // Contrat :
     // To work correcly, a valid path should be given
 
     void readParticulars ( string filename );
     // Mode d'emploi :
-    // Method used to read the particular users from a csv file, whose 
+    // Method used to read the particular users from a csv file, whose
     // path is indicated in the parameter "filename". The pointers to
     // the Particular objects are stored in a list which is the attribute
     // "particulars"
@@ -78,7 +78,7 @@ public:
 
     void readCleaners ( string filename );
     // Mode d'emploi :
-    // Method used to read the cleaners from a csv file, whose 
+    // Method used to read the cleaners from a csv file, whose
     // path is indicated in the parameter "filename". The pointers to
     // the Cleaner objects are stored in a map which is the attribute
     // "cleaners" and its key is the id of the Cleaner
@@ -87,7 +87,7 @@ public:
 
     void readProviders ( string filename );
     // Mode d'emploi :
-    // Method used to read the providers from a csv file, whose 
+    // Method used to read the providers from a csv file, whose
     // path is indicated in the parameter "filename". The pointers to
     // the Provider objects are stored in a list which is the attribute
     // "providers". Also, each provider has a list of cleaners whose
@@ -97,7 +97,7 @@ public:
 
     void readAttributes (string filename);
     // Mode d'emploi :
-    // Method used to read the possible attributes from a csv file, whose 
+    // Method used to read the possible attributes from a csv file, whose
     // path is indicated in the parameter "filename". The pointers to
     // the AttributeMeasure objects are stored in a list which is the attribute
     // "attributes".
@@ -112,7 +112,7 @@ public:
 
     void readSensors ( string filename);
     // Mode d'emploi :
-    // Method used to read the sensors from a csv file, whose 
+    // Method used to read the sensors from a csv file, whose
     // path is indicated in the parameter "filename". The pointers to
     // the Sensor objects are stored in a map which is the attribute
     // "sensors" and its key is the id of the Sensor
@@ -121,39 +121,42 @@ public:
 
     void checkImpactValue ( int cleanId, int nbDays, double r);
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Calculates the impact of the Cleaner whose id is 'CleanerId' and prints it.
+    //The time period is delimited by nbDays
+        //It begins on Cleaner.start - nbDays
+        //It ends on Cleaner.end + nbDays
+    //The space is delimited by a circle of radius r that has the cleaner in its center
 
     void checkImpactRadius ( int cleanId, int nbDays );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Calculates the biggest radius of impact of the Cleaner whose id is 'CleanerId' and prints it.
+    //The time period is delimited by nbDays
+        //It begins on Cleaner.start - nbDays
+        //It ends on Cleaner.end
 
     double * viewQuality(double c_lat, double c_long, double radius, tm time);
     // Mode d'emploi :
     // Method used to get the average of the measures that were observed on
-    // a specific day ("date"), in a circle represented by coordinates of 
+    // a specific day ("date"), in a circle represented by coordinates of
     // latitude and longitude and a radius around.
-    // Returns array with averages of values from the measures: 1st value of o3, 
+    // Returns array with averages of values from the measures: 1st value of o3,
     // 2nd of so2, 3rd of no2 and 4th of pm10, 5th value is the ATMO index
     // Contrat :
     // If in the given zone there are no sensors, the radius will be incremented
-    // until there are at least 3 sensors in the circle. This does not guarantee 
+    // until there are at least 3 sensors in the circle. This does not guarantee
     // that values will be returned, since these sensors could have not provided
     // values on this specific day
 
     double * viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
     // Mode d'emploi :
     // Method used to get the average of the measures that were observed on
-    // a timepspan represented by dates "start" and "end", in a circle represented 
+    // a timepspan represented by dates "start" and "end", in a circle represented
     // by coordinates of latitude and longitude and a radius around.
-    // Returns array with averages of values from the measures: 1st value of o3, 
+    // Returns array with averages of values from the measures: 1st value of o3,
     // 2nd of so2, 3rd of no2 and 4th of pm10, 5th value is the ATMO index
     // Contrat :
     // If in the given zone there are no sensors, the radius will be incremented
-    // until there are at least 3 sensors in the circle. This does not guarantee 
+    // until there are at least 3 sensors in the circle. This does not guarantee
     // that values will be returned, since these sensors could have not provided
     // values on this specific day
 
@@ -174,7 +177,7 @@ public:
     //least 5 sensors in the area. Then, it will call viewQuality to get the average
     //quality of the air each day ; the value of each air attribute obtained with
     //valid sensors will be compared with those obtained with the individual's sensor. In
-    //case the difference of two values is greater than a certain limit, all the measures 
+    //case the difference of two values is greater than a certain limit, all the measures
     //of the individual are marked as false in the data structure.
     // Contrat :
     //To work correctly, a correct id corresponding to a private individual should be entered

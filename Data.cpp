@@ -1,5 +1,5 @@
 /*************************************************************************
-                                Data  
+                                Data
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $eversmee$
@@ -82,7 +82,7 @@ void DatePlusDays( struct tm* date, int days )
     *date = *localtime( &date_seconds ) ;
 
     //To always have the value of the hour equal to 12 to read correctly the measures
-    (*date).tm_hour=12; 
+    (*date).tm_hour=12;
 }
 
 void AddDay( struct tm* date )
@@ -110,7 +110,7 @@ bool operator <= (const tm & date1, const tm & date2){
     return (diffSecs<=0);
 }
 
-int Data::nbSensorInArea(double c_lat, double c_long, double radius) 
+int Data::nbSensorInArea(double c_lat, double c_long, double radius)
 {
     auto it = sensors.begin();
     int nbSensors=0;
@@ -868,7 +868,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
 
         if (before[4]>0 && after[4]>0) {
             counter++;
-            isImpact = (after[4]+4<before[4]);
+            isImpact = (after[4]+4<before[4]); //We considered that an impact lower than 4 is not good enough
             if (isImpact)
             {
                 for (int i = 0; i<5;i++)
@@ -877,7 +877,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
                 }
             }
         }
-
+        //Output
         if(!isImpact && counter>1)
         {
             cout<<"There is a significant impact on Radius : "<<r<<" km"<<endl<<endl;
@@ -887,6 +887,8 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
             cout<<"Difference PM10 : "<<impact[3]<<" µg/m3"<<endl;
             cout<<"Difference ATMO : "<<impact[4]<<endl;
         }
+
+        //We increment r depending on its value to make the loop shorter without losing that much precision
         if (r<100) {
             r+=2;
         }
@@ -897,7 +899,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
         } else {
             r+= 1000;
         }
-
+        //Extreme case (to avoid infinite loops)
         if (r>5000) {
             cout<<"He cleaned everything"<<endl;
             cout<<"Impact Radius : "<<r<<" km"<<endl<<endl;
@@ -958,6 +960,7 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
         return;
     }
 
+    //Output
     if(isImpact)
     {
         cout<<"There is a significant impact on Radius : "<<r<<" km"<<endl<<endl;
