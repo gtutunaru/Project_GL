@@ -43,7 +43,7 @@ void viewQualityDay (Data & d){
         cout<<"NO3: "<<res[2]<<" µg/m3"<<endl;
         cout<<"PM10: "<<res[3]<<" µg/m3"<<endl;
     } else{
-        cout<<"No sensors in the area"<<endl;
+        cout<<"There are no measures in the area on this day or wrong input of date"<<endl;
     }
     double time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC);
     cout << "Time taken by program is : " << fixed
@@ -85,7 +85,7 @@ void viewQualityTimespan (Data & d){
         cout<<"NO3: "<<res[2]<<" µg/m3"<<endl;
         cout<<"PM10: "<<res[3]<<" µg/m3"<<endl;
     } else{
-        cout<<"No sensors in the area"<<endl;
+        cout<<"There are no measures in the area on this timespan or wrong input of dates"<<endl;
     }
     double time_taken = double(endClock - startClock) / double(CLOCKS_PER_SEC);
     cout << "Time taken by program is : " << fixed
