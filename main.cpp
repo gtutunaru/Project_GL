@@ -104,6 +104,19 @@ void checkImpact(Data & d){
     d.checkImpactRadius(id, nbDays);
 }
 
+void checkImpactValue(Data & d){
+    cout<<"Insert id of cleaner to inspect"<<endl;
+    int id;
+    cin>>id;
+    cout<<"How many days before the start of the cleaner do you want to check?"<<endl;
+    int nbDays;
+    cin>>nbDays;
+    cout<<"On which radius do you wish to check the impact?"<<endl;
+    double radius;
+    cin>>radius;
+    d.checkImpactValue(id, nbDays, radius);
+}
+
 int main(){
     cout<<"\n=============Starting application AirWatcher============="<<endl;
     cout<<"\nLoading data..."<<endl;
@@ -121,7 +134,7 @@ int main(){
     bool exitProv = false;
     bool exitPart = false;
     double time_taken;
-    
+
     while(!exit)
     {
         cout<<"\nMain menu:"<<endl;
@@ -177,7 +190,9 @@ int main(){
                     cout<<"\nHello, what do you want to do?:"<<endl;
                     cout<<"\t1: View quality of the air on a given date"<<endl;
                     cout<<"\t2: View quality of the air on a timespan"<<endl;
-                    cout<<"\t3: Check impact of a cleaner"<<endl;
+                    cout<<"\t3: Check maximum impact radius of a cleaner"<<endl;
+                    cout<<"\t4: Check impact value of a cleaner with a given radius"<<endl;
+
                     cout<<"\t0: Log out"<<endl;
                     int choix3;
                     cin>>choix3;
@@ -190,6 +205,9 @@ int main(){
                             break;
                         case 3:
                             checkImpact(d);
+                            break;
+                        case 4:
+                            checkImpactValue(d);
                             break;
                         case 0:
                             exitProv = true;
@@ -232,6 +250,8 @@ int main(){
                 break;
         }
     }
+
+    //d.checkImpactRadius(1,0);
 
 
     return 0;

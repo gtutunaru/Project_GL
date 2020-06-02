@@ -139,11 +139,10 @@ bool Data::filterData(int id) {
         if (username == part->getUsername()) {
             found = true;
             double radius = 10;
-            //sensor = new Sensor(*part->getSensor());
             sensor = part->getSensor();
             int nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
 
-            //Calcul du rayon dans lequel on trouve plus de 5 senseurs
+            //Calcul of the smallest radius with at least 5 sensors inside
             while(nbSensor<5) {
                 radius +=10;
                 nbSensor = nbSensorInArea(sensor->getLatitude(),sensor->getLongitude(),radius);
@@ -154,7 +153,7 @@ bool Data::filterData(int id) {
             double no2_part = 0;
 	        double so2_part = 0;
             double pm10_part = 0;
-            //On obtient toutes les mesures réalisées avec le senseur du particulier
+            //We obtain a pair of iterator with all of the individual's sensor measures inside
             pair<measures_iterator, measures_iterator> result = measures_key_id.equal_range(sensor->getSensorId());
             for(measures_iterator it = result.first;it != result.second;it++) {
                 tm date = it->second->getTimestamp();
@@ -521,7 +520,13 @@ string Data::AttributesToString() const
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
 {
     list<Measure*> goodMeasures;
-
+    int nbSensors = nbSensorInArea(c_lat,c_long,radius);
+    while(nbSensors<3) {
+        radius+=1;
+        nbSensors = nbSensorInArea(c_lat,c_long,radius);
+    }
+    //cout << "rayon : "<<radius << endl;
+    //cout <<"date " <<  asctime(&time)<< endl;
 
 	// It returns a pair representing the range of elements with key equal to time
     pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&time));
@@ -708,9 +713,14 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm start, tm end)
 {
     list<Measure*> goodMeasures;
+    int nbSensors = nbSensorInArea(c_lat,c_long,radius);
+    while(nbSensors<3) {
+        radius+=1;
+        nbSensors = nbSensorInArea(c_lat,c_long,radius);
+    }
+    //cout << " r : " << radius << endl;
 
     while (start<=end){
-
         // It returns a pair representing the range of elements with key equal to time
         pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&start));
         //cout << "All values for key "<<asctime( &start )<<" are," << endl;
@@ -905,7 +915,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
 void Data::checkImpactRadius (  int cleanId, int nbDays )
 {
     double impact[5];
-    int r=20; //radius
+    int r=0; //radius
     bool isImpact = true;
     int counter = 0;
 
@@ -922,7 +932,7 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
     struct tm beforeStart =startDate; //the day right before start of cleaner
     DatePlusDays(&beforeStart, -1);
 
-    
+
     //cout<<asctime(&afterDate)<<endl;
     cout<<"Information about the cleaner"<<endl<<endl;
     cout<<cleaners[cleanId]->toString()<<endl;
@@ -932,12 +942,12 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
 
         //Quality before
         double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, beforeStart);
-        
+
         //Quality After
         double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, endDate);
 
         //Impact
-        
+
 
         if (before[4]>0 && after[4]>0) {
             counter++;
@@ -991,68 +1001,68 @@ void Data::checkImpactRadius (  int cleanId, int nbDays )
 
 void Data::checkImpactValue ( int cleanId, int nbDays, double r)
 {
-    bool isImpact = false;
     double impact[5];
-    cout<<"So far so good 3"<<endl;
+    bool isImpact = false;
+
     struct tm startDate; //start day of cleaner working
     strptime(cleaners[cleanId]->getStart().c_str(), "%Y-%m-%d %H:%M:%S", &startDate);
+
     struct tm endDate; //last day of cleaner working
     strptime(cleaners[cleanId]->getEnd().c_str(), "%Y-%m-%d %H:%M:%S", &endDate);
+    DatePlusDays(&endDate, -1); //to have last day of cleaner working, since it stops at 00:00 the next day
 
-    struct tm beforeDate =startDate; //pour ajouter des jours, faut utiliser comme ca
+    struct tm beforeDate =startDate; //first day of period before cleaner
     DatePlusDays(&beforeDate, -nbDays);
 
-    //cout<<asctime(&beforeDate)<<endl;
-    //cout<<asctime(&startDate)<<endl;
+    struct tm beforeStart =startDate; //the day right before start of cleaner
+    DatePlusDays(&beforeStart, -1);
 
-    struct tm afterDate =endDate;
-    DatePlusDays(&afterDate, nbDays);
+
     //cout<<asctime(&afterDate)<<endl;
+    cout<<"Information about the cleaner"<<endl<<endl;
+    cout<<cleaners[cleanId]->toString()<<endl;
+
 
     //Quality before
-    double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, startDate);
+    double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, beforeStart);
+
     //Quality After
     double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, endDate);
 
-    /*cout<<"Before : "<<r<<" km"<<endl<<endl;
-    cout<<"Difference O3 : "<<before[0]<<endl;
-    cout<<"Difference SO2 : "<<before[1]<<endl;
-    cout<<"Difference NO2 : "<<before[2]<<endl;
-    cout<<"Difference PM10 : "<<before[3]<<endl<<endl;
-
-    cout<<"After : "<<r<<" km"<<endl<<endl;
-    cout<<"Difference O3 : "<<after[0]<<endl;
-    cout<<"Difference SO2 : "<<after[1]<<endl;
-    cout<<"Difference NO2 : "<<after[2]<<endl;
-    cout<<"Difference PM10 : "<<after[3]<<endl<<endl;*/
-
     //Impact
-    cout<<"Test before"<<endl;
-    for (int i = 0; i<5;i++)
-    {
-        //cout<<before[i]<<endl;
-        //cout<<after[i]<<endl;
-        if (before[i]>=0 && after[i]>=0){
-            impact[i]= after[i]-before[i];
-            //cout<<before[i]<<" "<<after[i]<<endl;
+
+
+    if (before[4]>0 && after[4]>0) {
+        isImpact = (after[4]+4<before[4]);
+        if (isImpact)
+        {
+            for (int i = 0; i<5;i++)
+            {
+                impact[i]= after[i]-before[i];
+            }
         }
+    } else {
+        cout<<"No sensors in this area, please try with a bigger radius"<<endl;
+        return;
     }
 
-    if (before[4]>=0 && after[4]>=0) {
-        isImpact = after[4]!=before[4];
+    if(isImpact)
+    {
+        cout<<"There is a significant impact on Radius : "<<r<<" km"<<endl<<endl;
+        cout<<"Difference O3 : "<<impact[0]<<" µg/m3"<<endl;
+        cout<<"Difference SO2 : "<<impact[1]<<" µg/m3"<<endl;
+        cout<<"Difference NO2 : "<<impact[2]<<" µg/m3"<<endl;
+        cout<<"Difference PM10 : "<<impact[3]<<" µg/m3"<<endl;
+        cout<<"Difference ATMO : "<<impact[4]<<endl;
     }
 
-    cout<<"isImpact : "<<isImpact<<endl;
-    cout<<"On a radius of "<<r<<" km the impact is :"<<endl<<endl;
-    cout<<"Difference O3 : "<<impact[0]<<endl;
-    cout<<"Difference SO2 : "<<impact[1]<<endl;
-    cout<<"Difference NO2 : "<<impact[2]<<endl;
-    cout<<"Difference PM10 : "<<impact[3]<<endl;
-    cout<<"Difference Atmos : "<<impact[4]<<endl;
-
-    cout<<"finished value"<<endl;
     delete[]before;
     delete[]after;
+
+    if (!isImpact){
+        cout<<"There is no impact from this cleaner in this area, but maybe on a smaller area it does."<<endl;
+        cout<<"Reminder : Within the app you can check the maximum radius of impact of this cleaner"<<endl;
+    }
 }
 
 //-------------------------------------------- Constructeurs - destructeur
