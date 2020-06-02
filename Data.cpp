@@ -1,5 +1,5 @@
 /*************************************************************************
-                           Data  -  description
+                                Data  
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $eversmee$
@@ -36,7 +36,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-//source: of toRadiand and distance https://www.geeksforgeeks.org/program-distance-two-points-earth/
+// Source of toRadians and distance https://www.geeksforgeeks.org/program-distance-two-points-earth/
 // Utility function for
 // converting degrees to radians
 double toRadians(const double degree)
@@ -47,32 +47,6 @@ double toRadians(const double degree)
     // pi accurate to 1e-30
     double one_deg = (M_PI) / 180;
     return (one_deg * degree);
-}
-
-void DatePlusDays( struct tm* date, int days )
-{
-    const time_t ONE_DAY = 24 * 60 * 60 ;
-
-    // Seconds since start of epoch
-    time_t date_seconds = mktime( date ) + (days * ONE_DAY) ;
-
-    // Update caller's date
-    // Use localtime because mktime converts to UTC so may change date
-    *date = *localtime( &date_seconds ) ;
-    (*date).tm_hour=12;
-}
-
-void AddDay( struct tm* date )
-{
-    const time_t ONE_DAY = 24 * 60 * 60 ;
-    // Seconds since start of epoch
-    time_t date_seconds = mktime( date ) + (ONE_DAY) ;
-
-    // Update caller's date
-    // Use localtime because mktime converts to UTC so may change date
-    *date = *localtime( &date_seconds ) ;
-    (*date).tm_hour=12;
-    return;
 }
 
 double distance(double lat1, double long1,
@@ -105,6 +79,32 @@ double distance(double lat1, double long1,
     ans = ans * R;
 
     return ans;
+}
+
+void DatePlusDays( struct tm* date, int days )
+{
+    const time_t ONE_DAY = 24 * 60 * 60 ;
+
+    // Seconds since start of epoch
+    time_t date_seconds = mktime( date ) + (days * ONE_DAY) ;
+
+    // Update caller's date
+    // Use localtime because mktime converts to UTC so may change date
+    *date = *localtime( &date_seconds ) ;
+    (*date).tm_hour=12;
+}
+
+void AddDay( struct tm* date )
+{
+    const time_t ONE_DAY = 24 * 60 * 60 ;
+    // Seconds since start of epoch
+    time_t date_seconds = mktime( date ) + (ONE_DAY) ;
+
+    // Update caller's date
+    // Use localtime because mktime converts to UTC so may change date
+    *date = *localtime( &date_seconds ) ;
+    (*date).tm_hour=12;
+    return;
 }
 
 bool operator <= (const tm & date1, const tm & date2){
@@ -296,7 +296,7 @@ void Data::readMeasures ( string filename)
             measures.insert(std::make_pair(s, mes));
             measures_key_id.insert(std::make_pair(stoi(sensorId_buffer),mes));
         }
-        //filterData();
+
     }
     /*Measures::iterator it_start = measures.begin();
     Measures::iterator it_end = measures.end();
@@ -309,7 +309,6 @@ void Data::readMeasures ( string filename)
 
 
 void Data::readCleaners ( string filename ){
-    //Cleaners
     ifstream file;
     string s;
     file.open(filename);
@@ -320,7 +319,6 @@ void Data::readCleaners ( string filename ){
             std::getline(file,s);
             if (s!=""){
                 int pos = s.find(";");
-                //cout<<s.substr(7, pos-7)<<endl;
                 int id = stoi(s.substr(7, pos-7));
                 s=s.substr(pos+1, s.length()-pos);
 
@@ -344,10 +342,8 @@ void Data::readCleaners ( string filename ){
                 string end = s.substr(0, pos);
 
                 Cleaner * c = new Cleaner(id, lat, longitude, description, start, end);
-                //cout<<(*c).toString()<<endl;
-                cleaners.insert(std::make_pair(id, c));
 
-                //cout<<cleaners.find(id)->second->toString()<<endl;
+                cleaners.insert(std::make_pair(id, c));
 
             }
         }
@@ -369,10 +365,9 @@ void Data::readSensors ( string filename ){
     } else {
         while (!file.eof()) {
             std::getline(file,s);
-            //cout<<"line "<<s<<endl;
+
             if (s!=""){
                 int pos = s.find(";");
-                //cout<<s.substr(7, pos-7)<<endl;
                 int id = stoi(s.substr(6, pos-6));
                 s=s.substr(pos+1, s.length()-pos);
 
@@ -386,7 +381,6 @@ void Data::readSensors ( string filename ){
                 Sensor * s=new Sensor(id, lat, longitude);
 
                 sensors.insert(std::make_pair(id, s));
-                //cout<<"String of provider"<<p.toString()<<endl;
             }
         }
     }
@@ -407,21 +401,17 @@ void Data::readParticulars ( string filename ){
     } else {
         while (!file.eof()) {
             getline(file,s);
-            //cout<<"line "<<s<<endl;
+
             if (s!=""){
                 int pos = s.find(";");
-
                 string username = s.substr(0, pos);
                 s=s.substr(pos+1, s.length()-pos);
 
                 pos = s.find(";");
                 int id = stoi(s.substr(6, pos-6));
-                //cout<<"id "<<id<<endl;
                 Sensor * sensor = sensors.find(id)->second;
-                //cout<<"String of cleaner found "<<(*c).toString()<<endl;
                 Particular * p = new Particular(username, "mdp", sensor);
                 particulars.push_back(p);
-                //cout<<"String of provider"<<p.toString()<<endl;
             }
         }
     }
@@ -439,10 +429,8 @@ void Data::readProviders ( string filename ){
     } else {
         while (!file.eof()) {
             std::getline(file,s);
-            //cout<<"line "<<s<<endl;
             if (s!=""){
                 int pos = s.find(";");
-                //cout<<s.substr(7, pos-7)<<endl;
                 string username = s.substr(0, pos);
                 s=s.substr(pos+1, s.length()-pos);
 
@@ -452,18 +440,14 @@ void Data::readProviders ( string filename ){
                 //if a provider has more cleaners, they will be all on the same line
                 // e.g. Provider10;Cleaner10;Cleaner11;Cleaner12;
                 while (s!=""){
-                    //cout<<"left of line "<<s<<endl;
                     pos = s.find(";");
                     int id = stoi(s.substr(7, pos-7));
-                    //cout<<"id "<<id<<endl;
                     Cleaner * c = cleaners.find(id)->second;
-                    //cout<<"String of cleaner found "<<(*c).toString()<<endl;
                     p->ajouterCleaner(c);
                     s=s.substr(pos+1, s.length()-pos);
                 }
 
                 providers.push_back(p);
-                //cout<<"String of provider"<<p.toString()<<endl;
             }
         }
     }
@@ -482,7 +466,6 @@ void Data::readAttributes ( string filename)
     } else {
         while (!file.eof()) {
             std::getline(file,s);
-            //cout<<"line "<<s<<endl;
             if (s!=""){
                 int pos = s.find(";");
                 string attributeID = s.substr(0, pos);
@@ -493,13 +476,10 @@ void Data::readAttributes ( string filename)
                 pos = s.find(";");
                 string description = s.substr(0, pos);
 
-                //cout<<attributeID<<endl<<unit<<endl<<description<<endl<<endl;
-
                 AttributeMeasure * attM = new AttributeMeasure(attributeID, unit, description);
 
                 attributes.push_back(attM);
 
-                //cout<<"String of provider"<<p.toString()<<endl;
             }
         }
     }
@@ -515,23 +495,19 @@ string Data::AttributesToString() const
     }
     return mes;
 }
-//return table with averages of values on a day from sensors in a circle
-//1st value of o3, 2nd of so2, 3rd of no2 and 4th of pm10
+
 double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
 {
     list<Measure*> goodMeasures;
     int nbSensors = nbSensorInArea(c_lat,c_long,radius);
-    while(nbSensors<3) {
+    while(nbSensors<3) { //if we want to always have at least 3 sensors in the area if given radius is too small
         radius+=1;
         nbSensors = nbSensorInArea(c_lat,c_long,radius);
     }
-    //cout << "rayon : "<<radius << endl;
-    //cout <<"date " <<  asctime(&time)<< endl;
 
 	// It returns a pair representing the range of elements with key equal to time
+    // (gives the map of measures that have happened on day "start")
     pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&time));
-    //auto result = measures.equal_range(time);
-	//cout << "All values for key "<<asctime( &time )<<" are," << endl;
 
 	 //Iterate over the range
 	for (multimap<string,Measure*>::iterator it = result.first; it != result.second; it++){
@@ -574,6 +550,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
         res[2]=no2_tot/count_no2;
         res[3]=pm10_tot/count_pm10;
     }else{
+        // If there are no good measures the method return an array filled with -1
         res[0]=-1;
         res[1]=-1;
         res[2]=-1;
@@ -688,7 +665,7 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
         indexPM10 = -1;
     }
 
-    //Atmos
+    //ATMO index
     double tmp;
     if(indexO3>=indexNO2) {
         tmp = indexO3;
@@ -704,7 +681,6 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm time)
 
     if(tmp>atmos) atmos = tmp;
 
-
     res[4] = atmos;
 
     return res;
@@ -714,16 +690,15 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
 {
     list<Measure*> goodMeasures;
     int nbSensors = nbSensorInArea(c_lat,c_long,radius);
-    while(nbSensors<3) {
+    while(nbSensors<3) { //if we want to always have at least 3 sensors in the area if given radius is too small
         radius+=1;
         nbSensors = nbSensorInArea(c_lat,c_long,radius);
     }
-    //cout << " r : " << radius << endl;
 
     while (start<=end){
         // It returns a pair representing the range of elements with key equal to time
+        // (gives the map of measures that have happened on day "start")
         pair<Measures::iterator,Measures::iterator> result = measures.equal_range(asctime(&start));
-        //cout << "All values for key "<<asctime( &start )<<" are," << endl;
 
         //Iterate over the range
         for (multimap<string,Measure*>::iterator it = result.first; it != result.second; it++){
@@ -732,10 +707,10 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
             double s_lat = s->getLatitude();
             double s_long = s->getLongitude();
             if (distance(c_lat, c_long, s_lat, s_long) < radius && !it->second->isFalseData()){
-                //cout<<it->second->toString()<<endl;
                 goodMeasures.push_back(it->second);
             }
         }
+        // Add a day to the current day
         AddDay(&start);
     }
 
@@ -750,7 +725,6 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
     double count_pm10 = 0;
 
     for (const auto & i : goodMeasures) {
-        //cout<<i->toString()<<endl;
         if (i->getAttributeId()=="O3"){
             count_o3++;
             o3_tot += i->getValue();
@@ -765,10 +739,10 @@ double * Data::viewQuality(double c_lat, double c_long, double radius, tm start,
             pm10_tot += i->getValue();
         }
     }
-    //cout<<o3_tot<<endl;
-    //static double res[4];
+
     double * res = new double[5];
     if (count_o3>0 && count_so2>0 && count_no2>0 && count_pm10>0){
+        // If there are no good measures the method return an array filled with -1
         res[0]=o3_tot/count_o3;
         res[1]=so2_tot/count_so2;
         res[2]=no2_tot/count_no2;
@@ -1017,11 +991,8 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
     struct tm beforeStart =startDate; //the day right before start of cleaner
     DatePlusDays(&beforeStart, -1);
 
-
-    //cout<<asctime(&afterDate)<<endl;
     cout<<"Information about the cleaner"<<endl<<endl;
     cout<<cleaners[cleanId]->toString()<<endl;
-
 
     //Quality before
     double * before = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, beforeDate, beforeStart);
@@ -1030,8 +1001,6 @@ void Data::checkImpactValue ( int cleanId, int nbDays, double r)
     double * after = viewQuality(cleaners[cleanId]->getLatitude(), cleaners[cleanId]->getLongitude(), r, startDate, endDate);
 
     //Impact
-
-
     if (before[4]>0 && after[4]>0) {
         isImpact = (after[4]+4<before[4]);
         if (isImpact)

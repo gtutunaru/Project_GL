@@ -1,5 +1,6 @@
 /*************************************************************************
-                           User  -  description
+                           AttributeMeasure
+            Class representing the possible attributes of a measure
                              -------------------
     début                : $DATE$
     copyright            : (C) $YEAR$ par $AUTHOR$
@@ -11,22 +12,17 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
 #include "AttributeMeasure.h"
+using namespace std;
 
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type AttributeMeasure::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
 
 string AttributeMeasure::toString() const
 {

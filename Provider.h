@@ -1,5 +1,5 @@
 /*************************************************************************
-                           Provider  -  description
+                                Provider
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $gtutunaru$
@@ -20,7 +20,9 @@
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Provider>
-//
+// Class that represents the type of users Provider. It inherits from the 
+// User class and has a new attribute "cleaners" representing the list of 
+// cleaners installed by this provider
 //
 //------------------------------------------------------------------------
 
@@ -30,51 +32,43 @@ class Provider : public User
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
     list<Cleaner*> getCleaners();
+    // Mode d'emploi :
+    // Return the list of cleaners of this Provider
+ 
 
     void ajouterCleaner(Cleaner * c);
+    // Mode d'emploi :
+    // Adds a new cleaner to the list of cleaners of this Provider
 
     string toString() const;
+    // Mode d'emploi :
+    // Returns the string representation of the Provider
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-    //Provider & operator = ( const Provider & unProvider );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
 
 //-------------------------------------------- Constructeurs - destructeur
     Provider ( const Provider & unProvider );
     // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
+    // Copy constructor of class Provider
+
 
      Provider ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Default constructor of class Provider
 
     Provider (string _username, string _password );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Constructor of class Provider who gets the username and password
+    // of the user as parameters 
 
     virtual ~Provider ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Destructor of class Data
+
 
 //------------------------------------------------------------------ PRIVE
 

@@ -20,7 +20,9 @@ using namespace std;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <User>
-//
+// User is the base class (mother class) of the types of users: GovAgency,
+// Provider, Particular. It has 2 attributes: a username and a password.
+// The password would be used for authentification eventually.
 //
 //------------------------------------------------------------------------
 
@@ -30,59 +32,35 @@ class User
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-    //bool viewQuality(double lat, double long, string date_start, string date_end=""); dans DATA
-
-    //bool login(string mail, string password);
-
-    //bool logout();
-
-
+    // Getters
     string getPassword();
-
-    void setPassword(string _password);
-
     string getUsername();
 
+    // Setters
+    void setPassword(string _password);
     void setUsername(string _username);
 
 //------------------------------------------------- Surcharge d'opérateurs
-    //User & operator = ( const User & unUser );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+
 
 
 //-------------------------------------------- Constructeurs - destructeur
     User ( const User & unUser );
     // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
+    // Copy constructor of class User
 
     User ();
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Default constructor of class User
 
     User (string _username, string _password );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Constructor of class Provider who gets the username and password
+    // of the user as parameters 
 
     virtual ~User ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Destructor of class User
 
 //------------------------------------------------------------------ PRIVE
 
@@ -92,8 +70,6 @@ protected:
 //----------------------------------------------------- Attributs protégés
     string password;
     string username;
-
-
 };
 
 //-------------------------------- Autres définitions dépendantes de <User>

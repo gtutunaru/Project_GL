@@ -22,16 +22,12 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Cleaner::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
 
 string Cleaner::toString() const{
+
     string s= "Cleaner" + to_string(cleanerId) + "\nLatitude: " +  to_string(latitude)  + "\nLongitude: " +  to_string(longitude);
     s += "\nDescription: " + description  + "\nStart day: " + start  + "\nLast day: " + end + '\n';
-    //s=to_string(cleanerId);
+
     return s;
 }
 
@@ -66,19 +62,10 @@ string Cleaner::getEnd() const
 }
 
 //------------------------------------------------- Surcharge d'opérateurs
-/*Cleaner & Cleaner::operator = ( const Cleaner & unCleaner )
-// Algorithme :
-//
-{
-} //----- Fin de operator =
-*/
-
-
 
 //-------------------------------------------- Constructeurs - destructeur
 Cleaner::Cleaner ( const Cleaner & unCleaner )
-// Algorithme :
-//
+
 {
     cleanerId = unCleaner.getCleanerId();
     latitude = unCleaner.getLatitude();
@@ -93,8 +80,7 @@ Cleaner::Cleaner ( const Cleaner & unCleaner )
 
 
 Cleaner :: Cleaner (int _id, double _latitude, double _longitude, string _description, string _start, string _end)
-// Algorithme :
-//
+
 {
     cleanerId = _id;
     latitude = _latitude;
@@ -109,8 +95,7 @@ Cleaner :: Cleaner (int _id, double _latitude, double _longitude, string _descri
 
 
 Cleaner::~Cleaner ( )
-// Algorithme :
-//
+
 {
 #ifdef MAP
     cout << "Appel au destructeur de <Cleaner>" << endl;

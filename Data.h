@@ -1,5 +1,5 @@
 /*************************************************************************
-                           Data  -  description
+                                    Data
                              -------------------
     début                : $06/05/2020$
     copyright            : (C) $2020$ par $eversmee$
@@ -41,7 +41,9 @@ typedef list<Particular*> Particulars;
 typedef multimap<int, Measure*>::iterator measures_iterator;
 //------------------------------------------------------------------------
 // Rôle de la classe <Data>
-//
+// This class contains all the data in our system stored in maps and lists. 
+// It also contains all the methods and functions used for the 
+// functionalities of this app
 //
 //------------------------------------------------------------------------
 
@@ -54,11 +56,74 @@ public:
 //----------------------------------------------------- Méthodes publiques
     void readMeasures ( string filename );
     // Mode d'emploi :
+    // Method used to read the measures from a csv file, whose path is
+    // indicated in the parameter "filename". The measures are stored in
+    // two multi-maps, one with the key being the date of the measure 
+    // (attribute "measures") and the second with the key being the id of 
+    // the sensor doing the measure ("measures_key_id"). Since we create the 
+    // measures dynamically, we store  in both multi-maps only the pointers 
+    // to the Measure objects, thus having two maps instead of one is not 
+    // very expensive in terms of memory
+    // Contrat :
+    // To work correcly, a valid path should be given
+
+    void readParticulars ( string filename );
+    // Mode d'emploi :
+    // Method used to read the particular users from a csv file, whose 
+    // path is indicated in the parameter "filename". The pointers to
+    // the Particular objects are stored in a list which is the attribute
+    // "particulars"
+    // Contrat :
+    // To work correcly, a valid path should be given
+
+    void readCleaners ( string filename );
+    // Mode d'emploi :
+    // Method used to read the cleaners from a csv file, whose 
+    // path is indicated in the parameter "filename". The pointers to
+    // the Cleaner objects are stored in a map which is the attribute
+    // "cleaners" and its key is the id of the Cleaner
+    // Contrat :
+    // To work correcly, a valid path should be given
+
+    void readProviders ( string filename );
+    // Mode d'emploi :
+    // Method used to read the providers from a csv file, whose 
+    // path is indicated in the parameter "filename". The pointers to
+    // the Provider objects are stored in a list which is the attribute
+    // "providers". Also, each provider has a list of cleaners whose
+    // pointers are stored in a list in the attribute "cleaners" of "Provider"
+    // Contrat :
+    // To work correcly, a valid path should be given
+
+    void readAttributes (string filename);
+    // Mode d'emploi :
+    // Method used to read the possible attributes from a csv file, whose 
+    // path is indicated in the parameter "filename". The pointers to
+    // the AttributeMeasure objects are stored in a list which is the attribute
+    // "attributes".
+    // Contrat :
+    // To work correcly, a valid path should be given
+
+    string AttributesToString() const;
+    // Mode d'emploi :
+    // Method that could be used to view all the attributes on the console
+    // Contrat :
+    // The method readAttributes should be called first
+
+    void readSensors ( string filename);
+    // Mode d'emploi :
+    // Method used to read the sensors from a csv file, whose 
+    // path is indicated in the parameter "filename". The pointers to
+    // the Sensor objects are stored in a map which is the attribute
+    // "sensors" and its key is the id of the Sensor
+    // Contrat :
+    // To work correcly, a valid path should be given
+
+    void checkImpactValue ( int cleanId, int nbDays, double r);
+    // Mode d'emploi :
     //
     // Contrat :
     //
-
-    void checkImpactValue ( int cleanId, int nbDays, double r);
 
     void checkImpactRadius ( int cleanId, int nbDays );
     // Mode d'emploi :
@@ -66,61 +131,61 @@ public:
     // Contrat :
     //
 
-    void readParticulars ( string filename );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-    void readCleaners ( string filename );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-    void readProviders ( string filename );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-    void readAttributes (string filename);
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-    string AttributesToString() const;
-
-    void readSensors ( string filename);
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
     double * viewQuality(double c_lat, double c_long, double radius, tm time);
+    // Mode d'emploi :
+    // Method used to get the average of the measures that were observed on
+    // a specific day ("date"), in a circle represented by coordinates of 
+    // latitude and longitude and a radius around.
+    // Returns array with averages of values from the measures: 1st value of o3, 
+    // 2nd of so2, 3rd of no2 and 4th of pm10, 5th value is the ATMO index
+    // Contrat :
+    // If in the given zone there are no sensors, the radius will be incremented
+    // until there are at least 3 sensors in the circle. This does not guarantee 
+    // that values will be returned, since these sensors could have not provided
+    // values on this specific day
 
     double * viewQuality(double c_lat, double c_long, double radius, tm start, tm end);
-    //bool operator < (tm a, tm b);
+    // Mode d'emploi :
+    // Method used to get the average of the measures that were observed on
+    // a timepspan represented by dates "start" and "end", in a circle represented 
+    // by coordinates of latitude and longitude and a radius around.
+    // Returns array with averages of values from the measures: 1st value of o3, 
+    // 2nd of so2, 3rd of no2 and 4th of pm10, 5th value is the ATMO index
+    // Contrat :
+    // If in the given zone there are no sensors, the radius will be incremented
+    // until there are at least 3 sensors in the circle. This does not guarantee 
+    // that values will be returned, since these sensors could have not provided
+    // values on this specific day
 
     int nbSensorInArea(double, double, double);
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
     bool filterData(int);
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( const Data & Data );
+    // Mode d'emploi :
+    // Copy constructor of class Data
+
 
     Data ();
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Default constructor of class Data
+
 
     virtual ~Data ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Destructor of class Data
+    // Is in charge of freeing all the memory allocated dynamically
+    // when reading the csv files
+
 
     //------------------------------------------------------------------ PRIVE
 
