@@ -162,7 +162,6 @@ int main(){
     d.readParticulars("dataset/users.csv");
     d.readMeasures("./dataset/measurements.csv");
 
-    cout<<d.AttributesToString()<<endl;
 
     bool exit = false;
     bool exitGov =false;
